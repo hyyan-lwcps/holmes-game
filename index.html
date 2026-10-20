@@ -7,12 +7,13 @@
   <style>
     /* ==========================================
        維多利亞復古羊皮紙與森林色系風格
+       包含跨平台 Emoji 字型修復
        ========================================== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", serif;
+      font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", serif;
     }
 
     body {
@@ -316,7 +317,6 @@
     <h2>── 倫敦貝克街 221 號 B ──</h2>
 
     <div class="img-display-box">
-      <!-- 已修正為 GitHub 上的正確檔名 20240119093952729_0001.jpg -->
       <img src="20240119093952729_0001.jpg" alt="福爾摩斯的邀請信">
     </div>
 
@@ -342,46 +342,45 @@
       <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 破案推理</button>
     </div>
 
-    <!-- 分頁 1: 檔案1基本資料 -->
+    <!-- 分頁 1: 檔案1基本資料 (純第6-7頁文本) -->
     <div id="nav-1" class="tab-page">
       <h1>📋 檔案1：蛋糕裏的櫻桃（基本資料登錄）</h1>
       <h2>── 請仔細閱讀下方案件頁面，選出正確的 4 大基本資訊 ──</h2>
 
       <div class="img-display-box">
-        <!-- 已修正為 GitHub 上的正確檔名 20240119093952729_0002.jpg -->
         <img src="20240119093952729_0002.jpg" alt="檔案1基本資料">
       </div>
 
-      <!-- 問題 1: 失物 -->
+      <!-- 問題 1: 失物 (更新選項) -->
       <div class="story-box">
         <p>1️⃣ <strong>請根據文本，選出本案的「失物」是什麼？</strong></p>
-        <div class="quiz-option" onclick="selectGate('item', 'ruby', this)">A. 💎 名貴的紅寶石 (Red Ruby)</div>
-        <div class="quiz-option" onclick="selectGate('item', 'wrong1', this)">B. 🔷 璀璨的藍寶石</div>
-        <div class="quiz-option" onclick="selectGate('item', 'wrong2', this)">C. 🪙 皇室黃金金幣</div>
+        <div class="quiz-option" onclick="selectGate('item', 'ruby', this)">A. 💎 紅寶石</div>
+        <div class="quiz-option" onclick="selectGate('item', 'wrong1', this)">B. 🔷 藍寶石</div>
+        <div class="quiz-option" onclick="selectGate('item', 'wrong2', this)">C. 🍰 櫻桃蛋糕</div>
       </div>
 
       <!-- 問題 2: 失物物主 -->
       <div class="story-box">
         <p>2️⃣ <strong>請選出「失物物主（寶石的主人）」是誰？</strong></p>
         <div class="quiz-option" onclick="selectGate('owner', 'swinbrook', this)">A. 斯文布魯克夫人 (Lady Swinbrook)</div>
-        <div class="quiz-option" onclick="selectGate('owner', 'wrong1', this)">B. 哈德遜太太 (Mrs. Hudson)</div>
-        <div class="quiz-option" onclick="selectGate('owner', 'wrong2', this)">C. 思華特小姐 (Mimi Swathe)</div>
+        <div class="quiz-option" onclick="selectGate('owner', 'wrong1', this)">B. 房東哈德遜太太 (Mrs. Hudson)</div>
+        <div class="quiz-option" onclick="selectGate('owner', 'wrong2', this)">C. 思華格小姐 (Leonora Swag)</div>
       </div>
 
       <!-- 問題 3: 失竊地點 -->
       <div class="story-box">
         <p>3️⃣ <strong>請選出紅寶石的「失竊地點」在哪裡？</strong></p>
-        <div class="quiz-option" onclick="selectGate('location', 'estate', this)">A. 🏰 斯文布魯克大屋 (Lady Swinbrook's Estate)</div>
-        <div class="quiz-option" onclick="selectGate('location', 'wrong1', this)">B. 貝克街 221 號 B 公寓</div>
-        <div class="quiz-option" onclick="selectGate('location', 'wrong2', this)">C. 高街 78 號思華布藝店</div>
+        <div class="quiz-option" onclick="selectGate('location', 'estate', this)">A. 🏰 斯文布魯克大屋 (南肯辛頓區)</div>
+        <div class="quiz-option" onclick="selectGate('location', 'wrong1', this)">B. 🏠 貝克街公寓門外</div>
+        <div class="quiz-option" onclick="selectGate('location', 'wrong2', this)">C. 🛍️ 思華布藝店</div>
       </div>
 
       <!-- 問題 4: 被捕人物 -->
       <div class="story-box">
         <p>4️⃣ <strong>根據《倫敦紀事報》報導，警方目前「被捕的人物」是誰？</strong></p>
         <div class="quiz-option" onclick="selectGate('arrested', 'mimi', this)">A. 美美·思華特小姐 (Mimi Swathe - 窗簾商店店主)</div>
-        <div class="quiz-option" onclick="selectGate('arrested', 'wrong1', this)">B. 吉迪恩·弗朗普先生</div>
-        <div class="quiz-option" onclick="selectGate('arrested', 'wrong2', this)">C. 管家波伊小姐</div>
+        <div class="quiz-option" onclick="selectGate('arrested', 'wrong1', this)">B. 斯文布魯克夫人 (Lady Swinbrook)</div>
+        <div class="quiz-option" onclick="selectGate('arrested', 'wrong2', this)">C. 思華格小姐 (Leonora Swag)</div>
       </div>
 
       <button class="btn" onclick="verifyGateAnswers()">🔍 驗證基本資料，解鎖現場搜查（跟福爾摩斯動身！）</button>
@@ -517,7 +516,7 @@
 </div>
 
 <script>
-  let isUnlocked = false; // 全局解鎖狀態
+  let isUnlocked = false;
 
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';

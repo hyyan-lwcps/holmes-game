@@ -7,7 +7,7 @@
   <style>
     /* ==========================================
        維多利亞復古羊皮紙與森林色系風格
-       包含跨平台 Emoji 字型修復
+       跨平台 Emoji 字型相容支援
        ========================================== */
     * {
       box-sizing: border-box;
@@ -70,12 +70,12 @@
 
     .nav-btn {
       flex: 1;
-      min-width: 110px;
-      padding: 12px 8px;
+      min-width: 100px;
+      padding: 12px 6px;
       background: #e6dfd3;
       border: 1px solid #b8a898;
       border-radius: 10px 10px 0 0;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: bold;
       color: #7a6b5d;
       cursor: not-allowed;
@@ -175,7 +175,7 @@
       transform: translateY(-2px);
     }
 
-    /* 時間線排序列表 */
+    /* 事件排序列表 */
     .timeline-list {
       list-style: none;
       padding: 0;
@@ -194,14 +194,15 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
-    .timeline-time {
+    .timeline-step {
       font-weight: bold;
-      color: #8c2d19;
-      background: #fcedea;
+      color: #1b4332;
+      background: #e8f5e9;
       padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.9rem;
       margin-right: 10px;
+      white-space: nowrap;
     }
 
     .timeline-controls button {
@@ -333,16 +334,17 @@
   <!-- 偵探主控台 -->
   <div id="main-dashboard" style="display: none;">
     
-    <!-- 頂部頁籤按鈕 -->
+    <!-- 頂部切換頁籤 (6 大分頁) -->
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
-      <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 12大線索牆</button>
-      <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 案件時間線</button>
+      <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 11大線索牆</button>
+      <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 事件排序</button>
       <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 縮寫解密</button>
-      <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 破案推理</button>
+      <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 破案小提示</button>
+      <button id="tab-btn-6" class="nav-btn" onclick="switchNav('nav-6')">🔒 破案推理</button>
     </div>
 
-    <!-- 分頁 1: 檔案1基本資料 (純第6-7頁文本) -->
+    <!-- 分頁 1: 檔案1基本資料 (選項已流暢打散，正確答案為：B - C - A - B) -->
     <div id="nav-1" class="tab-page">
       <h1>📋 檔案1：蛋糕裏的櫻桃（基本資料登錄）</h1>
       <h2>── 請仔細閱讀下方案件頁面，選出正確的 4 大基本資訊 ──</h2>
@@ -351,23 +353,23 @@
         <img src="20240119093952729_0002.jpg" alt="檔案1基本資料">
       </div>
 
-      <!-- 問題 1: 失物 -->
+      <!-- 問題 1: 失物 (正確答案：B) -->
       <div class="story-box">
         <p>1️⃣ <strong>請根據文本，選出本案的「失物」是什麼？</strong></p>
-        <div class="quiz-option" onclick="selectGate('item', 'ruby', this)">A. 💎 紅寶石</div>
-        <div class="quiz-option" onclick="selectGate('item', 'wrong1', this)">B. 🔷 藍寶石</div>
-        <div class="quiz-option" onclick="selectGate('item', 'wrong2', this)">C. 🍰 櫻桃蛋糕</div>
+        <div class="quiz-option" onclick="selectGate('item', 'wrong1', this)">A. 🍰 櫻桃蛋糕</div>
+        <div class="quiz-option" onclick="selectGate('item', 'ruby', this)">B. 💎 紅寶石</div>
+        <div class="quiz-option" onclick="selectGate('item', 'wrong2', this)">C. 🔷 藍寶石</div>
       </div>
 
-      <!-- 問題 2: 失物物主 -->
+      <!-- 問題 2: 失物物主 (正確答案：C) -->
       <div class="story-box">
         <p>2️⃣ <strong>請選出「失物物主（寶石的主人）」是誰？</strong></p>
-        <div class="quiz-option" onclick="selectGate('owner', 'swinbrook', this)">A. 斯文布魯克夫人 (Lady Swinbrook)</div>
-        <div class="quiz-option" onclick="selectGate('owner', 'wrong1', this)">B. 房東哈德遜太太 (Mrs. Hudson)</div>
-        <div class="quiz-option" onclick="selectGate('owner', 'wrong2', this)">C. 思華格小姐 (Leonora Swag)</div>
+        <div class="quiz-option" onclick="selectGate('owner', 'wrong1', this)">A. 🏠 房東哈德遜太太 (Mrs. Hudson)</div>
+        <div class="quiz-option" onclick="selectGate('owner', 'wrong2', this)">B. 🛍️ 思華格小姐 (Leonora Swag)</div>
+        <div class="quiz-option" onclick="selectGate('owner', 'swinbrook', this)">C. 👑 斯文布魯克夫人 (Lady Swinbrook)</div>
       </div>
 
-      <!-- 問題 3: 失竊地點 -->
+      <!-- 問題 3: 失竊地點 (正確答案：A) -->
       <div class="story-box">
         <p>3️⃣ <strong>請選出紅寶石的「失竊地點」在哪裡？</strong></p>
         <div class="quiz-option" onclick="selectGate('location', 'estate', this)">A. 🏰 斯文布魯克大屋 (南肯辛頓區)</div>
@@ -375,20 +377,20 @@
         <div class="quiz-option" onclick="selectGate('location', 'wrong2', this)">C. 🛍️ 思華布藝店</div>
       </div>
 
-      <!-- 問題 4: 被捕人物 -->
+      <!-- 問題 4: 被捕人物 (正確答案：B) -->
       <div class="story-box">
         <p>4️⃣ <strong>根據《倫敦紀事報》報導，警方目前「被捕的人物」是誰？</strong></p>
-        <div class="quiz-option" onclick="selectGate('arrested', 'mimi', this)">A. 美美·思華特小姐 (Mimi Swathe - 窗簾商店店主)</div>
-        <div class="quiz-option" onclick="selectGate('arrested', 'wrong1', this)">B. 房東哈德遜太太 (Mrs. Hudson)</div>
-        <div class="quiz-option" onclick="selectGate('arrested', 'wrong2', this)">C. 思華格小姐 (Leonora Swag)</div>
+        <div class="quiz-option" onclick="selectGate('arrested', 'wrong1', this)">A. 🏠 房東哈德遜太太 (Mrs. Hudson)</div>
+        <div class="quiz-option" onclick="selectGate('arrested', 'mimi', this)">B. 🚨 美美·思華特小姐 (Mimi Swathe - 窗簾商店店主)</div>
+        <div class="quiz-option" onclick="selectGate('arrested', 'wrong2', this)">C. 🛍️ 思華格小姐 (Leonora Swag)</div>
       </div>
 
       <button class="btn" onclick="verifyGateAnswers()">🔍 驗證基本資料，解鎖現場搜查（跟福爾摩斯動身！）</button>
     </div>
 
-    <!-- 分頁 2: 12大拆分線索牆 -->
+    <!-- 分頁 2: 11大拆分線索牆 -->
     <div id="nav-2" class="tab-page" style="display: none;">
-      <h1>🖼️ 12 大拆分線索牆</h1>
+      <h1>🖼️ 11 大拆分線索牆</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">翻閱下方卡片，仔細研讀便利貼上的「偵探麵包屑」：</p>
 
       <div id="slide-area"></div>
@@ -398,56 +400,77 @@
         <button class="btn" style="flex: 1;" onclick="changeSlide(1)">下一張線索 ➡️</button>
       </div>
 
-      <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【案件時間線】➡️</button>
+      <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件時間線 -->
+    <!-- 分頁 3: 案件事件排序 (已拿走時間) -->
     <div id="nav-3" class="tab-page" style="display: none;">
-      <h1>⏱️ 案件時間線重組</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請點擊「⬆️ 上移」或「⬇️ 下移」按鈕，將事件按正確時間排列：</p>
+      <h1>⏱️ 案件事件排序</h1>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照各張線索卡中的細節與口供，點擊「⬆️ 上移」或「⬇️ 下移」按鈕將事件按正確順序排列：</p>
 
       <div class="story-box">
         <ul id="timeline-container" class="timeline-list"></ul>
       </div>
 
-      <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查時間線順序</button>
+      <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列順序</button>
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">🧩 查看【縮寫解密】➡️</button>
     </div>
 
-    <!-- 分頁 4: 縮寫密碼解密 -->
+    <!-- 分頁 4: 縮寫密碼解密 (答案打散為：B - C - A - B) -->
     <div id="nav-4" class="tab-page" style="display: none;">
       <h1>🧩 人物縮寫密碼比對</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">根據線索卡中的便利貼，點選對應的人物身分：</p>
 
       <div class="story-box">
         <p>1️⃣ <strong>GF 代表誰？</strong>（便利貼提示：貸款申請評估人）</p>
-        <div class="quiz-option" onclick="selectAbbr('gf', 'correct', this)">A. 吉迪恩·弗朗普（Gideon Frump - 儲蓄及貸款）</div>
-        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong', this)">B. 喬治·福爾摩斯（George Holmes）</div>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong1', this)">A. 貝利先生（Mr Berry）</div>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'correct', this)">B. 吉迪恩·弗朗普（Gideon Frump）</div>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong2', this)">C. 馬洛蒂．費思克（Meoldy Frisk）</div>
       </div>
 
       <div class="story-box">
         <p>2️⃣ <strong>M 代表誰？</strong>（便利貼提示：急需要錢、店鋪要倒閉）</p>
-        <div class="quiz-option" onclick="selectAbbr('m', 'correct', this)">A. 美美·思華特（Mimi Swathe） / 莫良（Moira）</div>
-        <div class="quiz-option" onclick="selectAbbr('m', 'wrong', this)">B. 瑪麗安警官（Mary Agent）</div>
+        <div class="quiz-option" onclick="selectAbbr('m', 'wrong1', this)">A. 休伯特太太（Mrs M. Hubert）</div>
+        <div class="quiz-option" onclick="selectAbbr('m', 'wrong2', this)">B. 馬洛蒂．費思克（Meoldy Frisk）</div>
+        <div class="quiz-option" onclick="selectAbbr('m', 'correct', this)">C. 美美．思華特（Mimi Swathe） / 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
       </div>
 
       <div class="story-box">
         <p>3️⃣ <strong>MT 代表誰？</strong>（便利貼提示：未婚夫信件、管家手冊）</p>
         <div class="quiz-option" onclick="selectAbbr('mt', 'correct', this)">A. 馬丁·蒂德（Martin Tudor - 烘焙助手）</div>
-        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong', this)">B. 邁克羅夫特（Mycroft）</div>
+        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong1', this)">B. 瑪麗安．波伊（Miss Boyle）</div>
+        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong2', this)">C. 貝利先生（Mr Berry）</div>
       </div>
 
       <div class="story-box">
-        <p>4️⃣ <strong>MB 代表誰？</strong>（便利貼提示：波伊小姐 / 莫良·貝雅·蘭尼）</p>
-        <div class="quiz-option" onclick="selectAbbr('mb', 'correct', this)">A. 瑪麗安·波伊（Miss Boyle） / 莫良·貝雅·蘭尼（Moira Bes Lenny）</div>
-        <div class="quiz-option" onclick="selectAbbr('mb', 'wrong', this)">B. 麥克·貝克（Mike Baker）</div>
+        <p>4️⃣ <strong>MB 代表誰？</strong>（便利貼提示：波伊小姐 / 莫拉·貝雅·蘭尼）</p>
+        <div class="quiz-option" onclick="selectAbbr('mb', 'wrong1', this)">A. 休伯特太太（Mrs M. Hubert）</div>
+        <div class="quiz-option" onclick="selectAbbr('mb', 'correct', this)">B. 瑪麗安．波伊（Miss Boyle） / 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
+        <div class="quiz-option" onclick="selectAbbr('mb', 'wrong2', this)">C. 馬洛蒂．費思克（Meoldy Frisk）</div>
       </div>
 
-      <button class="btn" onclick="switchNav('nav-5')">⚖️ 解密完畢，前往【最終破案推理】➡️</button>
+      <button class="btn" onclick="switchNav('nav-5')">💡 閱讀【破案小提示】➡️</button>
     </div>
 
-    <!-- 分頁 5: 破案推理與真兇指認 -->
+    <!-- 分頁 5: 線索 12 獨立頁籤 (破案小提示) -->
     <div id="nav-5" class="tab-page" style="display: none;">
+      <h1>💡 線索 12：破案小提示</h1>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">在進行最終指認前，請仔細閱讀第 18 頁提出的關鍵提問：</p>
+
+      <div class="img-display-box">
+        <img src="18.jpg" alt="破案小提示第18頁">
+      </div>
+
+      <div class="story-box">
+        <p>🔍 <strong>思考指引：</strong></p>
+        <p>對照前 11 張線索卡中的圖文細節，整理出「粉筆與假牙印模膏」、「肯辛頓雜誌文章」、「烘焙蛋糕與綠色絲帶」之間的關鍵連結，準備指認真兇！</p>
+      </div>
+
+      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-6')">⚖️ 前往【最終破案推理】➡️</button>
+    </div>
+
+    <!-- 分頁 6: 破案推理與真兇指認 (答案打散為：A - A - B - A - B) -->
+    <div id="nav-6" class="tab-page" style="display: none;">
       <h1>⚖️ 最終破案推理與指認真兇</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">回答 5 大關鍵思考題，指認出本案真兇：</p>
 
@@ -465,8 +488,8 @@
 
       <div class="story-box">
         <p>3. 犯罪現場有沒有留下任何食材？</p>
-        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">A. 有，留下了烤製的櫻桃蛋糕</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong', this)">B. 完全沒有任何食材</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong', this)">A. 完全沒有任何食材</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">B. 有，留下了烤製的櫻桃蛋糕</div>
       </div>
 
       <div class="story-box">
@@ -477,8 +500,8 @@
 
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
         <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索，指認本案的真正主謀是誰？</strong></p>
-        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">A. 美美·思華特（Mimi Swathe）與莉奧蘿拉·思華格（Leonora Swag）</div>
-        <div class="quiz-option" onclick="selectFinal('q5', 'wrong', this)">B. 波伊小姐（Miss Boyle）</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong', this)">A. 波伊小姐（Miss Boyle）</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">B. 美美·思華特（Mimi Swathe）與莉奧蘿拉·思華格（Leonora Swag）</div>
       </div>
 
       <button class="btn" onclick="submitDeduction()">⚖️ 提交報告，核對真相與榮譽卡</button>
@@ -544,14 +567,15 @@
       gateAnswers.arrested === 'mimi'
     ) {
       isUnlocked = true;
-      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，後續所有搜查分頁（線索牆、時間線、縮寫解密、破案推理）已全部解鎖！");
+      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，後續所有搜查分頁已全部解鎖！");
 
-      document.getElementById('tab-btn-2').innerText = '🖼️ 12大線索牆';
-      document.getElementById('tab-btn-3').innerText = '⏱️ 案件時間線';
+      document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
+      document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
       document.getElementById('tab-btn-4').innerText = '🧩 縮寫解密';
-      document.getElementById('tab-btn-5').innerText = '⚖️ 破案推理';
+      document.getElementById('tab-btn-5').innerText = '💡 破案小提示';
+      document.getElementById('tab-btn-6').innerText = '⚖️ 破案推理';
 
-      for (let i = 2; i <= 5; i++) {
+      for (let i = 2; i <= 6; i++) {
         document.getElementById(`tab-btn-${i}`).classList.add('unlocked');
       }
 
@@ -575,13 +599,14 @@
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
+  /* 事件排序資料 */
   const timelineData = [
-    { time: '11:00 am', text: '美美·思華特到達大屋進行量度' },
-    { time: '12:30 pm', text: '美美離開大屋，前往買布匹' },
-    { time: '1:00 pm', text: '斯文布魯克夫人發現紅寶石失竊並報警' },
-    { time: '1:15 pm', text: '警方（史雲探長）抵達大屋調查' },
-    { time: '2:45 pm', text: '管家波伊小姐離開大屋出去辦事' },
-    { time: '3:30 pm', text: '美美·思華特在回店舖的路上被捕' }
+    { id: 1, text: '美美·思華特到達大屋進行量度' },
+    { id: 2, text: '美美離開大屋，前往買布匹' },
+    { id: 3, text: '斯文布魯克夫人發現紅寶石失竊並報警' },
+    { id: 4, text: '警方（史雲探長）抵達大屋調查' },
+    { id: 5, text: '管家波伊小姐離開大屋出去辦事' },
+    { id: 6, text: '美美·思華特在回店舖的路上被捕' }
   ];
 
   let currentTimeline = [
@@ -597,7 +622,7 @@
       li.className = 'timeline-item';
       li.innerHTML = `
         <div>
-          <span class="timeline-time">${item.time}</span>
+          <span class="timeline-step">步驟 ${index + 1}</span>
           <span>${item.text}</span>
         </div>
         <div class="timeline-controls">
@@ -621,81 +646,74 @@
   function checkTimelineOrder() {
     let isCorrect = true;
     for (let i = 0; i < currentTimeline.length; i++) {
-      if (currentTimeline[i].time !== timelineData[i].time) {
+      if (currentTimeline[i].id !== timelineData[i].id) {
         isCorrect = false;
         break;
       }
     }
     if (isCorrect) {
-      alert("🎉 太棒了！時間線完全正確！你對案件發生的經過掌握得非常精準！");
+      alert("🎉 太棒了！事件排序完全正確！你根據線索對案件經過進行了非常嚴密的推理！");
     } else {
-      alert("🔍 時間順序有點不對喔！請再對照一下美美離開與警察抵達的時間！");
+      alert("🔍 事件順序有點不對喔！請再對照美美離開大屋、警察抵達與波伊出門的細節！");
     }
   }
 
-  /* ==========================================
-     重新整理後的 12 張分拆線索卡資料與麵包屑提示
-     ========================================== */
+  /* 11 大拆分線索牆 */
   const slideCards = [
     { 
       img: '20240119093952729_0002.jpg', 
       title: '線索 1：蛋糕包裝紙與秘密字條（第6-7頁）', 
-      note: '🔍 偵探麵包屑：注意包裝紙上的地址「靈昂街114號」、日期時間「3月29日 下午2時30分」，以及夾在蛋糕盒裏的字條「GF: 請享用蛋糕，並重新考慮」。' 
+      note: '🔍 偵探麵包屑：集中觀察蛋糕包裝紙上的地址「麗晶街114號」、日期時間（3月29日 下午2時30分）以及字條的內容。' 
     },
     { 
       img: '8.jpg', 
       title: '線索 2：警方紀錄與波伊小姐口供（第8頁）', 
-      note: '🔍 偵探麵包屑：梳妝台上留下了奇怪的粉筆痕跡；注意時間線（1:00pm發現失竊、1:15pm探長抵達、2:45pm波伊外出）。' 
+      note: '🔍 偵探麵包屑：警方紀錄與波伊小姐的口供中，有一部分的時間線線索可整理。' 
     },
     { 
       img: '9.jpg', 
       title: '線索 3：思華布藝減價與美美口供（第9頁）', 
-      note: '🔍 偵探麵包屑：注意便利貼上的縮寫「M急需要錢嗎？」與「愛你的MT」；對照美美的時間線（11:00am到達、12:30pm離開、3:30pm被捕）。' 
+      note: '🔍 偵探麵包屑：思華布藝減價、有 M 及 MT 縮寫，以及一部分的時間線線索可整理。' 
     },
     { 
       img: '10.jpg', 
       title: '線索 4：診所紀錄與吉迪恩名片（第10頁）', 
-      note: '🔍 偵探麵包屑：解開 GF 縮寫（吉迪恩·弗朗普 - 儲蓄及貸款）；靈昂街114號原來是克倫斯·鳳傑診所！對照約會目的與時間。' 
+      note: '🔍 偵探麵包屑：第6頁地址的真正地方；對照字條地址、日期及時間找出「約會目的」。' 
     },
     { 
       img: '11.jpg', 
       title: '線索 5：肯辛頓生活雜誌與福韋克布行（第11頁）', 
-      note: '🔍 偵探麵包屑：雜誌報導神秘烘培師「莫良·貝雅·蘭尼」再度勝出；解開 M 縮寫（Moira 莫良 / Mimi 美美）。' 
+      note: '🔍 偵探麵包屑：雜誌報道有關神秘烘培師、福韋克布行廣告與 M 縮寫線索。' 
     },
     { 
       img: '12.jpg', 
       title: '線索 6：吉迪恩口供與保險箱蛋糕（第12頁）', 
-      note: '🔍 偵探麵包屑：吉迪恩保險箱裏竟然也有一個櫻桃蛋糕！解開 MT 縮寫（馬丁·蒂德 Martin Tudor - 烘焙助手）。' 
+      note: '🔍 偵探麵包屑：吉迪恩的口供及另一個在保險箱的蛋糕，留意 MT 縮寫線索。' 
     },
     { 
       img: '13.jpg', 
       title: '線索 7：櫻桃蛋糕食譜與關鍵合照（第13頁）', 
-      note: '🔍 偵探麵包屑：出現 MB 縮寫（愛你的MB / Moira Bes Lenny / Miss Boyle）；注意照片中馬丁與得獎者的關係！' 
+      note: '🔍 偵探麵包屑：MB 縮寫出現，關鍵照片可聯繫到神秘烘培師。' 
     },
     { 
       img: '14.jpg', 
-      title: '線索 8：莉奧蘿拉口供與商業貸款申請（第14頁）', 
-      note: '🔍 偵探麵包屑：思華布藝關店是為了籌集資金開設新茶室；對照 RLG 銀行的貸款申請資料。' 
+      title: '線索 8：莉奧蘿拉口供與商業貸款（第14頁）', 
+      note: '🔍 偵探麵包屑：思華布藝關店原因；對照 RLG 銀行的貸款申請資料。' 
     },
     { 
       img: '15.jpg', 
       title: '線索 9：大屋原貌與規劃會議告示（第15頁）', 
-      note: '🔍 偵探麵包屑：對比大屋梳妝台照片與原本樣貌；注意 4 月 12 日改為茶室專用的規劃申請會議。' 
+      note: '🔍 偵探麵包屑：對比大屋梳妝台照片與原本樣貌；茶室專用的規劃申請會議。' 
     },
     { 
       img: '16.jpg', 
       title: '線索 10：午餐菜單、彩色絲帶與工程估價（第16頁）', 
-      note: '🔍 偵探麵包屑：午餐菜單（魚、蔬菜、煮湯）與波伊一開始的口供衝突！彩色絲帶中少了一根綠色絲帶；柯林斯工程估價需 50 鎊。' 
+      note: '🔍 偵探麵包屑：午餐菜單與波伊口供的衝突！彩色絲帶中少了一根？柯林斯建築公司工程估價。' 
     },
     { 
       img: '17.jpg', 
       title: '線索 11：管家手冊揭密（第17頁）', 
-      note: '🔍 偵探麵包屑：瑪麗安·波伊寫給未婚夫馬丁·蒂德 (MT) 的管家手冊，解開神秘烘培師的面紗！' 
-    },
-    { 
-      img: '18.jpg', 
-      title: '線索 12：破案總結與 5 大關鍵提問（第18頁）', 
-      note: '🔍 偵探麵包屑：對照這 5 個問題與所有收集到的線索，準備前往【破案推理】指認真兇！' 
+      note: '🔍 偵探麵包屑：瑪麗安·波伊寫給未婚夫 (MT) 的管家手冊，解開神秘烘培師的面紗！' 
     }
   ];
 

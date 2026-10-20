@@ -336,7 +336,7 @@
     <!-- 頂部頁籤按鈕 -->
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
-      <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 10大線索牆</button>
+      <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 12大線索牆</button>
       <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 案件時間線</button>
       <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 縮寫解密</button>
       <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 破案推理</button>
@@ -375,7 +375,7 @@
         <div class="quiz-option" onclick="selectGate('location', 'wrong2', this)">C. 🛍️ 思華布藝店</div>
       </div>
 
-      <!-- 問題 4: 被捕人物 (選項已更新為頁面登場人物) -->
+      <!-- 問題 4: 被捕人物 -->
       <div class="story-box">
         <p>4️⃣ <strong>根據《倫敦紀事報》報導，警方目前「被捕的人物」是誰？</strong></p>
         <div class="quiz-option" onclick="selectGate('arrested', 'mimi', this)">A. 美美·思華特小姐 (Mimi Swathe - 窗簾商店店主)</div>
@@ -386,9 +386,9 @@
       <button class="btn" onclick="verifyGateAnswers()">🔍 驗證基本資料，解鎖現場搜查（跟福爾摩斯動身！）</button>
     </div>
 
-    <!-- 分頁 2: 10大拆分線索牆 -->
+    <!-- 分頁 2: 12大拆分線索牆 -->
     <div id="nav-2" class="tab-page" style="display: none;">
-      <h1>🖼️ 10 大拆分線索牆</h1>
+      <h1>🖼️ 12 大拆分線索牆</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">翻閱下方卡片，仔細研讀便利貼上的「偵探麵包屑」：</p>
 
       <div id="slide-area"></div>
@@ -546,7 +546,7 @@
       isUnlocked = true;
       alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，後續所有搜查分頁（線索牆、時間線、縮寫解密、破案推理）已全部解鎖！");
 
-      document.getElementById('tab-btn-2').innerText = '🖼️ 10大線索牆';
+      document.getElementById('tab-btn-2').innerText = '🖼️ 12大線索牆';
       document.getElementById('tab-btn-3').innerText = '⏱️ 案件時間線';
       document.getElementById('tab-btn-4').innerText = '🧩 縮寫解密';
       document.getElementById('tab-btn-5').innerText = '⚖️ 破案推理';
@@ -633,17 +633,70 @@
     }
   }
 
+  /* ==========================================
+     重新整理後的 12 張分拆線索卡資料與麵包屑提示
+     ========================================== */
   const slideCards = [
-    { img: '9.jpg', title: '圖 1：蛋糕盒字條與店主被捕', note: '💡 便籤提示：蛋糕盒裏夾著字條「GF: 請享用蛋糕，並重新考慮」。' },
-    { img: '10.jpg', title: '圖 2：警方紀錄與波伊小姐口供', note: '💡 便籤提示：梳妝台上留下了奇怪的粉筆痕跡，時間線上記錄了波伊小姐的行程。' },
-    { img: '11.jpg', title: '圖 3：思華布藝結業大減價與美美口供', note: '💡 便籤提示：美美急需要錢嗎？「M急需要錢嗎？」M 代表誰？' },
-    { img: '12.jpg', title: '圖 4：診所記憶卡片與吉迪恩貸款名片', note: '💡 便籤提示：「GF—這個簡稱是不是有點眼熟？」對照診所與貸款名片！' },
-    { img: '13.jpg', title: '圖 5：肯辛頓生活雜誌（第79期）', note: '💡 便籤提示：神秘烘焙師莫良·貝雅·蘭尼再度勝出，但她為何沒來領獎？' },
-    { img: '14.jpg', title: '圖 6：銀行貸款申請與莉奧蘿拉口供', note: '💡 便籤提示：美美會不會既是得獎的烘焙師，又是一流的裁縫？' },
-    { img: '15.jpg', title: '圖 7：大屋照片對比與結業告示', note: '💡 便籤提示：告示板上貼著「各色綠帶已售罄」，這跟彩虹蛋糕有何關係？' },
-    { img: '16.jpg', title: '圖 8：午餐菜單與柯林斯建築估價', note: '💡 便籤提示：這裡有些彩色的絲帶，是不是少了一根綠色的？' },
-    { img: '17.jpg', title: '圖 9：管家手冊與 MT 未婚夫信件', note: '💡 便籤提示：「MT 是誰？他的未婚妻到底又是誰？」' },
-    { img: '18.jpg', title: '圖 10：紅寶石失竊奇案總結 5 大提問', note: '💡 便籤提示：對照這 5 個問題，準備進行最終的真兇指認！' }
+    { 
+      img: '20240119093952729_0002.jpg', 
+      title: '線索 1：蛋糕包裝紙與秘密字條（第6-7頁）', 
+      note: '🔍 偵探麵包屑：注意包裝紙上的地址「靈昂街114號」、日期時間「3月29日 下午2時30分」，以及夾在蛋糕盒裏的字條「GF: 請享用蛋糕，並重新考慮」。' 
+    },
+    { 
+      img: '8.jpg', 
+      title: '線索 2：警方紀錄與波伊小姐口供（第8頁）', 
+      note: '🔍 偵探麵包屑：梳妝台上留下了奇怪的粉筆痕跡；注意時間線（1:00pm發現失竊、1:15pm探長抵達、2:45pm波伊外出）。' 
+    },
+    { 
+      img: '9.jpg', 
+      title: '線索 3：思華布藝減價與美美口供（第9頁）', 
+      note: '🔍 偵探麵包屑：注意便利貼上的縮寫「M急需要錢嗎？」與「愛你的MT」；對照美美的時間線（11:00am到達、12:30pm離開、3:30pm被捕）。' 
+    },
+    { 
+      img: '10.jpg', 
+      title: '線索 4：診所紀錄與吉迪恩名片（第10頁）', 
+      note: '🔍 偵探麵包屑：解開 GF 縮寫（吉迪恩·弗朗普 - 儲蓄及貸款）；靈昂街114號原來是克倫斯·鳳傑診所！對照約會目的與時間。' 
+    },
+    { 
+      img: '11.jpg', 
+      title: '線索 5：肯辛頓生活雜誌與福韋克布行（第11頁）', 
+      note: '🔍 偵探麵包屑：雜誌報導神秘烘培師「莫良·貝雅·蘭尼」再度勝出；解開 M 縮寫（Moira 莫良 / Mimi 美美）。' 
+    },
+    { 
+      img: '12.jpg', 
+      title: '線索 6：吉迪恩口供與保險箱蛋糕（第12頁）', 
+      note: '🔍 偵探麵包屑：吉迪恩保險箱裏竟然也有一個櫻桃蛋糕！解開 MT 縮寫（馬丁·蒂德 Martin Tudor - 烘焙助手）。' 
+    },
+    { 
+      img: '13.jpg', 
+      title: '線索 7：櫻桃蛋糕食譜與關鍵合照（第13頁）', 
+      note: '🔍 偵探麵包屑：出現 MB 縮寫（愛你的MB / Moira Bes Lenny / Miss Boyle）；注意照片中馬丁與得獎者的關係！' 
+    },
+    { 
+      img: '14.jpg', 
+      title: '線索 8：莉奧蘿拉口供與商業貸款申請（第14頁）', 
+      note: '🔍 偵探麵包屑：思華布藝關店是為了籌集資金開設新茶室；對照 RLG 銀行的貸款申請資料。' 
+    },
+    { 
+      img: '15.jpg', 
+      title: '線索 9：大屋原貌與規劃會議告示（第15頁）', 
+      note: '🔍 偵探麵包屑：對比大屋梳妝台照片與原本樣貌；注意 4 月 12 日改為茶室專用的規劃申請會議。' 
+    },
+    { 
+      img: '16.jpg', 
+      title: '線索 10：午餐菜單、彩色絲帶與工程估價（第16頁）', 
+      note: '🔍 偵探麵包屑：午餐菜單（魚、蔬菜、煮湯）與波伊一開始的口供衝突！彩色絲帶中少了一根綠色絲帶；柯林斯工程估價需 50 鎊。' 
+    },
+    { 
+      img: '17.jpg', 
+      title: '線索 11：管家手冊揭密（第17頁）', 
+      note: '🔍 偵探麵包屑：瑪麗安·波伊寫給未婚夫馬丁·蒂德 (MT) 的管家手冊，解開神秘烘培師的面紗！' 
+    },
+    { 
+      img: '18.jpg', 
+      title: '線索 12：破案總結與 5 大關鍵提問（第18頁）', 
+      note: '🔍 偵探麵包屑：對照這 5 個問題與所有收集到的線索，準備前往【破案推理】指認真兇！' 
+    }
   ];
 
   let currentSlideIndex = 0;

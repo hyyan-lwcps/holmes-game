@@ -175,7 +175,7 @@
       transform: translateY(-2px);
     }
 
-    /* 事件排序列表與時間輸入框 */
+    /* 事件排序列表與純數字時間輸入框 */
     .timeline-list {
       list-style: none;
       padding: 0;
@@ -196,22 +196,12 @@
       gap: 10px;
     }
 
-    .timeline-step {
-      font-weight: bold;
-      color: #1b4332;
-      background: #e8f5e9;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      white-space: nowrap;
-    }
-
-    .time-input {
-      width: 95px;
-      padding: 6px 8px;
+    .time-box {
+      width: 55px;
+      padding: 6px 4px;
       border: 1.5px solid #b8a898;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       background: #fffdf9;
       color: #8c2d19;
       font-weight: bold;
@@ -219,7 +209,7 @@
       transition: border-color 0.2s;
     }
 
-    .time-input:focus {
+    .time-box:focus {
       border-color: #2d6a4f;
       outline: none;
       background: #f4fbf7;
@@ -423,10 +413,10 @@
       <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件事件排序 (已新增時間填寫欄位) -->
+    <!-- 分頁 3: 案件事件排序 -->
     <div id="nav-3" class="tab-page" style="display: none;">
       <h1>⏱️ 案件事件排序</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方填寫你在文本中找到的「時間」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方輸入幾「時」幾「分」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
 
       <div class="story-box">
         <ul id="timeline-container" class="timeline-list"></ul>
@@ -483,7 +473,7 @@
 
       <div class="story-box">
         <p>🔍 <strong>思考指引：</strong></p>
-        <p>對照前 11 張線索卡中的圖文細節，整理出「粉筆與假牙印模膏」、「肯辛頓雜誌文章」、「烘焙蛋糕與綠色絲帶」之間的關鍵連結，準備指認真兇！</p>
+        <p>對照前 11 張線索卡中的圖文細節，整理出「遺留的痕跡與絲帶」、「肯辛頓雜誌文章」、「烘焙蛋糕標記」之間的關鍵連結，準備指認真正的真兇！</p>
       </div>
 
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-6')">⚖️ 前往【最終破案推理】➡️</button>
@@ -492,42 +482,54 @@
     <!-- 分頁 6: 破案推理與真兇指認 -->
     <div id="nav-6" class="tab-page" style="display: none;">
       <h1>⚖️ 最終破案推理與指認真兇</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">回答 5 大關鍵思考題，指認出本案真兇：</p>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">回答 5 大關鍵思考題，指認出本案的真正真兇：</p>
 
+      <!-- 題 1: 現場痕跡 -->
       <div class="story-box">
-        <p>1. 斯文布魯克夫人梳妝台上的裁縫粉筆是什麼顏色？</p>
-        <div class="quiz-option" onclick="selectFinal('q1', 'correct', this)">A. 藍色（巴斯特之藍），但梳妝台上留下的是假牙印模膏粉末</div>
-        <div class="quiz-option" onclick="selectFinal('q1', 'wrong', this)">B. 紅色裁縫粉筆</div>
+        <p>1. 斯文布魯克夫人房間失竊現場，小偷不小心留下了什麼關鍵痕跡？</p>
+        <div class="quiz-option" onclick="selectFinal('q1', 'wrong1', this)">A. 假牙印模膏粉末與綠色絲帶</div>
+        <div class="quiz-option" onclick="selectFinal('q1', 'correct', this)">B. 一抹麵粉和紫色的絲帶獎章</div>
+        <div class="quiz-option" onclick="selectFinal('q1', 'wrong2', this)">C. 藍色裁縫粉筆</div>
       </div>
 
+      <!-- 題 2: 寶石發現轉折 -->
       <div class="story-box">
-        <p>2. 從肯辛頓雜誌文章裏，你能看出什麼事情可能與此案有關？</p>
-        <div class="quiz-option" onclick="selectFinal('q2', 'correct', this)">A. 莫良奪冠且籌劃開設新茶室</div>
-        <div class="quiz-option" onclick="selectFinal('q2', 'wrong', this)">B. 雜誌發表了最新的服裝設計</div>
+        <p>2. 寶石是怎麼被發現的？（弗朗普先生發生了什麼事？）</p>
+        <div class="quiz-option" onclick="selectFinal('q2', 'correct', this)">A. 弗朗普咬下藏有寶石的蛋糕崩牙，去看牙醫克倫斯·鳳傑，進而揭發真相</div>
+        <div class="quiz-option" onclick="selectFinal('q2', 'wrong1', this)">B. 警察在思華特小姐的窗簾店搜出寶石</div>
+        <div class="quiz-option" onclick="selectFinal('q2', 'wrong2', this)">C. 管家波伊小姐主動向史雲探長投案</div>
       </div>
 
+      <!-- 題 3: 神秘烘焙師真實身分 -->
       <div class="story-box">
-        <p>3. 犯罪現場有沒有留下任何食材？</p>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong', this)">A. 完全沒有任何食材</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">B. 有，留下了烤製的櫻桃蛋糕</div>
+        <p>3. 神秘烘焙師「莫拉·貝雅·蘭尼（MB）」的真實身分是誰？</p>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">A. 窗簾店店主美美·思華特（Mimi Swathe）</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">B. 診所接待員馬洛蒂·費思克（Melody Frisk）</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">C. 管家瑪麗安·波伊（Miss Boyle），她們根本是同一個人！</div>
       </div>
 
+      <!-- 題 4: 蛋糕標記錯誤 -->
       <div class="story-box">
-        <p>4. 假如你想買綠色絲帶，為什麼會買不到？</p>
-        <div class="quiz-option" onclick="selectFinal('q4', 'correct', this)">A. 各色綠帶已售罄，全被拿去裝飾彩虹烘焙蛋糕</div>
-        <div class="quiz-option" onclick="selectFinal('q4', 'wrong', this)">B. 工廠忘了送貨</div>
+        <p>4. 為什麼會出現兩個櫻桃蛋糕，而且寶石還被弗朗普咬到？</p>
+        <div class="quiz-option" onclick="selectFinal('q4', 'correct', this)">A. 波伊小姐匆忙中把兩個蛋糕標記錯了，誤將藏寶石的蛋糕給了弗朗普</div>
+        <div class="quiz-option" onclick="selectFinal('q4', 'wrong1', this)">B. 美美·思華特故意把蛋糕送錯給銀行</div>
+        <div class="quiz-option" onclick="selectFinal('q4', 'wrong2', this)">C. 未婚夫馬丁·蒂德偷換了蛋糕</div>
       </div>
 
+      <!-- 題 5: 指認真兇 -->
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
-        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索，指認本案的真正主謀是誰？</strong></p>
-        <div class="quiz-option" onclick="selectFinal('q5', 'wrong', this)">A. 波伊小姐（Miss Boyle）</div>
-        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">B. 美美·思華特（Mimi Swathe）與莉奧蘿拉·思華格（Leonora Swag）</div>
+        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索與第 19 頁真相，本案偷走紅寶石的真正主謀是誰？</strong></p>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong1', this)">A. 美美·思華特小姐（Mimi Swathe - 無辜的代罪羔羊）</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle / 莫拉·貝雅·蘭尼 - 真正的真兇）</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 莉奧蘿拉·思華格小姐（Leonora Swag）</div>
       </div>
 
       <button class="btn" onclick="submitDeduction()">⚖️ 提交報告，核對真相與榮譽卡</button>
 
-      <!-- 3D 榮譽卡結果展現 -->
-      <div id="result-box" style="display: none; margin-top: 20px;">
+      <!-- 破案成功後展示：3D 榮譽卡 + 第 19 頁真相大白頁面 -->
+      <div id="result-box" style="display: none; margin-top: 25px;">
+        
+        <!-- 1. 3D 榮譽勳章卡 -->
         <div class="card-flip-container">
           <div class="card-inner" id="resultCard" onclick="toggleCardFlip()">
             
@@ -539,17 +541,34 @@
             </div>
 
             <div class="card-back">
-              <h2 style="color: #1b4332; text-align: left; margin-bottom: 8px;">📜 案件真相大白解析</h2>
+              <h2 style="color: #1b4332; text-align: left; margin-bottom: 8px;">📜 案件真相摘要</h2>
               <p style="line-height: 1.6; font-size: 0.92rem; color: #2d3748;">
-                <strong>真相揭密：</strong><br>
-                美美·思華特與莉奧蘿拉·思華格因店鋪經營困難、貸款被拒，策劃偷竊紅寶石。她們利用假牙印模膏調包寶石，並將寶石烤進櫻桃蛋糕中轉移，最終被小偵探們藉由「GF, M, MT, MB」縮寫與綠色絲帶線索一舉破解！
+                管家瑪麗安·波伊（Miss Boyle / 莫拉·貝雅·蘭尼）因貸款被拒，利用美美·思華特量度窗簾做假的不在場證明，偷走紅寶石藏入櫻桃蛋糕中。卻因匆忙標記錯蛋糕，讓弗朗普咬到寶石弄傷牙齒去看牙醫，最終真相大白！
               </p>
               <hr style="border: 0; border-top: 1px dashed #b8a898; margin: 10px 0;">
-              <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 太棒了！你們展現了極佳的觀察力與邏輯推理！</p>
+              <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，閱讀第 19 頁完整故事來龍去脈！</p>
             </div>
 
           </div>
         </div>
+
+        <!-- 2. 第 19 頁：完整案件來龍去脈 -->
+        <div class="story-box" style="border-left-color: #1b4332; background: #fdfbf7; margin-top: 30px; padding: 20px;">
+          <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁故事解密）</h2>
+          
+          <div class="img-display-box">
+            <img src="19.jpg" alt="第19頁案件真相大白">
+          </div>
+
+          <div style="line-height: 1.8; color: #2d1e16; font-size: 0.98rem; margin-top: 15px;">
+            <p style="font-weight: bold; color: #8c2d19; font-size: 1.1rem; margin-bottom: 8px;">🕵️ 事情的來龍去脈：</p>
+            <p>1️⃣ <strong>動機與製造不在場證明：</strong> 波伊小姐急需一筆錢來開茶室，收到貸款被拒通知後，正好遇到思華特小姐到房間量度窗簾尺寸，便抓住機會製造了一個完美的不在場證明。</p>
+            <p>2️⃣ <strong>偷竊與遺留線索：</strong> 波伊小姐送走思華特小姐後衝回樓上偷取紅寶石，不小心留下了<strong>一抹麵粉和紫色的絲帶獎章</strong>。</p>
+            <p>3️⃣ <strong>藏寶石與失誤：</strong> 因警察很快趕到，她緊張地將紅寶石藏在正準備烘烤的櫻桃蛋糕裏（打算用來說服弗朗普批准貸款）。她後來又做了一個蛋糕，並送到在銀行上班的未婚夫那裏，卻在匆忙中<strong>把蛋糕標記錯了</strong>！</p>
+            <p>4️⃣ <strong>破案與真相大白：</strong> 弗朗普咬下關鍵的一口崩牙，不得不去看牙醫克倫斯·鳳傑，進而引導福爾摩斯找到了她的未婚夫馬丁·蒂德。原來，<strong>莫拉·貝雅·蘭尼（Moira Bea Lenny）和瑪麗安·波伊（Miss Boyle）是同一個人</strong>！她就是管家、未婚妻、作者、得獎烘焙師兼小偷！</p>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -619,14 +638,14 @@
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
-  /* 精確對照的 6 大事件（包含輸入時間欄位） */
+  /* 精確對照的 6 大事件（純數字時間輸入框） */
   const timelineData = [
-    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', enteredTime: '' },
-    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', enteredTime: '' },
-    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', enteredTime: '' },
-    { id: 4, text: '史雲探長抵達斯文布魯大屋', enteredTime: '' },
-    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', enteredTime: '' },
-    { id: 6, text: '美美．思華特小姐被捕', enteredTime: '' }
+    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', enteredHour: '', enteredMin: '' },
+    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', enteredHour: '', enteredMin: '' },
+    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', enteredHour: '', enteredMin: '' },
+    { id: 4, text: '史雲探長抵達斯文布魯大屋', enteredHour: '', enteredMin: '' },
+    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', enteredHour: '', enteredMin: '' },
+    { id: 6, text: '美美．思華特小姐被捕', enteredHour: '', enteredMin: '' }
   ];
 
   /* 初始隨機打散順序 */
@@ -646,9 +665,11 @@
       const li = document.createElement('li');
       li.className = 'timeline-item';
       li.innerHTML = `
-        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; flex: 1;">
-          <span class="timeline-step">步驟 ${index + 1}</span>
-          <input type="text" class="time-input" placeholder="填寫時間" value="${item.enteredTime || ''}" oninput="updateTime(${index}, this.value)">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px; flex: 1;">
+          <input type="number" class="time-box" placeholder="時" min="1" max="12" value="${item.enteredHour || ''}" oninput="updateHour(${index}, this.value)">
+          <span style="font-weight: bold; color: #582f0e; margin-right: 4px;">時</span>
+          <input type="number" class="time-box" placeholder="分" min="0" max="59" value="${item.enteredMin || ''}" oninput="updateMin(${index}, this.value)">
+          <span style="font-weight: bold; color: #582f0e; margin-right: 10px;">分</span>
           <span style="font-weight: 600;">${item.text}</span>
         </div>
         <div class="timeline-controls">
@@ -660,8 +681,12 @@
     });
   }
 
-  function updateTime(index, val) {
-    currentTimeline[index].enteredTime = val;
+  function updateHour(index, val) {
+    currentTimeline[index].enteredHour = val;
+  }
+
+  function updateMin(index, val) {
+    currentTimeline[index].enteredMin = val;
   }
 
   function moveTimeline(index, direction) {
@@ -688,7 +713,7 @@
     }
   }
 
-  /* 11 大拆分線索牆 */
+  /* 11 大拆分線索牆 (已更新線索 8 加入「思華布藝用的裁縫粉筆」) */
   const slideCards = [
     { 
       img: '20240119093952729_0002.jpg', 
@@ -728,7 +753,7 @@
     { 
       img: '14.jpg', 
       title: '線索 8：莉奧蘿拉口供與商業貸款（第14頁）', 
-      note: '🔍 偵探麵包屑：思華布藝關店原因；對照 RLG 銀行的貸款申請資料。' 
+      note: '🔍 偵探麵包屑：思華布藝關店原因；思華布藝用的裁縫粉筆；對照 RLG 銀行的貸款申請資料。' 
     },
     { 
       img: '15.jpg', 
@@ -788,13 +813,21 @@
       return;
     }
 
-    if (finalAnswers['q5'] === 'correct') {
-      alert("👏 太棒了！你們成功指認出了真兇美美與莉奧蘿拉！");
+    if (
+      finalAnswers['q1'] === 'correct' &&
+      finalAnswers['q2'] === 'correct' &&
+      finalAnswers['q3'] === 'correct' &&
+      finalAnswers['q4'] === 'correct' &&
+      finalAnswers['q5'] === 'correct'
+    ) {
+      alert("👏 太棒了！你們成功破解真相，指認真正的真兇波伊小姐！\n\n📖 已解鎖第 19 頁完整故事真相與榮譽勳章！");
       document.getElementById('result-box').style.display = 'block';
       document.getElementById('resultCard').classList.remove('is-flipped');
+      
+      // 自動順暢滾動至真相大白區
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     } else {
-      alert("🔍 指認有誤喔！請重新比對美美與莉奧蘿拉的貸款與茶室計劃！");
+      alert("🔍 指認或推理有誤喔！請重新對照線索，留意誰才是真正的得獎烘焙師與小偷！");
     }
   }
 

@@ -175,7 +175,7 @@
       transform: translateY(-2px);
     }
 
-    /* 事件排序列表 */
+    /* 事件排序列表與時間輸入框 */
     .timeline-list {
       list-style: none;
       padding: 0;
@@ -192,6 +192,8 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .timeline-step {
@@ -201,8 +203,26 @@
       padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.9rem;
-      margin-right: 10px;
       white-space: nowrap;
+    }
+
+    .time-input {
+      width: 95px;
+      padding: 6px 8px;
+      border: 1.5px solid #b8a898;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: #fffdf9;
+      color: #8c2d19;
+      font-weight: bold;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .time-input:focus {
+      border-color: #2d6a4f;
+      outline: none;
+      background: #f4fbf7;
     }
 
     .timeline-controls button {
@@ -344,7 +364,7 @@
       <button id="tab-btn-6" class="nav-btn" onclick="switchNav('nav-6')">🔒 破案推理</button>
     </div>
 
-    <!-- 分頁 1: 檔案1基本資料 (選項已流暢打散，正確答案為：B - C - A - B) -->
+    <!-- 分頁 1: 檔案1基本資料 -->
     <div id="nav-1" class="tab-page">
       <h1>📋 檔案1：蛋糕裏的櫻桃（基本資料登錄）</h1>
       <h2>── 請仔細閱讀下方案件頁面，選出正確的 4 大基本資訊 ──</h2>
@@ -353,7 +373,7 @@
         <img src="20240119093952729_0002.jpg" alt="檔案1基本資料">
       </div>
 
-      <!-- 問題 1: 失物 (正確答案：B) -->
+      <!-- 問題 1: 失物 -->
       <div class="story-box">
         <p>1️⃣ <strong>請根據文本，選出本案的「失物」是什麼？</strong></p>
         <div class="quiz-option" onclick="selectGate('item', 'wrong1', this)">A. 🍰 櫻桃蛋糕</div>
@@ -361,7 +381,7 @@
         <div class="quiz-option" onclick="selectGate('item', 'wrong2', this)">C. 🔷 藍寶石</div>
       </div>
 
-      <!-- 問題 2: 失物物主 (正確答案：C) -->
+      <!-- 問題 2: 失物物主 -->
       <div class="story-box">
         <p>2️⃣ <strong>請選出「失物物主（寶石的主人）」是誰？</strong></p>
         <div class="quiz-option" onclick="selectGate('owner', 'wrong1', this)">A. 🏠 房東哈德遜太太 (Mrs. Hudson)</div>
@@ -369,7 +389,7 @@
         <div class="quiz-option" onclick="selectGate('owner', 'swinbrook', this)">C. 👑 斯文布魯克夫人 (Lady Swinbrook)</div>
       </div>
 
-      <!-- 問題 3: 失竊地點 (正確答案：A) -->
+      <!-- 問題 3: 失竊地點 -->
       <div class="story-box">
         <p>3️⃣ <strong>請選出紅寶石的「失竊地點」在哪裡？</strong></p>
         <div class="quiz-option" onclick="selectGate('location', 'estate', this)">A. 🏰 斯文布魯克大屋 (南肯辛頓區)</div>
@@ -377,7 +397,7 @@
         <div class="quiz-option" onclick="selectGate('location', 'wrong2', this)">C. 🛍️ 思華布藝店</div>
       </div>
 
-      <!-- 問題 4: 被捕人物 (正確答案：B) -->
+      <!-- 問題 4: 被捕人物 -->
       <div class="story-box">
         <p>4️⃣ <strong>根據《倫敦紀事報》報導，警方目前「被捕的人物」是誰？</strong></p>
         <div class="quiz-option" onclick="selectGate('arrested', 'wrong1', this)">A. 🏠 房東哈德遜太太 (Mrs. Hudson)</div>
@@ -403,10 +423,10 @@
       <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件事件排序 (已拿走時間) -->
+    <!-- 分頁 3: 案件事件排序 (已新增時間填寫欄位) -->
     <div id="nav-3" class="tab-page" style="display: none;">
       <h1>⏱️ 案件事件排序</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照各張線索卡中的細節與口供，點擊「⬆️ 上移」或「⬇️ 下移」按鈕將事件按正確順序排列：</p>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方填寫你在文本中找到的「時間」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
 
       <div class="story-box">
         <ul id="timeline-container" class="timeline-list"></ul>
@@ -416,7 +436,7 @@
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">🧩 查看【縮寫解密】➡️</button>
     </div>
 
-    <!-- 分頁 4: 縮寫密碼解密 (答案打散為：B - C - A - B) -->
+    <!-- 分頁 4: 縮寫密碼解密 -->
     <div id="nav-4" class="tab-page" style="display: none;">
       <h1>🧩 人物縮寫密碼比對</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">根據線索卡中的便利貼，點選對應的人物身分：</p>
@@ -469,7 +489,7 @@
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-6')">⚖️ 前往【最終破案推理】➡️</button>
     </div>
 
-    <!-- 分頁 6: 破案推理與真兇指認 (答案打散為：A - A - B - A - B) -->
+    <!-- 分頁 6: 破案推理與真兇指認 -->
     <div id="nav-6" class="tab-page" style="display: none;">
       <h1>⚖️ 最終破案推理與指認真兇</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">回答 5 大關鍵思考題，指認出本案真兇：</p>
@@ -599,19 +619,24 @@
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
-  /* 事件排序資料 */
+  /* 精確對照的 6 大事件（包含輸入時間欄位） */
   const timelineData = [
-    { id: 1, text: '美美·思華特到達大屋進行量度' },
-    { id: 2, text: '美美離開大屋，前往買布匹' },
-    { id: 3, text: '斯文布魯克夫人發現紅寶石失竊並報警' },
-    { id: 4, text: '警方（史雲探長）抵達大屋調查' },
-    { id: 5, text: '管家波伊小姐離開大屋出去辦事' },
-    { id: 6, text: '美美·思華特在回店舖的路上被捕' }
+    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', enteredTime: '' },
+    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', enteredTime: '' },
+    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', enteredTime: '' },
+    { id: 4, text: '史雲探長抵達斯文布魯大屋', enteredTime: '' },
+    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', enteredTime: '' },
+    { id: 6, text: '美美．思華特小姐被捕', enteredTime: '' }
   ];
 
+  /* 初始隨機打散順序 */
   let currentTimeline = [
-    timelineData[2], timelineData[0], timelineData[4], 
-    timelineData[1], timelineData[5], timelineData[3]
+    { ...timelineData[2] },
+    { ...timelineData[0] },
+    { ...timelineData[4] },
+    { ...timelineData[1] },
+    { ...timelineData[5] },
+    { ...timelineData[3] }
   ];
 
   function renderTimeline() {
@@ -621,9 +646,10 @@
       const li = document.createElement('li');
       li.className = 'timeline-item';
       li.innerHTML = `
-        <div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; flex: 1;">
           <span class="timeline-step">步驟 ${index + 1}</span>
-          <span>${item.text}</span>
+          <input type="text" class="time-input" placeholder="填寫時間" value="${item.enteredTime || ''}" oninput="updateTime(${index}, this.value)">
+          <span style="font-weight: 600;">${item.text}</span>
         </div>
         <div class="timeline-controls">
           <button onclick="moveTimeline(${index}, -1)">⬆️ 上移</button>
@@ -632,6 +658,10 @@
       `;
       container.appendChild(li);
     });
+  }
+
+  function updateTime(index, val) {
+    currentTimeline[index].enteredTime = val;
   }
 
   function moveTimeline(index, direction) {
@@ -654,7 +684,7 @@
     if (isCorrect) {
       alert("🎉 太棒了！事件排序完全正確！你根據線索對案件經過進行了非常嚴密的推理！");
     } else {
-      alert("🔍 事件順序有點不對喔！請再對照美美離開大屋、警察抵達與波伊出門的細節！");
+      alert("🔍 事件順序有點不對喔！請再對照美美到達、離開大屋，警方抵達與波伊出門的細節！");
     }
   }
 

@@ -263,7 +263,6 @@
       position: relative;
     }
 
-    /* 首 3 個分開的特質卡單列併排 */
     .traits-row {
       display: flex;
       gap: 10px;
@@ -320,7 +319,7 @@
       opacity: 0.9;
     }
 
-    /* 全能神探型 橫幅金卡（覆蓋三卡） */
+    /* 全能神探型 橫幅金卡 */
     .all-round-card {
       width: 100%;
       background: linear-gradient(135deg, #b8860b, #d4af37, #8b6508);
@@ -629,6 +628,7 @@
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // 置頂
   }
 
   let gateAnswers = { item: null, owner: null, location: null, arrested: null };
@@ -683,7 +683,7 @@
       finalAnswers['q5'] === 'correct';
 
     if (isFinalCorrect) {
-      if (tab4Attempts === 1) isTab4Perfect = true; // 一次完全答對
+      if (tab4Attempts === 1) isTab4Perfect = true;
       isTab4Unlocked = true;
       alert("🎉 太棒了！第 18 頁的 5 大細節推理完全正確！\n\n🔓 成功解鎖最後分頁【簡稱解密及尋找真兇】！");
 
@@ -696,6 +696,7 @@
     }
   }
 
+  /* 切換分頁時自動置頂 */
   function switchNav(pageId) {
     const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
 
@@ -714,6 +715,9 @@
     
     document.getElementById(pageId).style.display = 'block';
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
+
+    // 切換分頁時，頁面自動平滑滾動回最頂部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* 精確對照的 6 大事件 */
@@ -796,11 +800,11 @@
     }
 
     if (isOrderCorrect && isTimeValueCorrect) {
-      isTimelineCorrect = true; // 標記為完全答對！
-      if (timelineAttempts === 1) isTimelinePerfect = true; // 一次完全答對
+      isTimelineCorrect = true;
+      if (timelineAttempts === 1) isTimelinePerfect = true;
       alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！");
     } else {
-      isTimelineCorrect = false; // 未完全答對
+      isTimelineCorrect = false;
       if (isOrderCorrect && !isTimeValueCorrect) {
         alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
       } else if (!isOrderCorrect && isTimeValueCorrect) {
@@ -943,24 +947,24 @@
     const isCulpritCorrect = culpritAnswer === 'correct';
 
     if (isAbbrCorrect && isCulpritCorrect) {
-      if (tab5Attempts === 1) isTab5Perfect = true; // 一次完全答對
+      if (tab5Attempts === 1) isTab5Perfect = true;
 
       alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
-      // 計算並渲染特質卡
       calculateAndRenderTraits();
 
       document.getElementById('main-dashboard').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
+
+      // 跳轉大結局時自動置頂
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n2. 正確指認真正的真兇！");
     }
   }
 
-  /* 評估表現並渲染特質卡（精準判定答對項目） */
+  /* 評估表現並渲染特質卡 */
   function calculateAndRenderTraits() {
-    // 判定條件：全部一次完勝則觸發「全能神探型」
     const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
 
     if (isAllRound) {
@@ -970,7 +974,7 @@
       document.getElementById('all-round-container').style.display = 'none';
       document.getElementById('three-traits-row').style.display = 'flex';
 
-      // 1. 細節觀察卡：Tab 4 推理題完全答對則點亮
+      // 1. 細節觀察卡：Tab 4 答對解鎖
       const hawkCard = document.getElementById('trait-hawk');
       hawkCard.className = isTab4Unlocked ? 'trait-card lit' : 'trait-card unlit';
 
@@ -978,7 +982,7 @@
       const logicCard = document.getElementById('trait-logic');
       logicCard.className = isTimelineCorrect ? 'trait-card lit' : 'trait-card unlit';
 
-      // 3. 密碼解密卡：Tab 5 縮寫與真兇正確即點亮
+      // 3. 密碼解密卡：Tab 5 答對解鎖
       const codeCard = document.getElementById('trait-code');
       codeCard.className = 'trait-card lit';
     }
@@ -1003,6 +1007,7 @@
   function returnToDashboard() {
     document.getElementById('victory-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // 置頂
   }
 
   window.onload = function() {

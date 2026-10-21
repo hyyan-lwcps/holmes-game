@@ -58,7 +58,7 @@
       font-weight: 600;
     }
 
-    /* 頂部切換頁籤 (Main Nav - 共 4 個導覽按鈕) */
+    /* 頂部切換頁籤 (Main Nav - 共 5 個導覽按鈕) */
     .main-nav {
       display: flex;
       gap: 6px;
@@ -70,7 +70,7 @@
 
     .nav-btn {
       flex: 1;
-      min-width: 100px;
+      min-width: 110px;
       padding: 12px 6px;
       background: #e6dfd3;
       border: 1px solid #b8a898;
@@ -344,12 +344,13 @@
   <!-- 偵探主控台 (分頁導覽) -->
   <div id="main-dashboard" style="display: none;">
     
-    <!-- 頂部切換頁籤 (共 4 個核心分頁) -->
+    <!-- 頂部切換頁籤 (共 5 個核心分頁) -->
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
       <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 11大線索牆</button>
       <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 事件排序</button>
-      <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 破案小提示與推理</button>
+      <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 破案小提示</button>
+      <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 簡稱解密及尋找真兇</button>
     </div>
 
     <!-- 分頁 1: 檔案1基本資料 -->
@@ -421,21 +422,18 @@
       </div>
 
       <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列順序</button>
-      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示與推理】➡️</button>
+      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示】➡️</button>
     </div>
 
-    <!-- 分頁 4: 破案小提示與推理 (結合第18頁圖檔 + 5大精準推理題 + 人物縮寫密碼) -->
+    <!-- 分頁 4: 破案小提示（第 18 頁 5 大推理問題） -->
     <div id="nav-4" class="tab-page" style="display: none;">
-      <h1>💡 破案小提示與推理（第 18 頁）</h1>
-      <h2>── 請邊對照第 18 頁的提問圖卡，邊回答下方的推理問題與縮寫密碼 ──</h2>
+      <h1>💡 破案小提示（第 18 頁推理）</h1>
+      <h2>── 請邊對照第 18 頁的提問圖卡，邊回答下方的 5 道推理問題 ──</h2>
 
       <!-- 第 18 頁圖檔展示 -->
       <div class="img-display-box">
         <img src="18.jpg" alt="破案小提示第18頁">
       </div>
-
-      <!-- 第一部分：第 18 頁 5 大推理思考題 -->
-      <h3 style="color: #1b4332; margin: 20px 0 10px 0; font-size: 1.15rem;">🔍 第一部分：案件細節推理（對照第 18 頁 5 大提問）</h3>
 
       <div class="story-box">
         <p>1. 斯文布魯克夫人的梳妝台上，小偷不小心留下了什麼關鍵痕跡？</p>
@@ -452,10 +450,10 @@
       </div>
 
       <div class="story-box">
-        <p>3. 案發現場有沒有留下任何與烘焙相關的食材或線索？</p>
-        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">A. 現場留下了烘烤好的櫻桃蛋糕與抹麵粉痕跡</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">B. 完全沒有留下任何食材痕跡</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">C. 現場留下了未喝完的下午茶與鮮奶盒</div>
+        <p>3. 案發現場有沒有留下任何食材？</p>
+        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">A. 有，現場只留下了抹麵粉的痕跡</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">B. 有，現場留下了鮮奶與奶油</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">C. 完全沒有留下任何食材</div>
       </div>
 
       <div class="story-box">
@@ -467,13 +465,20 @@
 
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
         <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 是不是有兩個人在甜點製作方面有同樣的抱負？</strong></p>
-        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">A. 不是！因為看似是兩個不同的人，其實是同一個人的雙重身分（瑪麗安·波伊與莫拉·貝雅·蘭尼是同一人）！</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">A. 不是！因為看似是兩個不同的人，其實是同一個人的雙重身分！</div>
         <div class="quiz-option" onclick="selectFinal('q5', 'wrong1', this)">B. 是的，美美·思華特與莉奧蘿拉兩人都想開設烘焙坊。</div>
-        <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 是的，吉迪恩·弗朗普與史雲探長都想參加烘焙大賽。</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 是的，貝利先生（Mr Berry）與吉迪恩·弗朗普都想參加烘焙大賽。</div>
       </div>
 
-      <!-- 第二部分：人物縮寫密碼解密 -->
-      <h3 style="color: #1b4332; margin: 25px 0 10px 0; font-size: 1.15rem;">🧩 第二部分：人物縮寫密碼比對</h3>
+      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-5')">🧩 前往【簡稱解密及尋找真兇】➡️</button>
+    </div>
+
+    <!-- 分頁 5: 簡稱解密及尋找真兇（獨立分頁） -->
+    <div id="nav-5" class="tab-page" style="display: none;">
+      <h1>🧩 簡稱解密及尋找真兇</h1>
+      <h2>── 請完成人物縮寫比對，並綜合所有線索指認出真正的真兇 ──</h2>
+
+      <h3 style="color: #1b4332; margin: 15px 0 10px 0; font-size: 1.15rem;">第一部分：人物縮寫密碼比對</h3>
 
       <div class="story-box">
         <p>1️⃣ <strong>GF 代表誰？</strong>（便利貼提示：貸款申請評估人）</p>
@@ -503,7 +508,16 @@
         <div class="quiz-option" onclick="toggleMbOption('C', this)">C. 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
       </div>
 
-      <button class="btn" style="margin-top: 20px; font-size: 1.1rem; padding: 15px;" onclick="submitFinalInvestigation()">⚖️ 提交報告，揭開案件真相（跳轉大結局！）</button>
+      <h3 style="color: #1b4332; margin: 25px 0 10px 0; font-size: 1.15rem;">第二部分：綜合線索指認真兇</h3>
+
+      <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
+        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>🕵️ 綜合所有線索，本案偷走紅寶石的真正主謀是誰？</strong></p>
+        <div class="quiz-option" onclick="selectCulprit('wrong1', this)">A. 美美·思華特小姐（Mimi Swathe - 無辜的代罪羔羊）</div>
+        <div class="quiz-option" onclick="selectCulprit('correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle / 莫拉·貝雅·蘭尼 - 真正的真兇）</div>
+        <div class="quiz-option" onclick="selectCulprit('wrong2', this)">C. 莉奧蘿拉·思華格小姐（Leonora Swag）</div>
+      </div>
+
+      <button class="btn" style="margin-top: 20px; font-size: 1.1rem; padding: 15px;" onclick="submitFinalInvestigation()">⚖️ 提交報告，解密案件真相（跳轉大結局！）</button>
     </div>
 
   </div>
@@ -530,21 +544,24 @@
             管家瑪麗安·波伊（Miss Boyle / 莫拉·貝雅·蘭尼）因貸款被拒，利用美美·思華特量度窗簾做假的不在場證明，偷走紅寶石藏入櫻桃蛋糕中。卻因匆忙標記錯蛋糕，讓弗朗普咬到寶石弄傷牙齒去看牙醫，最終真相大白！
           </p>
           <hr style="border: 0; border-top: 1px dashed #b8a898; margin: 10px 0;">
-          <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，閱讀第 19 頁完整故事來龍去脈！</p>
+          <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，翻轉閱讀第 19 頁真相檔案！</p>
         </div>
 
       </div>
     </div>
 
-    <!-- 2. 第 19 頁完整故事與圖檔 -->
+    <!-- 2. 第 19 頁鏡像點擊翻轉互動圖解 -->
     <div class="story-box" style="border-left-color: #1b4332; background: #fdfbf7; margin-top: 25px; padding: 20px;">
-      <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁故事解密）</h2>
+      <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁解密檔案）</h2>
       
-      <div class="img-display-box">
-        <img src="19.jpg" alt="第19頁案件真相大白">
+      <div class="img-display-box" style="cursor: pointer;" onclick="toggleMirrorImage()">
+        <img id="truth-img" src="19a.jpg" alt="第19頁鏡像解密真相" style="transition: transform 0.5s ease; max-width: 100%;">
+        <p id="truth-hint" style="color: #8c2d19; font-weight: bold; margin-top: 10px; font-size: 1.05rem;">
+          🔍 發現加密的鏡像真相檔案！請點擊圖片翻轉解密 🔄
+        </p>
       </div>
 
-      <div style="line-height: 1.8; color: #2d1e16; font-size: 0.98rem; margin-top: 15px;">
+      <div style="line-height: 1.8; color: #2d1e16; font-size: 0.98rem; margin-top: 20px;">
         <p style="font-weight: bold; color: #8c2d19; font-size: 1.1rem; margin-bottom: 8px;">🕵️ 事情的來龍去脈：</p>
         <p>1️⃣ <strong>動機與製造不在場證明：</strong> 波伊小姐急需一筆錢來開茶室，收到貸款被拒通知後，正好遇到思華特小姐到房間量度窗簾尺寸，便抓住機會製造了一個完美的不在場證明。</p>
         <p>2️⃣ <strong>偷竊與遺留線索：</strong> 波伊小姐送走思華特小姐後衝回樓上偷取紅寶石，不小心留下了<strong>一抹麵粉和紫色的絲帶獎章</strong>。</p>
@@ -591,9 +608,10 @@
 
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
       document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
-      document.getElementById('tab-btn-4').innerText = '💡 破案小提示與推理';
+      document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
+      document.getElementById('tab-btn-5').innerText = '🧩 簡稱解密及尋找真兇';
 
-      for (let i = 2; i <= 4; i++) {
+      for (let i = 2; i <= 5; i++) {
         document.getElementById(`tab-btn-${i}`).classList.add('unlocked');
       }
 
@@ -775,6 +793,7 @@
   let finalAnswers = {};
   let abbrAnswers = {};
   let mbSelections = new Set();
+  let culpritAnswer = null;
 
   function selectFinal(key, val, elem) {
     finalAnswers[key] = val;
@@ -798,16 +817,23 @@
     }
   }
 
+  function selectCulprit(val, elem) {
+    culpritAnswer = val;
+    elem.parentElement.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+    elem.classList.add('selected');
+  }
+
   function submitFinalInvestigation() {
-    // 檢查推理題
+    // 檢查第4分頁的 5 題推理題
     if (Object.keys(finalAnswers).length < 5) {
-      alert("⚠️ 請將【第一部分：案件細節推理】的 5 道題目全部回答完畢喔！");
+      alert("⚠️ 請先在【💡 破案小提示】分頁將 5 道推理題目全部回答完畢喔！");
+      switchNav('nav-4');
       return;
     }
 
-    // 檢查縮寫題
-    if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0) {
-      alert("⚠️ 請將【第二部分：人物縮寫密碼】全部回答完畢喔！（第 4 題 MB 可能不止一個答案喔！）");
+    // 檢查第5分頁的 4 題縮寫與指認真兇題
+    if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0 || !culpritAnswer) {
+      alert("⚠️ 請將本分頁的人物縮寫比對與【指認真兇】問題全部回答完畢喔！（MB 可能不止一個答案喔！）");
       return;
     }
 
@@ -827,15 +853,33 @@
       abbrAnswers.m === 'correct' &&
       isMbCorrect;
 
-    if (isFinalCorrect && isAbbrCorrect) {
-      alert("🎉 太棒了！推理與縮寫密碼完全正確！\n\n💡 聰明的偵探，你成功發現了關鍵秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
+    const isCulpritCorrect = culpritAnswer === 'correct';
+
+    if (isFinalCorrect && isAbbrCorrect && isCulpritCorrect) {
+      alert("🎉 太棒了！推理、縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
       // 切換至獨立的終章大結局頁面
       document.getElementById('main-dashboard').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 第 18 頁的細節推理\n2. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物喔！");
+      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 【破案小提示】的細節推理\n2. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n3. 正確指認真正的真兇！");
+    }
+  }
+
+  /* 鏡像圖片切換翻轉邏輯 */
+  let isImageDecoded = false;
+  function toggleMirrorImage() {
+    const img = document.getElementById('truth-img');
+    const hint = document.getElementById('truth-hint');
+    if (!isImageDecoded) {
+      img.src = '19b.jpg';
+      hint.innerHTML = '✨ 鏡像解密成功！點擊圖片可切換回加密鏡像檢視 🔄';
+      isImageDecoded = true;
+    } else {
+      img.src = '19a.jpg';
+      hint.innerHTML = '🔍 發現加密的鏡像真相檔案！請點擊圖片翻轉解密 🔄';
+      isImageDecoded = false;
     }
   }
 

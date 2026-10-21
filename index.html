@@ -58,7 +58,7 @@
       font-weight: 600;
     }
 
-    /* 頂部切換頁籤 (Main Nav) */
+    /* 頂部切換頁籤 (Main Nav - 共 4 個導覽按鈕) */
     .main-nav {
       display: flex;
       gap: 6px;
@@ -322,7 +322,7 @@
 
 <div class="glass-card">
 
-  <!-- 0. 福爾摩斯的邀請信 -->
+  <!-- 0. 開頭獨立頁面：福爾摩斯的邀請信 -->
   <div id="welcome-screen">
     <h1>✉️ 福爾摩斯的特別委託信</h1>
     <h2>── 倫敦貝克街 221 號 B ──</h2>
@@ -341,20 +341,18 @@
     <button class="btn" onclick="startInvestigation()">✉️ 接受委託，開啟【檔案1基本資料】</button>
   </div>
 
-  <!-- 偵探主控台 -->
+  <!-- 偵探主控台 (分頁導覽) -->
   <div id="main-dashboard" style="display: none;">
     
-    <!-- 頂部切換頁籤 (6 大分頁) -->
+    <!-- 頂部切換頁籤 (共 4 個核心分頁) -->
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
       <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 11大線索牆</button>
       <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 事件排序</button>
-      <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 縮寫解密</button>
-      <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 破案小提示</button>
-      <button id="tab-btn-6" class="nav-btn" onclick="switchNav('nav-6')">🔒 破案推理</button>
+      <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 破案小提示與推理</button>
     </div>
 
-    <!-- 分頁 1: 檔案1基本資料 -->
+    <!-- 分頁 1: 檔案1基本資料 (圖像 + 4 題審核) -->
     <div id="nav-1" class="tab-page">
       <h1>📋 檔案1：蛋糕裏的櫻桃（基本資料登錄）</h1>
       <h2>── 請仔細閱讀下方案件頁面，選出正確的 4 大基本資訊 ──</h2>
@@ -423,68 +421,22 @@
       </div>
 
       <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列順序</button>
-      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">🧩 查看【縮寫解密】➡️</button>
+      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示與推理】➡️</button>
     </div>
 
-    <!-- 分頁 4: 縮寫密碼解密 -->
+    <!-- 分頁 4: 破案小提示與推理 (結合第18頁圖檔 + 5大推理問答 + 人物縮寫密碼) -->
     <div id="nav-4" class="tab-page" style="display: none;">
-      <h1>🧩 人物縮寫密碼比對</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">根據線索卡中的便利貼，點選對應的人物身分：</p>
+      <h1>💡 破案小提示與推理（第 18 頁）</h1>
+      <h2>── 請邊對照第 18 頁的提問圖卡，邊回答下方的推理問題與縮寫密碼 ──</h2>
 
-      <div class="story-box">
-        <p>1️⃣ <strong>GF 代表誰？</strong>（便利貼提示：貸款申請評估人）</p>
-        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong1', this)">A. 貝利先生（Mr Berry）</div>
-        <div class="quiz-option" onclick="selectAbbr('gf', 'correct', this)">B. 吉迪恩·弗朗普（Gideon Frump）</div>
-        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong2', this)">C. 馬洛蒂．費思克（Meoldy Frisk）</div>
-      </div>
-
-      <div class="story-box">
-        <p>2️⃣ <strong>M 代表誰？</strong>（便利貼提示：急需要錢、店鋪要倒閉）</p>
-        <div class="quiz-option" onclick="selectAbbr('m', 'wrong1', this)">A. 休伯特太太（Mrs M. Hubert）</div>
-        <div class="quiz-option" onclick="selectAbbr('m', 'wrong2', this)">B. 馬洛蒂．費思克（Meoldy Frisk）</div>
-        <div class="quiz-option" onclick="selectAbbr('m', 'correct', this)">C. 美美．思華特（Mimi Swathe） / 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
-      </div>
-
-      <div class="story-box">
-        <p>3️⃣ <strong>MT 代表誰？</strong>（便利貼提示：未婚夫信件、管家手冊）</p>
-        <div class="quiz-option" onclick="selectAbbr('mt', 'correct', this)">A. 馬丁·蒂德（Martin Tudor - 烘焙助手）</div>
-        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong1', this)">B. 瑪麗安．波伊（Miss Boyle）</div>
-        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong2', this)">C. 貝利先生（Mr Berry）</div>
-      </div>
-
-      <div class="story-box">
-        <p>4️⃣ <strong>MB 代表誰？</strong>（便利貼提示：波伊小姐 / 莫拉·貝雅·蘭尼）</p>
-        <div class="quiz-option" onclick="selectAbbr('mb', 'wrong1', this)">A. 休伯特太太（Mrs M. Hubert）</div>
-        <div class="quiz-option" onclick="selectAbbr('mb', 'correct', this)">B. 瑪麗安．波伊（Miss Boyle） / 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
-        <div class="quiz-option" onclick="selectAbbr('mb', 'wrong2', this)">C. 馬洛蒂．費思克（Meoldy Frisk）</div>
-      </div>
-
-      <button class="btn" onclick="switchNav('nav-5')">💡 閱讀【破案小提示】➡️</button>
-    </div>
-
-    <!-- 分頁 5: 線索 12 獨立頁籤 (破案小提示) -->
-    <div id="nav-5" class="tab-page" style="display: none;">
-      <h1>💡 線索 12：破案小提示</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">在進行最終指認前，請仔細閱讀第 18 頁提出的關鍵提問：</p>
-
+      <!-- 第 18 頁圖檔展示 -->
       <div class="img-display-box">
         <img src="18.jpg" alt="破案小提示第18頁">
       </div>
 
-      <div class="story-box">
-        <p>🔍 <strong>思考指引：</strong></p>
-        <p>對照前 11 張線索卡中的圖文細節，整理出「遺留的痕跡與絲帶」、「肯辛頓雜誌文章」、「烘焙蛋糕標記」之間的關鍵連結，準備指認真正的真兇！</p>
-      </div>
+      <!-- 第一部分：第 18 頁 5 大推理思考題 -->
+      <h3 style="color: #1b4332; margin: 20px 0 10px 0; font-size: 1.15rem;">🔍 第一部分：案件細節推理</h3>
 
-      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-6')">⚖️ 前往【最終破案推理】➡️</button>
-    </div>
-
-    <!-- 分頁 6: 破案推理與真兇指認 -->
-    <div id="nav-6" class="tab-page" style="display: none;">
-      <h1>⚖️ 最終破案推理與指認真兇</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">回答 5 大關鍵思考題，指認出本案的真正真兇：</p>
-
-      <!-- 題 1: 現場痕跡 -->
       <div class="story-box">
         <p>1. 斯文布魯克夫人房間失竊現場，小偷不小心留下了什麼關鍵痕跡？</p>
         <div class="quiz-option" onclick="selectFinal('q1', 'wrong1', this)">A. 假牙印模膏粉末與綠色絲帶</div>
@@ -492,7 +444,6 @@
         <div class="quiz-option" onclick="selectFinal('q1', 'wrong2', this)">C. 藍色裁縫粉筆</div>
       </div>
 
-      <!-- 題 2: 寶石發現轉折 -->
       <div class="story-box">
         <p>2. 寶石是怎麼被發現的？（弗朗普先生發生了什麼事？）</p>
         <div class="quiz-option" onclick="selectFinal('q2', 'correct', this)">A. 弗朗普咬下藏有寶石的蛋糕崩牙，去看牙醫克倫斯·鳳傑，進而揭發真相</div>
@@ -500,15 +451,13 @@
         <div class="quiz-option" onclick="selectFinal('q2', 'wrong2', this)">C. 管家波伊小姐主動向史雲探長投案</div>
       </div>
 
-      <!-- 題 3: 神秘烘焙師真實身分 -->
       <div class="story-box">
-        <p>3. 神秘烘焙師「莫拉·貝雅·蘭尼（MB）」的真實身分是誰？</p>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">A. 窗簾店店主美美·思華特（Mimi Swathe）</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">B. 診所接待員馬洛蒂·費思克（Melody Frisk）</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">C. 管家瑪麗安·波伊（Miss Boyle），她們根本是同一個人！</div>
+        <p>3. 第 18 頁提問：「是不是有兩個人在甜點製作方面有同樣的抱負？」這暗示了什麼？</p>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">A. 美美·思華特與莉奧蘿拉想合開甜點店</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">B. 管家瑪麗安·波伊（M）與得獎烘焙師莫拉·貝雅·蘭尼（MB），她們其實是同一個人！</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">C. 史雲探長與哈德遜太太都喜歡吃櫻桃蛋糕</div>
       </div>
 
-      <!-- 題 4: 蛋糕標記錯誤 -->
       <div class="story-box">
         <p>4. 為什麼會出現兩個櫻桃蛋糕，而且寶石還被弗朗普咬到？</p>
         <div class="quiz-option" onclick="selectFinal('q4', 'correct', this)">A. 波伊小姐匆忙中把兩個蛋糕標記錯了，誤將藏寶石的蛋糕給了弗朗普</div>
@@ -516,63 +465,95 @@
         <div class="quiz-option" onclick="selectFinal('q4', 'wrong2', this)">C. 未婚夫馬丁·蒂德偷換了蛋糕</div>
       </div>
 
-      <!-- 題 5: 指認真兇 -->
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
-        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索與第 19 頁真相，本案偷走紅寶石的真正主謀是誰？</strong></p>
+        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索，本案偷走紅寶石的真正主謀是誰？</strong></p>
         <div class="quiz-option" onclick="selectFinal('q5', 'wrong1', this)">A. 美美·思華特小姐（Mimi Swathe - 無辜的代罪羔羊）</div>
         <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle / 莫拉·貝雅·蘭尼 - 真正的真兇）</div>
         <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 莉奧蘿拉·思華格小姐（Leonora Swag）</div>
       </div>
 
-      <button class="btn" onclick="submitDeduction()">⚖️ 提交報告，核對真相與榮譽卡</button>
+      <!-- 第二部分：人物縮寫密碼解密 -->
+      <h3 style="color: #1b4332; margin: 25px 0 10px 0; font-size: 1.15rem;">🧩 第二部分：人物縮寫密碼比對</h3>
 
-      <!-- 破案成功後展示：3D 榮譽卡 + 第 19 頁真相大白頁面 -->
-      <div id="result-box" style="display: none; margin-top: 25px;">
+      <div class="story-box">
+        <p>1️⃣ <strong>GF 代表誰？</strong>（便利貼提示：貸款申請評估人）</p>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong1', this)">A. 貝利先生（Mr Berry）</div>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'wrong2', this)">B. 克倫斯．恩傑（Clarence Yankit）</div>
+        <div class="quiz-option" onclick="selectAbbr('gf', 'correct', this)">C. 吉迪恩．弗朗普（Gideon Frump）</div>
+      </div>
+
+      <div class="story-box">
+        <p>2️⃣ <strong>MT 代表誰？</strong>（便利貼提示：未婚夫信件、管家手冊）</p>
+        <div class="quiz-option" onclick="selectAbbr('mt', 'correct', this)">A. 馬丁．都鐸（Martin Tudor）</div>
+        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong1', this)">B. 馬洛蒂．費斯克（Melody Frisk）</div>
+        <div class="quiz-option" onclick="selectAbbr('mt', 'wrong2', this)">C. 貝利先生（Mr Berry）</div>
+      </div>
+
+      <div class="story-box">
+        <p>3️⃣ <strong>M 代表誰？</strong>（便利貼提示：急需要錢）</p>
+        <div class="quiz-option" onclick="selectAbbr('m', 'wrong1', this)">A. 美美．思華特（Mimi Swathe）</div>
+        <div class="quiz-option" onclick="selectAbbr('m', 'correct', this)">B. 瑪麗安．波伊（Miss Boyle）</div>
+        <div class="quiz-option" onclick="selectAbbr('m', 'wrong2', this)">C. 休伯特太太（Mrs M. Hubert）</div>
+      </div>
+
+      <div class="story-box">
+        <p>4️⃣ <strong>MB 代表誰？</strong>（便利貼提示：得獎食譜、急需要錢 💡 <em>提示：答案可能不止一個喔！</em>）</p>
+        <div class="quiz-option" onclick="toggleMbOption('A', this)">A. 瑪麗安．波伊（Miss Boyle）</div>
+        <div class="quiz-option" onclick="toggleMbOption('B', this)">B. 貝利先生（Mr Berry）</div>
+        <div class="quiz-option" onclick="toggleMbOption('C', this)">C. 莫拉．貝雅．蘭尼（Moria Bea Lenny）</div>
+      </div>
+
+      <button class="btn" style="margin-top: 20px; font-size: 1.1rem; padding: 15px;" onclick="submitFinalInvestigation()">⚖️ 提交報告，揭開案件真相（跳轉大結局！）</button>
+    </div>
+
+  </div>
+
+  <!-- 終章獨立大結局頁面：第 19 頁真相大白 (CASE CLOSED) -->
+  <div id="victory-screen" style="display: none;">
+    <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
+    <h2>── 倫敦貝克街 221 號 B 偵探檔案結案 ──</h2>
+
+    <!-- 1. 3D 榮譽勳章卡 -->
+    <div class="card-flip-container">
+      <div class="card-inner" id="resultCard" onclick="toggleCardFlip()">
         
-        <!-- 1. 3D 榮譽勳章卡 -->
-        <div class="card-flip-container">
-          <div class="card-inner" id="resultCard" onclick="toggleCardFlip()">
-            
-            <div class="card-front">
-              <h2 style="color: #f0f7f3; font-size: 1.7rem;">🕵️‍♂️ 頂級神探榮譽卡</h2>
-              <p style="margin: 15px 0; font-size: 1.05rem;">恭喜你成功破獲【櫻桃蛋糕藏寶案】！</p>
-              <div class="badge-tag">🏅 榮獲【洞察秋毫名偵探】勳章</div>
-              <p style="margin-top: 25px; color: #74c69d; font-size: 0.9rem;">✨ 點擊卡片翻轉查看詳細案件解析 🔄</p>
-            </div>
-
-            <div class="card-back">
-              <h2 style="color: #1b4332; text-align: left; margin-bottom: 8px;">📜 案件真相摘要</h2>
-              <p style="line-height: 1.6; font-size: 0.92rem; color: #2d3748;">
-                管家瑪麗安·波伊（Miss Boyle / 莫拉·貝雅·蘭尼）因貸款被拒，利用美美·思華特量度窗簾做假的不在場證明，偷走紅寶石藏入櫻桃蛋糕中。卻因匆忙標記錯蛋糕，讓弗朗普咬到寶石弄傷牙齒去看牙醫，最終真相大白！
-              </p>
-              <hr style="border: 0; border-top: 1px dashed #b8a898; margin: 10px 0;">
-              <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，閱讀第 19 頁完整故事來龍去脈！</p>
-            </div>
-
-          </div>
+        <div class="card-front">
+          <h2 style="color: #f0f7f3; font-size: 1.7rem;">🕵️‍♂️ 頂級神探榮譽卡</h2>
+          <p style="margin: 15px 0; font-size: 1.05rem;">恭喜你成功破獲【櫻桃蛋糕藏寶案】！</p>
+          <div class="badge-tag">🏅 榮獲【洞察秋毫名偵探】勳章</div>
+          <p style="margin-top: 25px; color: #74c69d; font-size: 0.9rem;">✨ 點擊卡片翻轉查看詳細案件解析 🔄</p>
         </div>
 
-        <!-- 2. 第 19 頁：完整案件來龍去脈 -->
-        <div class="story-box" style="border-left-color: #1b4332; background: #fdfbf7; margin-top: 30px; padding: 20px;">
-          <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁故事解密）</h2>
-          
-          <div class="img-display-box">
-            <img src="19.jpg" alt="第19頁案件真相大白">
-          </div>
-
-          <div style="line-height: 1.8; color: #2d1e16; font-size: 0.98rem; margin-top: 15px;">
-            <p style="font-weight: bold; color: #8c2d19; font-size: 1.1rem; margin-bottom: 8px;">🕵️ 事情的來龍去脈：</p>
-            <p>1️⃣ <strong>動機與製造不在場證明：</strong> 波伊小姐急需一筆錢來開茶室，收到貸款被拒通知後，正好遇到思華特小姐到房間量度窗簾尺寸，便抓住機會製造了一個完美的不在場證明。</p>
-            <p>2️⃣ <strong>偷竊與遺留線索：</strong> 波伊小姐送走思華特小姐後衝回樓上偷取紅寶石，不小心留下了<strong>一抹麵粉和紫色的絲帶獎章</strong>。</p>
-            <p>3️⃣ <strong>藏寶石與失誤：</strong> 因警察很快趕到，她緊張地將紅寶石藏在正準備烘烤的櫻桃蛋糕裏（打算用來說服弗朗普批准貸款）。她後來又做了一個蛋糕，並送到在銀行上班的未婚夫那裏，卻在匆忙中<strong>把蛋糕標記錯了</strong>！</p>
-            <p>4️⃣ <strong>破案與真相大白：</strong> 弗朗普咬下關鍵的一口崩牙，不得不去看牙醫克倫斯·鳳傑，進而引導福爾摩斯找到了她的未婚夫馬丁·蒂德。原來，<strong>莫拉·貝雅·蘭尼（Moira Bea Lenny）和瑪麗安·波伊（Miss Boyle）是同一個人</strong>！她就是管家、未婚妻、作者、得獎烘焙師兼小偷！</p>
-          </div>
+        <div class="card-back">
+          <h2 style="color: #1b4332; text-align: left; margin-bottom: 8px;">📜 案件真相摘要</h2>
+          <p style="line-height: 1.6; font-size: 0.92rem; color: #2d3748;">
+            管家瑪麗安·波伊（Miss Boyle / 莫拉·貝雅·蘭尼）因貸款被拒，利用美美·思華特量度窗簾做假的不在場證明，偷走紅寶石藏入櫻桃蛋糕中。卻因匆忙標記錯蛋糕，讓弗朗普咬到寶石弄傷牙齒去看牙醫，最終真相大白！
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #b8a898; margin: 10px 0;">
+          <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，閱讀第 19 頁完整故事來龍去脈！</p>
         </div>
 
       </div>
-
     </div>
 
+    <!-- 2. 第 19 頁完整故事與圖檔 -->
+    <div class="story-box" style="border-left-color: #1b4332; background: #fdfbf7; margin-top: 25px; padding: 20px;">
+      <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁故事解密）</h2>
+      
+      <div class="img-display-box">
+        <img src="19.jpg" alt="第19頁案件真相大白">
+      </div>
+
+      <div style="line-height: 1.8; color: #2d1e16; font-size: 0.98rem; margin-top: 15px;">
+        <p style="font-weight: bold; color: #8c2d19; font-size: 1.1rem; margin-bottom: 8px;">🕵️ 事情的來龍去脈：</p>
+        <p>1️⃣ <strong>動機與製造不在場證明：</strong> 波伊小姐急需一筆錢來開茶室，收到貸款被拒通知後，正好遇到思華特小姐到房間量度窗簾尺寸，便抓住機會製造了一個完美的不在場證明。</p>
+        <p>2️⃣ <strong>偷竊與遺留線索：</strong> 波伊小姐送走思華特小姐後衝回樓上偷取紅寶石，不小心留下了<strong>一抹麵粉和紫色的絲帶獎章</strong>。</p>
+        <p>3️⃣ <strong>藏寶石與失誤：</strong> 因警察很快趕到，她緊張地將紅寶石藏在正準備烘烤的櫻桃蛋糕裏（打算用來說服弗朗普批准貸款）。她後來又做了一個蛋糕，並送到在銀行上班的未婚夫那裏，卻在匆忙中<strong>把蛋糕標記錯了</strong>！</p>
+        <p>4️⃣ <strong>破案與真相大白：</strong> 弗朗普咬下關鍵的一口崩牙，不得不去看牙醫克倫斯·鳳傑，進而引導福爾摩斯找到了她的未婚夫馬丁·蒂德。原來，<strong>莫拉·貝雅·蘭尼（Moira Bea Lenny）和瑪麗安·波伊（Miss Boyle）是同一個人</strong>！她就是管家、未婚妻、作者、得獎烘焙師兼小偷！</p>
+      </div>
+    </div>
+
+    <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="returnToDashboard()">🔄 返回案件總控台查看線索</button>
   </div>
 
 </div>
@@ -610,11 +591,9 @@
 
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
       document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
-      document.getElementById('tab-btn-4').innerText = '🧩 縮寫解密';
-      document.getElementById('tab-btn-5').innerText = '💡 破案小提示';
-      document.getElementById('tab-btn-6').innerText = '⚖️ 破案推理';
+      document.getElementById('tab-btn-4').innerText = '💡 破案小提示與推理';
 
-      for (let i = 2; i <= 6; i++) {
+      for (let i = 2; i <= 4; i++) {
         document.getElementById(`tab-btn-${i}`).classList.add('unlocked');
       }
 
@@ -713,7 +692,7 @@
     }
   }
 
-  /* 11 大拆分線索牆 (已更新線索 8 加入「思華布藝用的裁縫粉筆」) */
+  /* 11 大拆分線索牆 */
   const slideCards = [
     { 
       img: '20240119093952729_0002.jpg', 
@@ -793,13 +772,9 @@
     renderSlide();
   }
 
-  let abbrAnswers = {}, finalAnswers = {};
-
-  function selectAbbr(key, val, elem) {
-    abbrAnswers[key] = val;
-    elem.parentElement.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
-    elem.classList.add('selected');
-  }
+  let finalAnswers = {};
+  let abbrAnswers = {};
+  let mbSelections = new Set();
 
   function selectFinal(key, val, elem) {
     finalAnswers[key] = val;
@@ -807,32 +782,70 @@
     elem.classList.add('selected');
   }
 
-  function submitDeduction() {
+  function selectAbbr(key, val, elem) {
+    abbrAnswers[key] = val;
+    elem.parentElement.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+    elem.classList.add('selected');
+  }
+
+  function toggleMbOption(val, elem) {
+    if (mbSelections.has(val)) {
+      mbSelections.delete(val);
+      elem.classList.remove('selected');
+    } else {
+      mbSelections.add(val);
+      elem.classList.add('selected');
+    }
+  }
+
+  function submitFinalInvestigation() {
+    // 檢查推理題
     if (Object.keys(finalAnswers).length < 5) {
-      alert("⚠️ 請回答全部 5 道推理問題後再提交報告喔！");
+      alert("⚠️ 請將【第一部分：案件細節推理】的 5 道題目全部回答完畢喔！");
       return;
     }
 
-    if (
+    // 檢查縮寫題
+    if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0) {
+      alert("⚠️ 請將【第二部分：人物縮寫密碼】全部回答完畢喔！（第 4 題 MB 可能不止一個答案喔！）");
+      return;
+    }
+
+    // 驗證縮寫第 4 題 (必須同時選 A 和 C，且不能選 B)
+    const isMbCorrect = mbSelections.has('A') && mbSelections.has('C') && !mbSelections.has('B') && mbSelections.size === 2;
+
+    const isFinalCorrect =
       finalAnswers['q1'] === 'correct' &&
       finalAnswers['q2'] === 'correct' &&
       finalAnswers['q3'] === 'correct' &&
       finalAnswers['q4'] === 'correct' &&
-      finalAnswers['q5'] === 'correct'
-    ) {
-      alert("👏 太棒了！你們成功破解真相，指認真正的真兇波伊小姐！\n\n📖 已解鎖第 19 頁完整故事真相與榮譽勳章！");
-      document.getElementById('result-box').style.display = 'block';
-      document.getElementById('resultCard').classList.remove('is-flipped');
+      finalAnswers['q5'] === 'correct';
+
+    const isAbbrCorrect =
+      abbrAnswers.gf === 'correct' &&
+      abbrAnswers.mt === 'correct' &&
+      abbrAnswers.m === 'correct' &&
+      isMbCorrect;
+
+    if (isFinalCorrect && isAbbrCorrect) {
+      alert("🎉 太棒了！推理與縮寫密碼完全正確！\n\n💡 聰明的偵探，你成功發現了關鍵秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
-      // 自動順暢滾動至真相大白區
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      // 切換至獨立的終章大結局頁面
+      document.getElementById('main-dashboard').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      alert("🔍 指認或推理有誤喔！請重新對照線索，留意誰才是真正的得獎烘焙師與小偷！");
+      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 第 18 頁的細節推理\n2. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物喔！");
     }
   }
 
   function toggleCardFlip() {
     document.getElementById('resultCard').classList.toggle('is-flipped');
+  }
+
+  function returnToDashboard() {
+    document.getElementById('victory-screen').style.display = 'none';
+    document.getElementById('main-dashboard').style.display = 'block';
   }
 
   window.onload = function() {

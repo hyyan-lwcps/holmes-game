@@ -284,16 +284,16 @@
       min-height: 150px;
     }
 
-    /* 未點亮（灰階半透明） */
+    /* 未點亮（灰階半透明，顯現未獲得狀態） */
     .trait-card.unlit {
-      background: #e2dbce;
-      border: 2px dashed #b8a898;
-      color: #8c8275;
+      background: #d8d0c0;
+      border: 2px dashed #a09585;
+      color: #6e6558;
       filter: grayscale(100%);
-      opacity: 0.55;
+      opacity: 0.45;
     }
 
-    /* 點亮（亮麗色彩與金光） */
+    /* 點亮（亮麗綠色與光澤） */
     .trait-card.lit {
       background: linear-gradient(135deg, #1b4332, #2d6a4f);
       border: 2px solid #74c69d;
@@ -616,12 +616,13 @@
   let isGate1Unlocked = false;
   let isTab4Unlocked = false;
 
-  /* 背景自動統計答題嘗試次數（無須 Database） */
+  /* 背景自動統計答題狀態 */
   let timelineAttempts = 0;
   let tab4Attempts = 0;
   let tab5Attempts = 0;
 
-  let isTimelinePerfect = false;
+  let isTimelineCorrect = false; // 時間線是否完全答對
+  let isTimelinePerfect = false; // 是否一次就完全答對
   let isTab4Perfect = false;
   let isTab5Perfect = false;
 
@@ -712,7 +713,6 @@
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     
     document.getElementById(pageId).style.display = 'block';
-    document.getElementById(`tab-btn-${pageIndex}`).classList.active = true;
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
@@ -796,14 +796,18 @@
     }
 
     if (isOrderCorrect && isTimeValueCorrect) {
+      isTimelineCorrect = true; // 標記為完全答對！
       if (timelineAttempts === 1) isTimelinePerfect = true; // 一次完全答對
       alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！");
-    } else if (isOrderCorrect && !isTimeValueCorrect) {
-      alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
-    } else if (!isOrderCorrect && isTimeValueCorrect) {
-      alert("💡 時間的「幾時幾分」填寫完全正確喔！\n但是卡片的「先後排列順序」還沒排好，請點擊「⬆️上移」或「⬇️下移」調整順序！");
     } else {
-      alert("🔍 卡片順序與填寫的時間都有誤喔！請對照線索卡上的時間，重新輸入並調整排列！");
+      isTimelineCorrect = false; // 未完全答對
+      if (isOrderCorrect && !isTimeValueCorrect) {
+        alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
+      } else if (!isOrderCorrect && isTimeValueCorrect) {
+        alert("💡 時間的「幾時幾分」填寫完全正確喔！\n但是卡片的「先後排列順序」還沒排好，請點擊「⬆️上移」或「⬇️下移」調整順序！");
+      } else {
+        alert("🔍 卡片順序與填寫的時間都有誤喔！請對照線索卡上的時間，重新輸入並調整排列！");
+      }
     }
   }
 
@@ -954,36 +958,29 @@
     }
   }
 
-  /* 評估表現並渲染特質卡（點亮 / 全能型覆蓋） */
+  /* 評估表現並渲染特質卡（精準判定答對項目） */
   function calculateAndRenderTraits() {
-    // 判定條件：全部完勝（一次就全對或完美完成）則觸發「全能神探型」
+    // 判定條件：全部一次完勝則觸發「全能神探型」
     const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
 
     if (isAllRound) {
-      // 顯示全能橫圖，隱藏三卡
       document.getElementById('all-round-container').style.display = 'block';
       document.getElementById('three-traits-row').style.display = 'none';
     } else {
       document.getElementById('all-round-container').style.display = 'none';
       document.getElementById('three-traits-row').style.display = 'flex';
 
-      // 1. 細節觀察卡：完成 Tab 4 推理即可解鎖點亮（表現好亮光更足）
+      // 1. 細節觀察卡：Tab 4 推理題完全答對則點亮
       const hawkCard = document.getElementById('trait-hawk');
-      if (isTab4Unlocked) {
-        hawkCard.className = 'trait-card lit';
-      }
+      hawkCard.className = isTab4Unlocked ? 'trait-card lit' : 'trait-card unlit';
 
-      // 2. 嚴密邏輯卡：完成時間線排序解鎖點亮
+      // 2. 嚴密邏輯卡：時間線【順序與時間皆完全正確】才點亮
       const logicCard = document.getElementById('trait-logic');
-      if (timelineAttempts > 0) {
-        logicCard.className = 'trait-card lit';
-      }
+      logicCard.className = isTimelineCorrect ? 'trait-card lit' : 'trait-card unlit';
 
-      // 3. 密碼解密卡：完成縮寫解密解鎖點亮
+      // 3. 密碼解密卡：Tab 5 縮寫與真兇正確即點亮
       const codeCard = document.getElementById('trait-code');
-      if (isTab5Perfect || tab5Attempts > 0) {
-        codeCard.className = 'trait-card lit';
-      }
+      codeCard.className = 'trait-card lit';
     }
   }
 

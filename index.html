@@ -442,7 +442,7 @@
       </div>
 
       <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列與時間</button>
-      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示】➡️</button>
+      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 前往【破案小提示】➡️</button>
     </div>
 
     <!-- 分頁 4: 破案小提示（第 18 頁 5 大推理問題） -->
@@ -613,6 +613,7 @@
 
 <script>
   let isGate1Unlocked = false;
+  let isTimelineUnlocked = false; // 時間線排序完成標誌
   let isTab4Unlocked = false;
 
   /* 背景自動統計答題狀態 */
@@ -628,7 +629,7 @@
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // 置頂
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   let gateAnswers = { item: null, owner: null, location: null, arrested: null };
@@ -652,15 +653,13 @@
       gateAnswers.arrested === 'mimi'
     ) {
       isGate1Unlocked = true;
-      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，11大線索牆、事件排序與破案小提示已解鎖！");
+      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，11大線索牆與事件排序已解鎖！");
 
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
       document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
-      document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
 
-      for (let i = 2; i <= 4; i++) {
-        document.getElementById(`tab-btn-${i}`).classList.add('unlocked');
-      }
+      document.getElementById('tab-btn-2').classList.add('unlocked');
+      document.getElementById('tab-btn-3').classList.add('unlocked');
 
       switchNav('nav-2');
     } else {
@@ -696,15 +695,23 @@
     }
   }
 
-  /* 切換分頁時自動置頂 */
+  /* 切換分頁關卡關卡檢查 */
   function switchNav(pageId) {
     const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
 
-    if (pageIndex > 1 && pageIndex < 5 && !isGate1Unlocked) {
-      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟後續分頁喔！");
+    // 關卡 1 門檻檢查：Tab 2, 3 需要先通過基本資料
+    if (pageIndex > 1 && pageIndex < 4 && !isGate1Unlocked) {
+      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟【11大線索牆】與【事件排序】喔！");
       return;
     }
 
+    // 關卡 2 門檻檢查：Tab 4 需要先通過【事件排序】
+    if (pageIndex === 4 && !isTimelineUnlocked) {
+      alert("🔒 請先在【⏱️ 事件排序】中將事件順序與時間全部排列正確，才能解鎖【💡 破案小提示】喔！");
+      return;
+    }
+
+    // 關卡 3 門檻檢查：Tab 5 需要先通過【破案小提示】
     if (pageIndex === 5 && !isTab4Unlocked) {
       alert("🔒 請先在【💡 破案小提示】中答對 5 道推理題目，才能解鎖【簡稱解密及尋找真兇】分頁喔！");
       return;
@@ -716,7 +723,7 @@
     document.getElementById(pageId).style.display = 'block';
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
 
-    // 切換分頁時，頁面自動平滑滾動回最頂部
+    // 自動滾動平滑置頂
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -801,8 +808,12 @@
 
     if (isOrderCorrect && isTimeValueCorrect) {
       isTimelineCorrect = true;
+      isTimelineUnlocked = true; // 解鎖下一步門檻
       if (timelineAttempts === 1) isTimelinePerfect = true;
-      alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！");
+      alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！\n\n🔓 成功解鎖分頁【💡 破案小提示】！");
+
+      document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
+      document.getElementById('tab-btn-4').classList.add('unlocked');
     } else {
       isTimelineCorrect = false;
       if (isOrderCorrect && !isTimeValueCorrect) {
@@ -931,6 +942,13 @@
   function submitFinalInvestigation() {
     tab5Attempts++;
 
+    // 防護檢查：未完成時間線排序阻擋
+    if (!isTimelineUnlocked) {
+      alert("⚠️ 你尚未完成【⏱️ 事件排序】關卡！請先前往 Tab 3 將事件順序與時間排列正確後再提交報告！");
+      switchNav('nav-3');
+      return;
+    }
+
     if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0 || !culpritAnswer) {
       alert("⚠️ 請將本分頁的人物縮寫比對與【指認真兇】問題全部回答完畢喔！（MB 可能不止一個答案喔！）");
       return;
@@ -1007,7 +1025,7 @@
   function returnToDashboard() {
     document.getElementById('victory-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // 置頂
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   window.onload = function() {

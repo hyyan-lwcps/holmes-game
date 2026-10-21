@@ -256,7 +256,7 @@
     }
 
     /* ==========================================
-       特質卡展示區樣式 (首3個併排一行 + 全能型橫圖)
+       特質卡 3D 雙面翻牌效果 (正面:文字/Emoji ↔ 背面:圖片)
        ========================================== */
     .traits-wrapper {
       margin: 20px 0;
@@ -265,76 +265,141 @@
 
     .traits-row {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: space-between;
       align-items: stretch;
     }
 
-    .trait-card {
+    .flip-card-container {
       flex: 1;
-      padding: 16px 10px;
-      border-radius: 14px;
+      perspective: 1000px;
+      min-height: 180px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
       text-align: center;
-      transition: all 0.4s ease;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      border-radius: 14px;
+    }
+
+    /* 點亮類別 toggled flipped */
+    .flip-card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 150px;
+      padding: 12px 10px;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
-    /* 未點亮（灰階半透明，顯現未獲得狀態） */
-    .trait-card.unlit {
-      background: #d8d0c0;
-      border: 2px dashed #a09585;
-      color: #6e6558;
-      filter: grayscale(100%);
-      opacity: 0.45;
+    /* 卡片正面：文字 + Emoji */
+    .flip-card-front .icon {
+      font-size: 2.2rem;
+      margin-bottom: 4px;
     }
 
-    /* 點亮（亮麗綠色與光澤） */
-    .trait-card.lit {
-      background: linear-gradient(135deg, #1b4332, #2d6a4f);
-      border: 2px solid #74c69d;
-      color: #f0f7f3;
-      box-shadow: 0 6px 18px rgba(45, 106, 79, 0.35);
-      filter: none;
-      opacity: 1;
-    }
-
-    .trait-card .icon {
-      font-size: 2rem;
-      margin-bottom: 6px;
-    }
-
-    .trait-card .title {
+    .flip-card-front .title {
       font-weight: bold;
       font-size: 0.95rem;
       margin-bottom: 4px;
     }
 
-    .trait-card .desc {
+    .flip-card-front .desc {
       font-size: 0.78rem;
       line-height: 1.3;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
-    /* 全能神探型 橫幅金卡 */
-    .all-round-card {
+    .flip-hint {
+      font-size: 0.7rem;
+      margin-top: 6px;
+      opacity: 0.8;
+      color: #ffe066;
+      font-weight: bold;
+    }
+
+    /* 卡片背面：圖像 */
+    .flip-card-back {
+      transform: rotateY(180deg);
+      background: #fff;
+    }
+
+    .flip-card-back img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* 點亮狀態 (彩色亮卡) */
+    .flip-card-container.lit .flip-card-front {
+      background: linear-gradient(135deg, #1b4332, #2d6a4f);
+      border: 2px solid #74c69d;
+      color: #f0f7f3;
+      box-shadow: 0 6px 18px rgba(45, 106, 79, 0.35);
+    }
+
+    .flip-card-container.lit .flip-card-back {
+      border: 2px solid #d4af37;
+      box-shadow: 0 6px 18px rgba(184, 134, 11, 0.35);
+    }
+
+    /* 未獲得狀態 (灰階半透明) */
+    .flip-card-container.unlit .flip-card-front {
+      background: #d8d0c0;
+      border: 2px dashed #a09585;
+      color: #6e6558;
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+
+    .flip-card-container.unlit .flip-card-front .flip-hint {
+      color: #6e6558;
+    }
+
+    .flip-card-container.unlit .flip-card-back {
+      border: 2px dashed #a09585;
+      background: #e2dbce;
+    }
+
+    .flip-card-container.unlit .flip-card-back img {
+      filter: grayscale(100%);
+      opacity: 0.4;
+    }
+
+    /* 全能神探型 橫幅 3D 翻轉卡 */
+    .all-round-container {
+      width: 100%;
+      perspective: 1000px;
+      min-height: 190px;
+    }
+
+    .all-round-container.lit .flip-card-front {
       background: linear-gradient(135deg, #b8860b, #d4af37, #8b6508);
       border: 3px solid #ffe066;
-      border-radius: 16px;
-      padding: 22px;
-      text-align: center;
       color: #fff;
       box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
-      animation: pulseGlow 2s infinite alternate;
     }
 
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45); }
-      100% { box-shadow: 0 12px 32px rgba(255, 224, 102, 0.7); }
+    .all-round-container.lit .flip-card-back {
+      border: 3px solid #ffe066;
+      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
     }
   </style>
 </head>
@@ -364,7 +429,7 @@
   <!-- 偵探主控台 (分頁導覽) -->
   <div id="main-dashboard" style="display: none;">
     
-    <!-- 頂部切換頁籤 (共 5 個核心分頁) -->
+    <!-- 頂部切換頁籤 -->
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
       <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 11大線索牆</button>
@@ -541,47 +606,83 @@
 
   </div>
 
-  <!-- 終章獨立大結局頁面：特質卡結算 + 第 19 頁真相大白 -->
+  <!-- 終章獨立大結局頁面：可點擊 3D 雙面翻轉特質卡 + 第 19 頁真相大白 -->
   <div id="victory-screen" style="display: none;">
     <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
-    <h2>── 本案解鎖神探特質卡結算 ──</h2>
+    <h2>── 本案解鎖神探特質卡結算（💡 點擊卡片可翻轉看圖） ──</h2>
 
-    <!-- 特質卡動態展示容器 -->
+    <!-- 特質卡動態 3D 翻轉展示區 -->
     <div class="traits-wrapper">
       
       <!-- 1. 全能神探型 橫幅金卡（頂尖表現時覆蓋） -->
       <div id="all-round-container" style="display: none;">
-        <div class="all-round-card">
-          <div style="font-size: 2.3rem; margin-bottom: 6px;">👑</div>
-          <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 6px;">【全能神探型】徽章解鎖！</h2>
-          <p style="font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
-            完美通關！你在細節觀察、時間推算與密碼解密全方位展現了頂尖天賦，獲頒本案最高榮譽！
-          </p>
+        <div id="all-round-card-box" class="all-round-container lit">
+          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+            <!-- 正面：Emoji + 金色文字說明 -->
+            <div class="flip-card-front">
+              <div style="font-size: 2.3rem; margin-bottom: 4px;">👑</div>
+              <h2 style="color: #fff; font-size: 1.4rem; margin-bottom: 4px;">【全能神探型】徽章解鎖！</h2>
+              <p style="font-size: 0.9rem; opacity: 0.95; line-height: 1.4;">
+                完美通關！你在細節觀察、時間推算與密碼解密全方位展現頂尖天賦！
+              </p>
+              <div class="flip-hint">🔄 點擊翻轉查看神探角色圖卡</div>
+            </div>
+            <!-- 背面：橫圖 trait_allround.png -->
+            <div class="flip-card-back">
+              <img src="trait_allround.png" alt="全能神探角色卡">
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- 2. 首 3 個分開的特質卡單列併排 -->
       <div id="three-traits-row" class="traits-row">
+        
         <!-- 特質 1：細節觀察 -->
-        <div id="trait-hawk" class="trait-card unlit">
-          <div class="icon">🦅</div>
-          <div class="title">細節觀察</div>
-          <div class="desc">一眼看穿現場痕跡與雜誌線索</div>
+        <div id="trait-hawk-box" class="flip-card-container unlit">
+          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-front">
+              <div class="icon">🦅</div>
+              <div class="title">細節觀察</div>
+              <div class="desc">一眼看穿現場痕跡與雜誌線索</div>
+              <div class="flip-hint">🔄 點擊翻頁</div>
+            </div>
+            <div class="flip-card-back">
+              <img src="trait_hawk.png" alt="細節觀察特質卡">
+            </div>
+          </div>
         </div>
 
         <!-- 特質 2：嚴密邏輯 -->
-        <div id="trait-logic" class="trait-card unlit">
-          <div class="icon">🧠</div>
-          <div class="title">嚴密邏輯</div>
-          <div class="desc">精準掌握案件時間軸與順序</div>
+        <div id="trait-logic-box" class="flip-card-container unlit">
+          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-front">
+              <div class="icon">🧠</div>
+              <div class="title">嚴密邏輯</div>
+              <div class="desc">精準掌握案件時間軸與順序</div>
+              <div class="flip-hint">🔄 點擊翻頁</div>
+            </div>
+            <div class="flip-card-back">
+              <img src="trait_logic.png" alt="嚴密邏輯特質卡">
+            </div>
+          </div>
         </div>
 
         <!-- 特質 3：密碼解密 -->
-        <div id="trait-code" class="trait-card unlit">
-          <div class="icon">🧩</div>
-          <div class="title">密碼解密</div>
-          <div class="desc">看穿 MB 縮寫與雙重身分</div>
+        <div id="trait-code-box" class="flip-card-container unlit">
+          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-front">
+              <div class="icon">🧩</div>
+              <div class="title">密碼解密</div>
+              <div class="desc">看穿 MB 縮寫與雙重身分</div>
+              <div class="flip-hint">🔄 點擊翻頁</div>
+            </div>
+            <div class="flip-card-back">
+              <img src="trait_code.png" alt="密碼解密特質卡">
+            </div>
+          </div>
         </div>
+
       </div>
 
     </div>
@@ -695,7 +796,7 @@
     }
   }
 
-  /* 切換分頁關卡關卡檢查 */
+  /* 切換分頁關卡檢查 */
   function switchNav(pageId) {
     const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
 
@@ -981,7 +1082,7 @@
     }
   }
 
-  /* 評估表現並渲染特質卡 */
+  /* 評估表現並動態更新特質卡 (Lit vs Unlit 狀態) */
   function calculateAndRenderTraits() {
     const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
 
@@ -993,16 +1094,16 @@
       document.getElementById('three-traits-row').style.display = 'flex';
 
       // 1. 細節觀察卡：Tab 4 答對解鎖
-      const hawkCard = document.getElementById('trait-hawk');
-      hawkCard.className = isTab4Unlocked ? 'trait-card lit' : 'trait-card unlit';
+      const hawkBox = document.getElementById('trait-hawk-box');
+      hawkBox.className = isTab4Unlocked ? 'flip-card-container lit' : 'flip-card-container unlit';
 
       // 2. 嚴密邏輯卡：時間線【順序與時間皆完全正確】才點亮
-      const logicCard = document.getElementById('trait-logic');
-      logicCard.className = isTimelineCorrect ? 'trait-card lit' : 'trait-card unlit';
+      const logicBox = document.getElementById('trait-logic-box');
+      logicBox.className = isTimelineCorrect ? 'flip-card-container lit' : 'flip-card-container unlit';
 
       // 3. 密碼解密卡：Tab 5 答對解鎖
-      const codeCard = document.getElementById('trait-code');
-      codeCard.className = 'trait-card lit';
+      const codeBox = document.getElementById('trait-code-box');
+      codeBox.className = 'flip-card-container lit';
     }
   }
 

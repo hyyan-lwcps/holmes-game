@@ -412,7 +412,7 @@
       <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件事件排序 -->
+    <!-- 分頁 3: 案件事件排序 (含時間與順序雙重邏輯驗證與提示) -->
     <div id="nav-3" class="tab-page" style="display: none;">
       <h1>⏱️ 案件事件排序</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方輸入幾「時」幾「分」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
@@ -421,7 +421,7 @@
         <ul id="timeline-container" class="timeline-list"></ul>
       </div>
 
-      <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列順序</button>
+      <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列與時間</button>
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示】➡️</button>
     </div>
 
@@ -472,7 +472,7 @@
       <button class="btn" onclick="verifyTab4Answers()">🔍 驗證 5 大推理，解鎖【簡稱解密及尋找真兇】➡️</button>
     </div>
 
-    <!-- 分頁 5: 簡稱解密及尋找真兇（獨立分頁） -->
+    <!-- 分頁 5: 簡稱解密及尋找真兇（獨立分頁，無劇透選項） -->
     <div id="nav-5" class="tab-page" style="display: none;">
       <h1>🧩 簡稱解密及尋找真兇</h1>
       <h2>── 請完成人物縮寫比對，並綜合所有線索指認出真正的真兇 ──</h2>
@@ -521,20 +521,20 @@
 
   </div>
 
-  <!-- 終章獨立大結局頁面：第 19 頁真相大白 (CASE CLOSED) -->
+  <!-- 終章獨立大結局頁面：心理測驗延續神探榮譽卡 + 第 19 頁真相大白 -->
   <div id="victory-screen" style="display: none;">
     <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
     <h2>── 倫敦貝克街 221 號 B 偵探檔案結案 ──</h2>
 
-    <!-- 1. 3D 榮譽勳章卡 -->
+    <!-- 1. 心理測驗延續 3D 榮譽勳章卡 -->
     <div class="card-flip-container">
       <div class="card-inner" id="resultCard" onclick="toggleCardFlip()">
         
         <div class="card-front">
-          <h2 style="color: #f0f7f3; font-size: 1.7rem;">🕵️‍♂️ 頂級神探榮譽卡</h2>
-          <p style="margin: 15px 0; font-size: 1.05rem;">恭喜你成功破獲【櫻桃蛋糕藏寶案】！</p>
-          <div class="badge-tag">🏅 榮獲【洞察秋毫名偵探】勳章</div>
-          <p style="margin-top: 25px; color: #74c69d; font-size: 0.9rem;">✨ 點擊卡片翻轉查看詳細案件解析 🔄</p>
+          <h2 style="color: #f0f7f3; font-size: 1.7rem;">🕵️‍♂️ 頂級神探成就卡</h2>
+          <p style="margin: 12px 0; font-size: 1.05rem;">延續心理測驗的洞察力，你成功破獲【櫻桃蛋糕藏寶案】！</p>
+          <div class="badge-tag">🏅 榮獲【邏輯縝密名偵探】勳章</div>
+          <p style="margin-top: 22px; color: #74c69d; font-size: 0.9rem;">✨ 點擊卡片翻轉查看詳細案件解析 🔄</p>
         </div>
 
         <div class="card-back">
@@ -666,14 +666,14 @@
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
-  /* 精確對照的 6 大事件（純數字時間輸入框） */
+  /* 精確對照的 6 大事件（含正確時間與卡片對照） */
   const timelineData = [
-    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', enteredHour: '', enteredMin: '' },
-    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', enteredHour: '', enteredMin: '' },
-    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', enteredHour: '', enteredMin: '' },
-    { id: 4, text: '史雲探長抵達斯文布魯大屋', enteredHour: '', enteredMin: '' },
-    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', enteredHour: '', enteredMin: '' },
-    { id: 6, text: '美美．思華特小姐被捕', enteredHour: '', enteredMin: '' }
+    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 45, enteredHour: '', enteredMin: '' },
+    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 0, enteredHour: '', enteredMin: '' },
+    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', hour: 12, min: 15, enteredHour: '', enteredMin: '' },
+    { id: 4, text: '史雲探長抵達斯文布魯大屋', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
+    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', hour: 12, min: 45, enteredHour: '', enteredMin: '' },
+    { id: 6, text: '美美．思華特小姐被捕', hour: 1, min: 15, enteredHour: '', enteredMin: '' }
   ];
 
   /* 初始隨機打散順序 */
@@ -727,17 +727,32 @@
   }
 
   function checkTimelineOrder() {
-    let isCorrect = true;
+    let isOrderCorrect = true;
+    let isTimeValueCorrect = true;
+
     for (let i = 0; i < currentTimeline.length; i++) {
       if (currentTimeline[i].id !== timelineData[i].id) {
-        isCorrect = false;
-        break;
+        isOrderCorrect = false;
+      }
+      
+      const item = currentTimeline[i];
+      const h = parseInt(item.enteredHour, 10);
+      const m = parseInt(item.enteredMin, 10);
+
+      // 檢查該事件填寫的時間數值是否符合標準答案
+      if (isNaN(h) || isNaN(m) || h !== item.hour || m !== item.min) {
+        isTimeValueCorrect = false;
       }
     }
-    if (isCorrect) {
-      alert("🎉 太棒了！事件排序完全正確！你根據線索對案件經過進行了非常嚴密的推理！");
+
+    if (isOrderCorrect && isTimeValueCorrect) {
+      alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！");
+    } else if (isOrderCorrect && !isTimeValueCorrect) {
+      alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
+    } else if (!isOrderCorrect && isTimeValueCorrect) {
+      alert("💡 時間的「幾時幾分」填寫完全正確喔！\n但是卡片的「先後排列順序」還沒排好，請點擊「⬆️上移」或「⬇️下移」調整順序！");
     } else {
-      alert("🔍 事件順序有點不對喔！請再對照美美到達、離開大屋，警方抵達與波伊出門的細節！");
+      alert("🔍 卡片順序與填寫的時間都有誤喔！請對照線索卡上的時間，重新輸入並調整排列！");
     }
   }
 

@@ -666,14 +666,14 @@
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
-  /* 精確對照的 6 大事件（含正確時間與卡片對照） */
+  /* 精確對照的 6 大事件（時間線數據依據原書正確時間更新） */
   const timelineData = [
-    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 45, enteredHour: '', enteredMin: '' },
-    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 0, enteredHour: '', enteredMin: '' },
-    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', hour: 12, min: 15, enteredHour: '', enteredMin: '' },
-    { id: 4, text: '史雲探長抵達斯文布魯大屋', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
-    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', hour: 12, min: 45, enteredHour: '', enteredMin: '' },
-    { id: 6, text: '美美．思華特小姐被捕', hour: 1, min: 15, enteredHour: '', enteredMin: '' }
+    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 0, enteredHour: '', enteredMin: '' },
+    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
+    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', hour: 1, min: 0, enteredHour: '', enteredMin: '' },
+    { id: 4, text: '史雲探長抵達斯文布魯大屋', hour: 1, min: 15, enteredHour: '', enteredMin: '' },
+    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', hour: 2, min: 45, enteredHour: '', enteredMin: '' },
+    { id: 6, text: '美美．思華特小姐被捕', hour: 3, min: 30, enteredHour: '', enteredMin: '' }
   ];
 
   /* 初始隨機打散順序 */
@@ -739,7 +739,6 @@
       const h = parseInt(item.enteredHour, 10);
       const m = parseInt(item.enteredMin, 10);
 
-      // 檢查該事件填寫的時間數值是否符合標準答案
       if (isNaN(h) || isNaN(m) || h !== item.hour || m !== item.min) {
         isTimeValueCorrect = false;
       }
@@ -870,13 +869,11 @@
   }
 
   function submitFinalInvestigation() {
-    // 檢查第5分頁的 4 題縮寫與指認真兇題
     if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0 || !culpritAnswer) {
       alert("⚠️ 請將本分頁的人物縮寫比對與【指認真兇】問題全部回答完畢喔！（MB 可能不止一個答案喔！）");
       return;
     }
 
-    // 驗證縮寫第 4 題 (必須同時選 A 和 C，且不能選 B)
     const isMbCorrect = mbSelections.has('A') && mbSelections.has('C') && !mbSelections.has('B') && mbSelections.size === 2;
 
     const isAbbrCorrect =
@@ -890,7 +887,6 @@
     if (isAbbrCorrect && isCulpritCorrect) {
       alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
-      // 切換至獨立的終章大結局頁面
       document.getElementById('main-dashboard').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });

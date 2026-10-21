@@ -352,7 +352,7 @@
       <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 破案小提示與推理</button>
     </div>
 
-    <!-- 分頁 1: 檔案1基本資料 (圖像 + 4 題審核) -->
+    <!-- 分頁 1: 檔案1基本資料 -->
     <div id="nav-1" class="tab-page">
       <h1>📋 檔案1：蛋糕裏的櫻桃（基本資料登錄）</h1>
       <h2>── 請仔細閱讀下方案件頁面，選出正確的 4 大基本資訊 ──</h2>
@@ -424,7 +424,7 @@
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 查看【破案小提示與推理】➡️</button>
     </div>
 
-    <!-- 分頁 4: 破案小提示與推理 (結合第18頁圖檔 + 5大推理問答 + 人物縮寫密碼) -->
+    <!-- 分頁 4: 破案小提示與推理 (結合第18頁圖檔 + 5大精準推理題 + 人物縮寫密碼) -->
     <div id="nav-4" class="tab-page" style="display: none;">
       <h1>💡 破案小提示與推理（第 18 頁）</h1>
       <h2>── 請邊對照第 18 頁的提問圖卡，邊回答下方的推理問題與縮寫密碼 ──</h2>
@@ -435,41 +435,41 @@
       </div>
 
       <!-- 第一部分：第 18 頁 5 大推理思考題 -->
-      <h3 style="color: #1b4332; margin: 20px 0 10px 0; font-size: 1.15rem;">🔍 第一部分：案件細節推理</h3>
+      <h3 style="color: #1b4332; margin: 20px 0 10px 0; font-size: 1.15rem;">🔍 第一部分：案件細節推理（對照第 18 頁 5 大提問）</h3>
 
       <div class="story-box">
-        <p>1. 斯文布魯克夫人房間失竊現場，小偷不小心留下了什麼關鍵痕跡？</p>
-        <div class="quiz-option" onclick="selectFinal('q1', 'wrong1', this)">A. 假牙印模膏粉末與綠色絲帶</div>
-        <div class="quiz-option" onclick="selectFinal('q1', 'correct', this)">B. 一抹麵粉和紫色的絲帶獎章</div>
-        <div class="quiz-option" onclick="selectFinal('q1', 'wrong2', this)">C. 藍色裁縫粉筆</div>
+        <p>1. 斯文布魯克夫人的梳妝台上，小偷不小心留下了什麼關鍵痕跡？</p>
+        <div class="quiz-option" onclick="selectFinal('q1', 'wrong1', this)">A. 藍色裁縫粉筆與貸款資料</div>
+        <div class="quiz-option" onclick="selectFinal('q1', 'wrong2', this)">B. 假牙印模膏粉末與診所收據</div>
+        <div class="quiz-option" onclick="selectFinal('q1', 'correct', this)">C. 一抹麵粉和紫色的絲帶獎章</div>
       </div>
 
       <div class="story-box">
-        <p>2. 寶石是怎麼被發現的？（弗朗普先生發生了什麼事？）</p>
-        <div class="quiz-option" onclick="selectFinal('q2', 'correct', this)">A. 弗朗普咬下藏有寶石的蛋糕崩牙，去看牙醫克倫斯·鳳傑，進而揭發真相</div>
-        <div class="quiz-option" onclick="selectFinal('q2', 'wrong1', this)">B. 警察在思華特小姐的窗簾店搜出寶石</div>
-        <div class="quiz-option" onclick="selectFinal('q2', 'wrong2', this)">C. 管家波伊小姐主動向史雲探長投案</div>
+        <p>2. 從《肯辛頓生活雜誌》的報導與廣告中，你能發現什麼重要線索？</p>
+        <div class="quiz-option" onclick="selectFinal('q2', 'wrong1', this)">A. 福韋克布行刊登了優質布料的推廣廣告</div>
+        <div class="quiz-option" onclick="selectFinal('q2', 'correct', this)">B. 神秘烘焙師「莫拉·貝雅·蘭尼（MB）」奪得冠軍，且正籌劃開設新茶室</div>
+        <div class="quiz-option" onclick="selectFinal('q2', 'wrong2', this)">C. 斯文布魯克夫人登報重金懸賞失竊的紅寶石</div>
       </div>
 
       <div class="story-box">
-        <p>3. 第 18 頁提問：「是不是有兩個人在甜點製作方面有同樣的抱負？」這暗示了什麼？</p>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">A. 美美·思華特與莉奧蘿拉想合開甜點店</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">B. 管家瑪麗安·波伊（M）與得獎烘焙師莫拉·貝雅·蘭尼（MB），她們其實是同一個人！</div>
-        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">C. 史雲探長與哈德遜太太都喜歡吃櫻桃蛋糕</div>
+        <p>3. 案發現場有沒有留下任何與烘焙相關的食材或線索？</p>
+        <div class="quiz-option" onclick="selectFinal('q3', 'correct', this)">A. 現場留下了烘烤好的櫻桃蛋糕與抹麵粉痕跡</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong1', this)">B. 完全沒有留下任何食材痕跡</div>
+        <div class="quiz-option" onclick="selectFinal('q3', 'wrong2', this)">C. 現場留下了未喝完的下午茶與鮮奶盒</div>
       </div>
 
       <div class="story-box">
-        <p>4. 為什麼會出現兩個櫻桃蛋糕，而且寶石還被弗朗普咬到？</p>
-        <div class="quiz-option" onclick="selectFinal('q4', 'correct', this)">A. 波伊小姐匆忙中把兩個蛋糕標記錯了，誤將藏寶石的蛋糕給了弗朗普</div>
-        <div class="quiz-option" onclick="selectFinal('q4', 'wrong1', this)">B. 美美·思華特故意把蛋糕送錯給銀行</div>
-        <div class="quiz-option" onclick="selectFinal('q4', 'wrong2', this)">C. 未婚夫馬丁·蒂德偷換了蛋糕</div>
+        <p>4. 假如你想買彩色絲帶裝飾，為什麼會買不到？</p>
+        <div class="quiz-option" onclick="selectFinal('q4', 'wrong1', this)">A. 絲帶工廠停工導致全倫敦大缺貨</div>
+        <div class="quiz-option" onclick="selectFinal('q4', 'wrong2', this)">B. 思華布藝店將所有絲帶全數燒毀</div>
+        <div class="quiz-option" onclick="selectFinal('q4', 'correct', this)">C. 各色絲帶都被買去裝飾彩虹蛋糕與烘焙獎章了</div>
       </div>
 
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
-        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 綜合所有線索，本案偷走紅寶石的真正主謀是誰？</strong></p>
-        <div class="quiz-option" onclick="selectFinal('q5', 'wrong1', this)">A. 美美·思華特小姐（Mimi Swathe - 無辜的代罪羔羊）</div>
-        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle / 莫拉·貝雅·蘭尼 - 真正的真兇）</div>
-        <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 莉奧蘿拉·思華格小姐（Leonora Swag）</div>
+        <p style="font-size: 1.05rem; color: #8c2d19;"><strong>5. 是不是有兩個人在甜點製作方面有同樣的抱負？</strong></p>
+        <div class="quiz-option" onclick="selectFinal('q5', 'correct', this)">A. 不是！因為看似是兩個不同的人，其實是同一個人的雙重身分（瑪麗安·波伊與莫拉·貝雅·蘭尼是同一人）！</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong1', this)">B. 是的，美美·思華特與莉奧蘿拉兩人都想開設烘焙坊。</div>
+        <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 是的，吉迪恩·弗朗普與史雲探長都想參加烘焙大賽。</div>
       </div>
 
       <!-- 第二部分：人物縮寫密碼解密 -->
@@ -692,7 +692,7 @@
     }
   }
 
-  /* 11 大拆分線索牆 */
+  /* 11 大拆分線索牆 (已更新線索 8 加入「思華布藝用的裁縫粉筆」) */
   const slideCards = [
     { 
       img: '20240119093952729_0002.jpg', 

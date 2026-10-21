@@ -632,7 +632,7 @@
     <!-- 特質卡動態 3D 翻轉展示區 -->
     <div class="traits-wrapper">
       
-      <!-- 1. 全能神探型 橫幅金卡 (1200x450px 比例，頂尖表現時覆蓋) -->
+      <!-- 1. 全能神探型 橫幅金卡 (1200x450px 比例，三關皆首試零失誤時覆蓋) -->
       <div id="all-round-container" style="display: none;">
         <div id="all-round-card-box" class="all-round-container lit">
           <div class="flip-card-inner" onclick="toggleFlip(this)">
@@ -665,7 +665,7 @@
               <div class="title">細節觀察</div>
               <div class="desc">洞察秋毫，捕捉關鍵痕跡</div>
               <div class="flip-hint-lit">🔄 點擊翻頁</div>
-              <div class="flip-hint-unlit">🔒 未獲得特質</div>
+              <div class="flip-hint-unlit">🔒 未解鎖特質（需首試零失誤）</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_hawk.jpg" alt="細節觀察特質卡">
@@ -681,7 +681,7 @@
               <div class="title">嚴密邏輯</div>
               <div class="desc">精準推演時間，構建邏輯框架</div>
               <div class="flip-hint-lit">🔄 點擊翻頁</div>
-              <div class="flip-hint-unlit">🔒 未獲得特質</div>
+              <div class="flip-hint-unlit">🔒 未解鎖特質（需首試零失誤）</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_logic.jpg" alt="嚴密邏輯特質卡">
@@ -697,7 +697,7 @@
               <div class="title">密碼解密</div>
               <div class="desc">洞察代號密碼，破譯多重身份</div>
               <div class="flip-hint-lit">🔄 點擊翻頁</div>
-              <div class="flip-hint-unlit">🔒 未獲得特質</div>
+              <div class="flip-hint-unlit">🔒 未解鎖特質（需首試零失誤）</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_code.jpg" alt="密碼解密特質卡">
@@ -739,15 +739,15 @@
   let isTimelineUnlocked = false; // 時間線排序完成標誌
   let isTab4Unlocked = false;
 
-  /* 背景自動統計答題狀態 */
+  /* 統計各關卡完整提交的次數 */
   let timelineAttempts = 0;
   let tab4Attempts = 0;
   let tab5Attempts = 0;
 
-  let isTimelineCorrect = false; // 時間線是否完全答對
-  let isTimelinePerfect = false; // 是否一次就完全答對
-  let isTab4Perfect = false;
-  let isTab5Perfect = false;
+  let isTimelineCorrect = false; // 時間線是否最終正確
+  let isTimelinePerfect = false; // 是否第一次即完全正確
+  let isTab4Perfect = false;     // Tab 4 是否第一次即完全正確
+  let isTab5Perfect = false;     // Tab 5 是否第一次即完全正確
 
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
@@ -791,11 +791,12 @@
   }
 
   function verifyTab4Answers() {
-    tab4Attempts++;
     if (Object.keys(finalAnswers).length < 5) {
       alert("⚠️ 請將【💡 破案小提示】的 5 道推理題目全部回答完畢喔！");
       return;
     }
+
+    tab4Attempts++; // 僅在填寫完整點擊提交時採計次數
 
     const isFinalCorrect =
       finalAnswers['q1'] === 'correct' &&
@@ -805,7 +806,7 @@
       finalAnswers['q5'] === 'correct';
 
     if (isFinalCorrect) {
-      if (tab4Attempts === 1) isTab4Perfect = true;
+      if (tab4Attempts === 1) isTab4Perfect = true; // 第一次即無錯才判定為 Perfect
       isTab4Unlocked = true;
       alert("🎉 太棒了！第 18 頁的 5 大細節推理完全正確！\n\n🔓 成功解鎖最後分頁【簡稱解密及尋找真兇】！");
 
@@ -932,7 +933,7 @@
     if (isOrderCorrect && isTimeValueCorrect) {
       isTimelineCorrect = true;
       isTimelineUnlocked = true; // 解鎖下一步門檻
-      if (timelineAttempts === 1) isTimelinePerfect = true;
+      if (timelineAttempts === 1) isTimelinePerfect = true; // 第一次即無錯
       alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！\n\n🔓 成功解鎖分頁【💡 破案小提示】！");
 
       document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
@@ -1063,8 +1064,6 @@
   }
 
   function submitFinalInvestigation() {
-    tab5Attempts++;
-
     // 防護檢查：未完成時間線排序阻擋
     if (!isTimelineUnlocked) {
       alert("⚠️ 你尚未完成【⏱️ 事件排序】關卡！請先前往 Tab 3 將事件順序與時間排列正確後再提交報告！");
@@ -1077,6 +1076,8 @@
       return;
     }
 
+    tab5Attempts++; // 僅在填寫完整點擊提交時採計次數
+
     const isMbCorrect = mbSelections.has('A') && mbSelections.has('C') && !mbSelections.has('B') && mbSelections.size === 2;
 
     const isAbbrCorrect =
@@ -1088,7 +1089,7 @@
     const isCulpritCorrect = culpritAnswer === 'correct';
 
     if (isAbbrCorrect && isCulpritCorrect) {
-      if (tab5Attempts === 1) isTab5Perfect = true;
+      if (tab5Attempts === 1) isTab5Perfect = true; // 第一次即無錯才判定為 Perfect
 
       alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
@@ -1104,7 +1105,7 @@
     }
   }
 
-  /* 評估表現並動態更新特質卡 (Lit 點亮 vs Unlit 灰階阻擋翻牌) */
+  /* 精確判定特質卡解鎖（需該模組「首試零失誤」） */
   function calculateAndRenderTraits() {
     const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
 
@@ -1115,17 +1116,17 @@
       document.getElementById('all-round-container').style.display = 'none';
       document.getElementById('three-traits-row').style.display = 'flex';
 
-      // 1. 細節觀察卡：Tab 4 答對解鎖
+      // 1. 細節觀察卡：需【破案小提示】一次全對（零失誤）
       const hawkBox = document.getElementById('trait-hawk-box');
-      hawkBox.className = isTab4Unlocked ? 'flip-card-container lit' : 'flip-card-container unlit';
+      hawkBox.className = isTab4Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
 
-      // 2. 嚴密邏輯卡：時間線【順序與時間皆完全正確】才點亮
+      // 2. 嚴密邏輯卡：需【事件排序】一次全對（零失誤）
       const logicBox = document.getElementById('trait-logic-box');
-      logicBox.className = isTimelineCorrect ? 'flip-card-container lit' : 'flip-card-container unlit';
+      logicBox.className = isTimelinePerfect ? 'flip-card-container lit' : 'flip-card-container unlit';
 
-      // 3. 密碼解密卡：Tab 5 答對解鎖
+      // 3. 密碼解密卡：需【簡稱與指認真兇】一次全對（零失誤）
       const codeBox = document.getElementById('trait-code-box');
-      codeBox.className = 'flip-card-container lit';
+      codeBox.className = isTab5Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
     }
   }
 

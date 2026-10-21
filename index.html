@@ -58,7 +58,7 @@
       font-weight: 600;
     }
 
-    /* 頂部切換頁籤 (Main Nav - 共 5 個導覽按鈕) */
+    /* 頂部切換頁籤 */
     .main-nav {
       display: flex;
       gap: 6px;
@@ -255,66 +255,87 @@
       color: #3d230d;
     }
 
-    /* 3D 卡片翻轉效果 */
-    .card-flip-container {
-      perspective: 1200px;
-      width: 100%;
-      margin: 15px auto;
-      min-height: 420px;
-    }
-
-    .card-inner {
+    /* ==========================================
+       特質卡展示區樣式 (首3個併排一行 + 全能型橫圖)
+       ========================================== */
+    .traits-wrapper {
+      margin: 20px 0;
       position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 420px;
-      transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-      transform-style: preserve-3d;
-      cursor: pointer;
     }
 
-    .card-inner.is-flipped {
-      transform: rotateY(180deg);
+    /* 首 3 個分開的特質卡單列併排 */
+    .traits-row {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: stretch;
     }
 
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      padding: 22px;
-      box-sizing: border-box;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .card-front {
-      background: #1b4332;
-      border: 3px solid #74c69d;
-      color: #f0f7f3;
+    .trait-card {
+      flex: 1;
+      padding: 16px 10px;
+      border-radius: 14px;
+      text-align: center;
+      transition: all 0.4s ease;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
+      justify-content: center;
+      min-height: 150px;
     }
 
-    .card-back {
-      background: #fdfbf7;
-      border: 2px solid #2d6a4f;
-      transform: rotateY(180deg);
-      color: #2b1e16;
-      overflow-y: auto;
+    /* 未點亮（灰階半透明） */
+    .trait-card.unlit {
+      background: #e2dbce;
+      border: 2px dashed #b8a898;
+      color: #8c8275;
+      filter: grayscale(100%);
+      opacity: 0.55;
     }
 
-    .badge-tag {
-      background: #2d6a4f;
-      color: #fff;
-      padding: 6px 16px;
-      border-radius: 20px;
+    /* 點亮（亮麗色彩與金光） */
+    .trait-card.lit {
+      background: linear-gradient(135deg, #1b4332, #2d6a4f);
+      border: 2px solid #74c69d;
+      color: #f0f7f3;
+      box-shadow: 0 6px 18px rgba(45, 106, 79, 0.35);
+      filter: none;
+      opacity: 1;
+    }
+
+    .trait-card .icon {
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .trait-card .title {
+      font-weight: bold;
       font-size: 0.95rem;
-      display: inline-block;
-      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .trait-card .desc {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      opacity: 0.9;
+    }
+
+    /* 全能神探型 橫幅金卡（覆蓋三卡） */
+    .all-round-card {
+      width: 100%;
+      background: linear-gradient(135deg, #b8860b, #d4af37, #8b6508);
+      border: 3px solid #ffe066;
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45); }
+      100% { box-shadow: 0 12px 32px rgba(255, 224, 102, 0.7); }
     }
   </style>
 </head>
@@ -412,7 +433,7 @@
       <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件事件排序 (含時間與順序雙重邏輯驗證與提示) -->
+    <!-- 分頁 3: 案件事件排序 -->
     <div id="nav-3" class="tab-page" style="display: none;">
       <h1>⏱️ 案件事件排序</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方輸入幾「時」幾「分」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
@@ -472,7 +493,7 @@
       <button class="btn" onclick="verifyTab4Answers()">🔍 驗證 5 大推理，解鎖【簡稱解密及尋找真兇】➡️</button>
     </div>
 
-    <!-- 分頁 5: 簡稱解密及尋找真兇（獨立分頁，無劇透選項） -->
+    <!-- 分頁 5: 簡稱解密及尋找真兇 -->
     <div id="nav-5" class="tab-page" style="display: none;">
       <h1>🧩 簡稱解密及尋找真兇</h1>
       <h2>── 請完成人物縮寫比對，並綜合所有線索指認出真正的真兇 ──</h2>
@@ -521,32 +542,49 @@
 
   </div>
 
-  <!-- 終章獨立大結局頁面：心理測驗延續神探榮譽卡 + 第 19 頁真相大白 -->
+  <!-- 終章獨立大結局頁面：特質卡結算 + 第 19 頁真相大白 -->
   <div id="victory-screen" style="display: none;">
     <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
-    <h2>── 倫敦貝克街 221 號 B 偵探檔案結案 ──</h2>
+    <h2>── 本案解鎖神探特質卡結算 ──</h2>
 
-    <!-- 1. 心理測驗延續 3D 榮譽勳章卡 -->
-    <div class="card-flip-container">
-      <div class="card-inner" id="resultCard" onclick="toggleCardFlip()">
-        
-        <div class="card-front">
-          <h2 style="color: #f0f7f3; font-size: 1.7rem;">🕵️‍♂️ 頂級神探成就卡</h2>
-          <p style="margin: 12px 0; font-size: 1.05rem;">延續心理測驗的洞察力，你成功破獲【櫻桃蛋糕藏寶案】！</p>
-          <div class="badge-tag">🏅 榮獲【邏輯縝密名偵探】勳章</div>
-          <p style="margin-top: 22px; color: #74c69d; font-size: 0.9rem;">✨ 點擊卡片翻轉查看詳細案件解析 🔄</p>
-        </div>
-
-        <div class="card-back">
-          <h2 style="color: #1b4332; text-align: left; margin-bottom: 8px;">📜 案件真相摘要</h2>
-          <p style="line-height: 1.6; font-size: 0.92rem; color: #2d3748;">
-            管家瑪麗安·波伊（Miss Boyle / 莫拉·貝雅·蘭尼）因貸款被拒，利用美美·思華特量度窗簾做假的不在場證明，偷走紅寶石藏入櫻桃蛋糕中。卻因匆忙標記錯蛋糕，讓弗朗普咬到寶石弄傷牙齒去看牙醫，最終真相大白！
+    <!-- 特質卡動態展示容器 -->
+    <div class="traits-wrapper">
+      
+      <!-- 1. 全能神探型 橫幅金卡（頂尖表現時覆蓋） -->
+      <div id="all-round-container" style="display: none;">
+        <div class="all-round-card">
+          <div style="font-size: 2.3rem; margin-bottom: 6px;">👑</div>
+          <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 6px;">【全能神探型】徽章解鎖！</h2>
+          <p style="font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
+            完美通關！你在細節觀察、時間推算與密碼解密全方位展現了頂尖天賦，獲頒本案最高榮譽！
           </p>
-          <hr style="border: 0; border-top: 1px dashed #b8a898; margin: 10px 0;">
-          <p style="font-weight: bold; color: #1b4332; text-align: center;">🎉 請往下滑動，翻轉閱讀第 19 頁真相檔案！</p>
+        </div>
+      </div>
+
+      <!-- 2. 首 3 個分開的特質卡單列併排 -->
+      <div id="three-traits-row" class="traits-row">
+        <!-- 特質 1：細節觀察 -->
+        <div id="trait-hawk" class="trait-card unlit">
+          <div class="icon">🦅</div>
+          <div class="title">細節觀察</div>
+          <div class="desc">一眼看穿現場痕跡與雜誌線索</div>
         </div>
 
+        <!-- 特質 2：嚴密邏輯 -->
+        <div id="trait-logic" class="trait-card unlit">
+          <div class="icon">🧠</div>
+          <div class="title">嚴密邏輯</div>
+          <div class="desc">精準掌握案件時間軸與順序</div>
+        </div>
+
+        <!-- 特質 3：密碼解密 -->
+        <div id="trait-code" class="trait-card unlit">
+          <div class="icon">🧩</div>
+          <div class="title">密碼解密</div>
+          <div class="desc">看穿 MB 縮寫與雙重身分</div>
+        </div>
       </div>
+
     </div>
 
     <!-- 2. 第 19 頁鏡像點擊翻轉互動圖解 -->
@@ -577,6 +615,15 @@
 <script>
   let isGate1Unlocked = false;
   let isTab4Unlocked = false;
+
+  /* 背景自動統計答題嘗試次數（無須 Database） */
+  let timelineAttempts = 0;
+  let tab4Attempts = 0;
+  let tab5Attempts = 0;
+
+  let isTimelinePerfect = false;
+  let isTab4Perfect = false;
+  let isTab5Perfect = false;
 
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
@@ -621,6 +668,7 @@
   }
 
   function verifyTab4Answers() {
+    tab4Attempts++;
     if (Object.keys(finalAnswers).length < 5) {
       alert("⚠️ 請將【💡 破案小提示】的 5 道推理題目全部回答完畢喔！");
       return;
@@ -634,6 +682,7 @@
       finalAnswers['q5'] === 'correct';
 
     if (isFinalCorrect) {
+      if (tab4Attempts === 1) isTab4Perfect = true; // 一次完全答對
       isTab4Unlocked = true;
       alert("🎉 太棒了！第 18 頁的 5 大細節推理完全正確！\n\n🔓 成功解鎖最後分頁【簡稱解密及尋找真兇】！");
 
@@ -663,10 +712,11 @@
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     
     document.getElementById(pageId).style.display = 'block';
+    document.getElementById(`tab-btn-${pageIndex}`).classList.active = true;
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
   }
 
-  /* 精確對照的 6 大事件（時間線數據依據原書正確時間更新） */
+  /* 精確對照的 6 大事件 */
   const timelineData = [
     { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 0, enteredHour: '', enteredMin: '' },
     { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
@@ -727,6 +777,7 @@
   }
 
   function checkTimelineOrder() {
+    timelineAttempts++;
     let isOrderCorrect = true;
     let isTimeValueCorrect = true;
 
@@ -745,6 +796,7 @@
     }
 
     if (isOrderCorrect && isTimeValueCorrect) {
+      if (timelineAttempts === 1) isTimelinePerfect = true; // 一次完全答對
       alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！");
     } else if (isOrderCorrect && !isTimeValueCorrect) {
       alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
@@ -755,7 +807,7 @@
     }
   }
 
-  /* 11 大拆分線索牆 (已更新線索 8 加入「思華布藝用的裁縫粉筆」) */
+  /* 11 大拆分線索牆 */
   const slideCards = [
     { 
       img: '20240119093952729_0002.jpg', 
@@ -869,6 +921,8 @@
   }
 
   function submitFinalInvestigation() {
+    tab5Attempts++;
+
     if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0 || !culpritAnswer) {
       alert("⚠️ 請將本分頁的人物縮寫比對與【指認真兇】問題全部回答完畢喔！（MB 可能不止一個答案喔！）");
       return;
@@ -885,13 +939,51 @@
     const isCulpritCorrect = culpritAnswer === 'correct';
 
     if (isAbbrCorrect && isCulpritCorrect) {
+      if (tab5Attempts === 1) isTab5Perfect = true; // 一次完全答對
+
       alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
+      // 計算並渲染特質卡
+      calculateAndRenderTraits();
+
       document.getElementById('main-dashboard').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n2. 正確指認真正的真兇！");
+    }
+  }
+
+  /* 評估表現並渲染特質卡（點亮 / 全能型覆蓋） */
+  function calculateAndRenderTraits() {
+    // 判定條件：全部完勝（一次就全對或完美完成）則觸發「全能神探型」
+    const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
+
+    if (isAllRound) {
+      // 顯示全能橫圖，隱藏三卡
+      document.getElementById('all-round-container').style.display = 'block';
+      document.getElementById('three-traits-row').style.display = 'none';
+    } else {
+      document.getElementById('all-round-container').style.display = 'none';
+      document.getElementById('three-traits-row').style.display = 'flex';
+
+      // 1. 細節觀察卡：完成 Tab 4 推理即可解鎖點亮（表現好亮光更足）
+      const hawkCard = document.getElementById('trait-hawk');
+      if (isTab4Unlocked) {
+        hawkCard.className = 'trait-card lit';
+      }
+
+      // 2. 嚴密邏輯卡：完成時間線排序解鎖點亮
+      const logicCard = document.getElementById('trait-logic');
+      if (timelineAttempts > 0) {
+        logicCard.className = 'trait-card lit';
+      }
+
+      // 3. 密碼解密卡：完成縮寫解密解鎖點亮
+      const codeCard = document.getElementById('trait-code');
+      if (isTab5Perfect || tab5Attempts > 0) {
+        codeCard.className = 'trait-card lit';
+      }
     }
   }
 
@@ -909,10 +1001,6 @@
       hint.innerHTML = '🔍 發現加密的鏡像真相檔案！請點擊圖片翻轉解密 🔄';
       isImageDecoded = false;
     }
-  }
-
-  function toggleCardFlip() {
-    document.getElementById('resultCard').classList.toggle('is-flipped');
   }
 
   function returnToDashboard() {

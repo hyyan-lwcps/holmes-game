@@ -257,6 +257,7 @@
 
     /* ==========================================
        特質卡 3D 雙面翻牌效果 (正面:文字/Emoji ↔ 背面:圖片)
+       第一至三張比例 400x450，全能神探型 1200x450
        ========================================== */
     .traits-wrapper {
       margin: 20px 0;
@@ -270,10 +271,19 @@
       align-items: stretch;
     }
 
+    /* 前 3 張：400x450 比例 */
     .flip-card-container {
       flex: 1;
       perspective: 1000px;
-      min-height: 180px;
+      aspect-ratio: 400 / 450;
+      min-width: 0;
+    }
+
+    /* 全能型橫圖：1200x450 比例 */
+    .all-round-container {
+      width: 100%;
+      perspective: 1000px;
+      aspect-ratio: 1200 / 450;
     }
 
     .flip-card-inner {
@@ -283,11 +293,21 @@
       text-align: center;
       transition: transform 0.6s ease;
       transform-style: preserve-3d;
-      cursor: pointer;
       border-radius: 14px;
     }
 
-    /* 點亮類別 toggled flipped */
+    /* 解鎖特質時鼠標顯示手勢 */
+    .flip-card-container.lit .flip-card-inner,
+    .all-round-container.lit .flip-card-inner {
+      cursor: pointer;
+    }
+
+    /* 未解鎖特質時鼠標顯示禁止 */
+    .flip-card-container.unlit .flip-card-inner,
+    .all-round-container.unlit .flip-card-inner {
+      cursor: not-allowed;
+    }
+
     .flip-card-inner.flipped {
       transform: rotateY(180deg);
     }
@@ -308,7 +328,7 @@
       overflow: hidden;
     }
 
-    /* 卡片正面：文字 + Emoji */
+    /* 正面內容樣式 */
     .flip-card-front .icon {
       font-size: 2.2rem;
       margin-bottom: 4px;
@@ -316,43 +336,63 @@
 
     .flip-card-front .title {
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       margin-bottom: 4px;
     }
 
     .flip-card-front .desc {
-      font-size: 0.78rem;
-      line-height: 1.3;
+      font-size: 0.8rem;
+      line-height: 1.35;
       opacity: 0.92;
+      padding: 0 5px;
     }
 
-    .flip-hint {
-      font-size: 0.7rem;
-      margin-top: 6px;
-      opacity: 0.8;
+    .flip-hint-lit {
+      font-size: 0.72rem;
+      margin-top: 8px;
       color: #ffe066;
       font-weight: bold;
     }
 
-    /* 卡片背面：圖像 */
+    .flip-hint-unlit {
+      font-size: 0.72rem;
+      margin-top: 8px;
+      color: #706555;
+      font-weight: bold;
+    }
+
+    /* 獲得特質（高質感綠/金彩亮卡） */
+    .flip-card-container.lit .flip-card-front {
+      background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #112d20 100%);
+      border: 2px solid #d4af37;
+      color: #f0f7f3;
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3), inset 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+
+    .all-round-container.lit .flip-card-front {
+      background: linear-gradient(135deg, #4a3510 0%, #b8860b 50%, #d4af37 100%);
+      border: 3px solid #ffe066;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
+    }
+
+    .flip-card-container.lit .flip-hint-unlit,
+    .all-round-container.lit .flip-hint-unlit {
+      display: none;
+    }
+
+    /* 背面內容（圖卡） */
     .flip-card-back {
       transform: rotateY(180deg);
-      background: #fff;
+      background: #1a0f0a;
+      padding: 0;
     }
 
     .flip-card-back img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 10px;
-    }
-
-    /* 點亮狀態 (彩色亮卡) */
-    .flip-card-container.lit .flip-card-front {
-      background: linear-gradient(135deg, #1b4332, #2d6a4f);
-      border: 2px solid #74c69d;
-      color: #f0f7f3;
-      box-shadow: 0 6px 18px rgba(45, 106, 79, 0.35);
+      border-radius: 12px;
     }
 
     .flip-card-container.lit .flip-card-back {
@@ -360,46 +400,24 @@
       box-shadow: 0 6px 18px rgba(184, 134, 11, 0.35);
     }
 
-    /* 未獲得狀態 (灰階半透明) */
-    .flip-card-container.unlit .flip-card-front {
-      background: #d8d0c0;
-      border: 2px dashed #a09585;
-      color: #6e6558;
-      filter: grayscale(100%);
-      opacity: 0.5;
-    }
-
-    .flip-card-container.unlit .flip-card-front .flip-hint {
-      color: #6e6558;
-    }
-
-    .flip-card-container.unlit .flip-card-back {
-      border: 2px dashed #a09585;
-      background: #e2dbce;
-    }
-
-    .flip-card-container.unlit .flip-card-back img {
-      filter: grayscale(100%);
-      opacity: 0.4;
-    }
-
-    /* 全能神探型 橫幅 3D 翻轉卡 */
-    .all-round-container {
-      width: 100%;
-      perspective: 1000px;
-      min-height: 190px;
-    }
-
-    .all-round-container.lit .flip-card-front {
-      background: linear-gradient(135deg, #b8860b, #d4af37, #8b6508);
-      border: 3px solid #ffe066;
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
-    }
-
     .all-round-container.lit .flip-card-back {
       border: 3px solid #ffe066;
       box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
+    }
+
+    /* 未獲得特質（灰階半透明虛線邊框，無法翻面） */
+    .flip-card-container.unlit .flip-card-front,
+    .all-round-container.unlit .flip-card-front {
+      background: rgba(200, 190, 175, 0.4);
+      border: 2px dashed #908575;
+      color: #706555;
+      filter: grayscale(100%);
+      opacity: 0.65;
+    }
+
+    .flip-card-container.unlit .flip-hint-lit,
+    .all-round-container.unlit .flip-hint-lit {
+      display: none;
     }
   </style>
 </head>
@@ -609,23 +627,24 @@
   <!-- 終章獨立大結局頁面：可點擊 3D 雙面翻轉特質卡 + 第 19 頁真相大白 -->
   <div id="victory-screen" style="display: none;">
     <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
-    <h2>── 本案解鎖神探特質卡結算（💡 點擊卡片可翻轉看圖） ──</h2>
+    <h2>── 本案解鎖神探特質卡結算 ──</h2>
 
     <!-- 特質卡動態 3D 翻轉展示區 -->
     <div class="traits-wrapper">
       
-      <!-- 1. 全能神探型 橫幅金卡（頂尖表現時覆蓋） -->
+      <!-- 1. 全能神探型 橫幅金卡 (1200x450px 比例，頂尖表現時覆蓋) -->
       <div id="all-round-container" style="display: none;">
         <div id="all-round-card-box" class="all-round-container lit">
-          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
-            <!-- 正面：Emoji + 金色文字說明 -->
+          <div class="flip-card-inner" onclick="toggleFlip(this)">
+            <!-- 正面：金色文字說明 -->
             <div class="flip-card-front">
-              <div style="font-size: 2.3rem; margin-bottom: 4px;">👑</div>
-              <h2 style="color: #fff; font-size: 1.4rem; margin-bottom: 4px;">【全能神探型】徽章解鎖！</h2>
-              <p style="font-size: 0.9rem; opacity: 0.95; line-height: 1.4;">
-                完美通關！你在細節觀察、時間推算與密碼解密全方位展現頂尖天賦！
+              <div style="font-size: 2.5rem; margin-bottom: 4px;">👑</div>
+              <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 6px;">【全能神探型】勳章解鎖！</h2>
+              <p style="font-size: 0.95rem; opacity: 0.95; line-height: 1.4; max-width: 80%;">
+                完美通關！洞察細節，精密推演，破譯萬象真諦。<br>恭喜獲頒貝克街首席傳奇大偵探勳章！
               </p>
-              <div class="flip-hint">🔄 點擊翻轉查看神探角色圖卡</div>
+              <div class="flip-hint-lit">🔄 點擊翻頁查看全能神探角色圖卡</div>
+              <div class="flip-hint-unlit">🔒 未獲得特質（無法翻頁）</div>
             </div>
             <!-- 背面：橫圖 trait_allround.png -->
             <div class="flip-card-back">
@@ -635,17 +654,18 @@
         </div>
       </div>
 
-      <!-- 2. 首 3 個分開的特質卡單列併排 -->
+      <!-- 2. 首 3 個分開的特質卡單列併排 (400x450px 比例) -->
       <div id="three-traits-row" class="traits-row">
         
         <!-- 特質 1：細節觀察 -->
         <div id="trait-hawk-box" class="flip-card-container unlit">
-          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
               <div class="icon">🦅</div>
               <div class="title">細節觀察</div>
-              <div class="desc">一眼看穿現場痕跡與雜誌線索</div>
-              <div class="flip-hint">🔄 點擊翻頁</div>
+              <div class="desc">洞察秋毫，捕捉關鍵痕跡</div>
+              <div class="flip-hint-lit">🔄 點擊翻頁</div>
+              <div class="flip-hint-unlit">🔒 未獲得特質</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_hawk.png" alt="細節觀察特質卡">
@@ -655,12 +675,13 @@
 
         <!-- 特質 2：嚴密邏輯 -->
         <div id="trait-logic-box" class="flip-card-container unlit">
-          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
               <div class="icon">🧠</div>
               <div class="title">嚴密邏輯</div>
-              <div class="desc">精準掌握案件時間軸與順序</div>
-              <div class="flip-hint">🔄 點擊翻頁</div>
+              <div class="desc">精準推演時間，構建邏輯框架</div>
+              <div class="flip-hint-lit">🔄 點擊翻頁</div>
+              <div class="flip-hint-unlit">🔒 未獲得特質</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_logic.png" alt="嚴密邏輯特質卡">
@@ -670,12 +691,13 @@
 
         <!-- 特質 3：密碼解密 -->
         <div id="trait-code-box" class="flip-card-container unlit">
-          <div class="flip-card-inner" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
               <div class="icon">🧩</div>
               <div class="title">密碼解密</div>
-              <div class="desc">看穿 MB 縮寫與雙重身分</div>
-              <div class="flip-hint">🔄 點擊翻頁</div>
+              <div class="desc">洞察代號密碼，破譯多重身份</div>
+              <div class="flip-hint-lit">🔄 點擊翻頁</div>
+              <div class="flip-hint-unlit">🔒 未獲得特質</div>
             </div>
             <div class="flip-card-back">
               <img src="trait_code.png" alt="密碼解密特質卡">
@@ -1082,7 +1104,7 @@
     }
   }
 
-  /* 評估表現並動態更新特質卡 (Lit vs Unlit 狀態) */
+  /* 評估表現並動態更新特質卡 (Lit 點亮 vs Unlit 灰階阻擋翻牌) */
   function calculateAndRenderTraits() {
     const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
 
@@ -1104,6 +1126,14 @@
       // 3. 密碼解密卡：Tab 5 答對解鎖
       const codeBox = document.getElementById('trait-code-box');
       codeBox.className = 'flip-card-container lit';
+    }
+  }
+
+  /* 安全點擊翻牌邏輯：僅當容器為 lit 時才允許翻面 */
+  function toggleFlip(innerElem) {
+    const container = innerElem.closest('.flip-card-container, .all-round-container');
+    if (container && container.classList.contains('lit')) {
+      innerElem.classList.toggle('flipped');
     }
   }
 

@@ -430,7 +430,6 @@
       <h1>💡 破案小提示（第 18 頁推理）</h1>
       <h2>── 請邊對照第 18 頁的提問圖卡，邊回答下方的 5 道推理問題 ──</h2>
 
-      <!-- 第 18 頁圖檔展示 -->
       <div class="img-display-box">
         <img src="18.jpg" alt="破案小提示第18頁">
       </div>
@@ -470,7 +469,7 @@
         <div class="quiz-option" onclick="selectFinal('q5', 'wrong2', this)">C. 是的，貝利先生（Mr Berry）與吉迪恩·弗朗普都想參加烘焙大賽。</div>
       </div>
 
-      <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-5')">🧩 前往【簡稱解密及尋找真兇】➡️</button>
+      <button class="btn" onclick="verifyTab4Answers()">🔍 驗證 5 大推理，解鎖【簡稱解密及尋找真兇】➡️</button>
     </div>
 
     <!-- 分頁 5: 簡稱解密及尋找真兇（獨立分頁） -->
@@ -512,8 +511,8 @@
 
       <div class="story-box" style="border-left-color: #8c2d19; background: #fffdf5;">
         <p style="font-size: 1.05rem; color: #8c2d19;"><strong>🕵️ 綜合所有線索，本案偷走紅寶石的真正主謀是誰？</strong></p>
-        <div class="quiz-option" onclick="selectCulprit('wrong1', this)">A. 美美·思華特小姐（Mimi Swathe - 無辜的代罪羔羊）</div>
-        <div class="quiz-option" onclick="selectCulprit('correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle / 莫拉·貝雅·蘭尼 - 真正的真兇）</div>
+        <div class="quiz-option" onclick="selectCulprit('wrong1', this)">A. 美美·思華特小姐（Mimi Swathe）</div>
+        <div class="quiz-option" onclick="selectCulprit('correct', this)">B. 瑪麗安·波伊小姐（Miss Boyle）</div>
         <div class="quiz-option" onclick="selectCulprit('wrong2', this)">C. 莉奧蘿拉·思華格小姐（Leonora Swag）</div>
       </div>
 
@@ -576,7 +575,8 @@
 </div>
 
 <script>
-  let isUnlocked = false;
+  let isGate1Unlocked = false;
+  let isTab4Unlocked = false;
 
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
@@ -603,15 +603,14 @@
       gateAnswers.location === 'estate' &&
       gateAnswers.arrested === 'mimi'
     ) {
-      isUnlocked = true;
-      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，後續所有搜查分頁已全部解鎖！");
+      isGate1Unlocked = true;
+      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，11大線索牆、事件排序與破案小提示已解鎖！");
 
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
       document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
       document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
-      document.getElementById('tab-btn-5').innerText = '🧩 簡稱解密及尋找真兇';
 
-      for (let i = 2; i <= 5; i++) {
+      for (let i = 2; i <= 4; i++) {
         document.getElementById(`tab-btn-${i}`).classList.add('unlocked');
       }
 
@@ -621,10 +620,42 @@
     }
   }
 
+  function verifyTab4Answers() {
+    if (Object.keys(finalAnswers).length < 5) {
+      alert("⚠️ 請將【💡 破案小提示】的 5 道推理題目全部回答完畢喔！");
+      return;
+    }
+
+    const isFinalCorrect =
+      finalAnswers['q1'] === 'correct' &&
+      finalAnswers['q2'] === 'correct' &&
+      finalAnswers['q3'] === 'correct' &&
+      finalAnswers['q4'] === 'correct' &&
+      finalAnswers['q5'] === 'correct';
+
+    if (isFinalCorrect) {
+      isTab4Unlocked = true;
+      alert("🎉 太棒了！第 18 頁的 5 大細節推理完全正確！\n\n🔓 成功解鎖最後分頁【簡稱解密及尋找真兇】！");
+
+      document.getElementById('tab-btn-5').innerText = '🧩 簡稱解密及尋找真兇';
+      document.getElementById('tab-btn-5').classList.add('unlocked');
+
+      switchNav('nav-5');
+    } else {
+      alert("🔍 5 道推理題中有回答錯誤的地方喔！請重新對照第 18 頁的細節提問再試一次！");
+    }
+  }
+
   function switchNav(pageId) {
-    const pageIndex = pageId.replace('nav-', '');
-    if (pageIndex !== '1' && !isUnlocked) {
-      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能跟福爾摩斯動身開啟後續分頁喔！");
+    const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
+
+    if (pageIndex > 1 && pageIndex < 5 && !isGate1Unlocked) {
+      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟後續分頁喔！");
+      return;
+    }
+
+    if (pageIndex === 5 && !isTab4Unlocked) {
+      alert("🔒 請先在【💡 破案小提示】中答對 5 道推理題目，才能解鎖【簡稱解密及尋找真兇】分頁喔！");
       return;
     }
 
@@ -824,13 +855,6 @@
   }
 
   function submitFinalInvestigation() {
-    // 檢查第4分頁的 5 題推理題
-    if (Object.keys(finalAnswers).length < 5) {
-      alert("⚠️ 請先在【💡 破案小提示】分頁將 5 道推理題目全部回答完畢喔！");
-      switchNav('nav-4');
-      return;
-    }
-
     // 檢查第5分頁的 4 題縮寫與指認真兇題
     if (!abbrAnswers.gf || !abbrAnswers.mt || !abbrAnswers.m || mbSelections.size === 0 || !culpritAnswer) {
       alert("⚠️ 請將本分頁的人物縮寫比對與【指認真兇】問題全部回答完畢喔！（MB 可能不止一個答案喔！）");
@@ -840,13 +864,6 @@
     // 驗證縮寫第 4 題 (必須同時選 A 和 C，且不能選 B)
     const isMbCorrect = mbSelections.has('A') && mbSelections.has('C') && !mbSelections.has('B') && mbSelections.size === 2;
 
-    const isFinalCorrect =
-      finalAnswers['q1'] === 'correct' &&
-      finalAnswers['q2'] === 'correct' &&
-      finalAnswers['q3'] === 'correct' &&
-      finalAnswers['q4'] === 'correct' &&
-      finalAnswers['q5'] === 'correct';
-
     const isAbbrCorrect =
       abbrAnswers.gf === 'correct' &&
       abbrAnswers.mt === 'correct' &&
@@ -855,15 +872,15 @@
 
     const isCulpritCorrect = culpritAnswer === 'correct';
 
-    if (isFinalCorrect && isAbbrCorrect && isCulpritCorrect) {
-      alert("🎉 太棒了！推理、縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
+    if (isAbbrCorrect && isCulpritCorrect) {
+      alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
       
       // 切換至獨立的終章大結局頁面
       document.getElementById('main-dashboard').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 【破案小提示】的細節推理\n2. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n3. 正確指認真正的真兇！");
+      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n2. 正確指認真正的真兇！");
     }
   }
 

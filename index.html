@@ -230,9 +230,7 @@
       color: #fff;
     }
 
-    /* ==========================================
-       11 大線索牆：左右雙欄佈局
-       ========================================== */
+    /* 11 大線索牆：左右雙欄佈局 */
     .clue-wall-layout {
       display: flex;
       gap: 16px;
@@ -317,9 +315,7 @@
       }
     }
 
-    /* ==========================================
-       特質卡 3D 雙面翻牌效果 (正面:文字/Emoji ↔ 背面:圖片)
-       ========================================== */
+    /* 特質卡 3D 雙面翻牌效果 */
     .traits-wrapper {
       margin: 20px 0;
       position: relative;
@@ -332,7 +328,6 @@
       align-items: stretch;
     }
 
-    /* 前 3 張：400x450 比例 */
     .flip-card-container {
       flex: 1;
       perspective: 1000px;
@@ -340,7 +335,6 @@
       min-width: 0;
     }
 
-    /* 全能型橫圖：1200x450 比例 */
     .all-round-container {
       width: 100%;
       perspective: 1000px;
@@ -357,13 +351,11 @@
       border-radius: 14px;
     }
 
-    /* 解鎖特質時鼠標顯示手勢 */
     .flip-card-container.lit .flip-card-inner,
     .all-round-container.lit .flip-card-inner {
       cursor: pointer;
     }
 
-    /* 未解鎖特質時鼠標顯示禁止 */
     .flip-card-container.unlit .flip-card-inner,
     .all-round-container.unlit .flip-card-inner {
       cursor: not-allowed;
@@ -389,7 +381,6 @@
       overflow: hidden;
     }
 
-    /* 正面內容樣式 */
     .flip-card-front .icon {
       font-size: 2.2rem;
       margin-bottom: 4px;
@@ -422,7 +413,6 @@
       font-weight: bold;
     }
 
-    /* 獲得特質（高質感綠/金彩亮卡） */
     .flip-card-container.lit .flip-card-front {
       background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #112d20 100%);
       border: 2px solid #d4af37;
@@ -442,7 +432,6 @@
       display: none;
     }
 
-    /* 背面內容（圖卡） */
     .flip-card-back {
       transform: rotateY(180deg);
       background: #1a0f0a;
@@ -466,7 +455,6 @@
       box-shadow: 0 10px 25px rgba(184, 134, 11, 0.45);
     }
 
-    /* 未獲得特質（灰階半透明虛線邊框，無法翻面） */
     .flip-card-container.unlit .flip-card-front,
     .all-round-container.unlit .flip-card-front {
       background: rgba(200, 190, 175, 0.4);
@@ -485,6 +473,26 @@
 <body>
 
 <div class="glass-card">
+
+  <!-- 自訂跳關教務彈窗 (完全避免 iPad/平板 prompt/confirm 被系統封鎖的問題) -->
+  <div id="custom-jump-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+    <div style="background: #fdfbf7; border: 3px solid #7f5539; border-radius: 16px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;">
+      <h3 style="color: #1b4332; margin-bottom: 12px; font-size: 1.3rem;">🏫 接續上次課堂進度驗證</h3>
+      <p style="font-size: 0.95rem; color: #582f0e; margin-bottom: 16px; line-height: 1.5;">
+        請確認上次【事件排序】的完成狀況：
+      </p>
+      
+      <div style="margin-bottom: 18px; text-align: left; background: #f4ece1; padding: 12px 14px; border-radius: 10px; border: 1px solid #c8beac;">
+        <label style="font-size: 0.88rem; font-weight: bold; color: #1b4332; display: block; margin-bottom: 6px;">🔐 若為『一次過全對』，請輸入教師授權碼：</label>
+        <input type="password" id="modal-pin-input" placeholder="請輸入教師授權碼" style="width: 100%; padding: 10px; border: 1.5px solid #b8a898; border-radius: 8px; font-size: 0.95rem; background: #fffdf9;">
+      </div>
+
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn" style="flex: 1; margin: 0; background: linear-gradient(135deg, #7f5539, #582f0e); font-size: 0.9rem;" onclick="confirmModalJump(false)">一般接續（未一次全對）</button>
+        <button class="btn" style="flex: 1; margin: 0; font-size: 0.9rem;" onclick="confirmModalJump(true)">驗證並完美接續 ➡️</button>
+      </div>
+    </div>
+  </div>
 
   <!-- 0. 開頭獨立頁面：福爾摩斯的邀請信 + 快捷關卡跳轉區域 -->
   <div id="welcome-screen">
@@ -570,16 +578,13 @@
       <button class="btn" onclick="verifyGateAnswers()">🔍 驗證基本資料，解鎖現場搜查（跟福爾摩斯動身！）</button>
     </div>
 
-    <!-- 分頁 2: 11大拆分線索牆 (升級為左右雙欄) -->
+    <!-- 分頁 2: 11大拆分線索牆 (左右雙欄) -->
     <div id="nav-2" class="tab-page" style="display: none;">
       <h1>🖼️ 11 大拆分線索牆</h1>
       <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">點擊左側線索按鈕，可直接切換查看對應圖文線索與偵探便利貼：</p>
 
       <div class="clue-wall-layout">
-        <!-- 左側：11 大線索按鈕選單 -->
         <div id="clue-sidebar" class="clue-sidebar"></div>
-
-        <!-- 右側：線索圖文展示區 -->
         <div id="clue-display-area" class="clue-content"></div>
       </div>
 
@@ -700,14 +705,10 @@
     <h1 style="color: #8c2d19; font-size: 1.8rem;">🎉 破案！真相大白（CASE CLOSED）</h1>
     <h2>── 本案解鎖神探特質卡結算 ──</h2>
 
-    <!-- 特質卡動態 3D 翻轉展示區 -->
     <div class="traits-wrapper">
-      
-      <!-- 1. 全能神探型 橫幅金卡 (1200x450px 比例，三關皆首試零失誤時覆蓋) -->
       <div id="all-round-container" style="display: none;">
         <div id="all-round-card-box" class="all-round-container lit">
           <div class="flip-card-inner" onclick="toggleFlip(this)">
-            <!-- 正面：金色文字說明 -->
             <div class="flip-card-front">
               <div style="font-size: 2.5rem; margin-bottom: 4px;">👑</div>
               <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 6px;">【全能神探型】勳章解鎖！</h2>
@@ -717,7 +718,6 @@
               <div class="flip-hint-lit">🔄 點擊翻頁查看全能神探角色圖卡</div>
               <div class="flip-hint-unlit">🔒 未獲得特質（無法翻頁）</div>
             </div>
-            <!-- 背面：橫圖 trait_allround.jpg -->
             <div class="flip-card-back">
               <img src="trait_allround.jpg" alt="全能神探角色卡">
             </div>
@@ -725,10 +725,7 @@
         </div>
       </div>
 
-      <!-- 2. 首 3 個分開的特質卡單列併排 (400x450px 比例) -->
       <div id="three-traits-row" class="traits-row">
-        
-        <!-- 特質 1：細節觀察 -->
         <div id="trait-hawk-box" class="flip-card-container unlit">
           <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
@@ -744,7 +741,6 @@
           </div>
         </div>
 
-        <!-- 特質 2：嚴密邏輯 -->
         <div id="trait-logic-box" class="flip-card-container unlit">
           <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
@@ -760,7 +756,6 @@
           </div>
         </div>
 
-        <!-- 特質 3：密碼解密 -->
         <div id="trait-code-box" class="flip-card-container unlit">
           <div class="flip-card-inner" onclick="toggleFlip(this)">
             <div class="flip-card-front">
@@ -775,12 +770,9 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
 
-    <!-- 2. 第 19 頁鏡像點擊翻轉互動圖解 -->
     <div class="story-box" style="border-left-color: #1b4332; background: #fdfbf7; margin-top: 25px; padding: 20px;">
       <h2 style="color: #1b4332; font-size: 1.4rem; text-align: center; margin-bottom: 12px;">📖 案件真相大白（第 19 頁解密檔案）</h2>
       
@@ -809,6 +801,8 @@
   /* 教師專屬授權口令 */
   const TEACHER_PIN = "221b";
 
+  let pendingTargetTab = 4; // 暫存跳轉關卡
+
   let isGate1Unlocked = false;
   let isTimelineUnlocked = false;
   let isTab4Unlocked = false;
@@ -828,15 +822,17 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  /* 開啟自訂 Modal 視窗，避免原生 prompt/confirm 在平板 blocked 的問題 */
   function jumpToTab(targetTabNum) {
-    const isClaimedPerfect = confirm(
-      "🏫 請確認上次【事件排序】表現：\n\n" +
-      "・點擊【確定】：上次一次過全對（需輸入教師授權口令）\n" +
-      "・點擊【取消】：一般接續（未一次過全對）"
-    );
+    pendingTargetTab = targetTabNum;
+    document.getElementById('modal-pin-input').value = '';
+    document.getElementById('custom-jump-modal').style.display = 'flex';
+  }
 
-    if (isClaimedPerfect) {
-      const pin = prompt("🔐 請輸入教師授權口令以解鎖『一次過全對』特質資格：");
+  /* 自訂 Modal 按鈕事件處置 */
+  function confirmModalJump(isTryPerfect) {
+    if (isTryPerfect) {
+      const pin = document.getElementById('modal-pin-input').value.trim();
       if (pin === TEACHER_PIN) {
         isTimelinePerfect = true;
         alert("✨ 教師授權成功！已為本組保留『嚴密邏輯』特質解鎖資格。");
@@ -848,10 +844,14 @@
       isTimelinePerfect = false;
     }
 
+    // 關閉 Modal
+    document.getElementById('custom-jump-modal').style.display = 'none';
+
+    // 執行關卡切換與解鎖
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
 
-    if (targetTabNum >= 4) {
+    if (pendingTargetTab >= 4) {
       isGate1Unlocked = true;
       isTimelineUnlocked = true;
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
@@ -862,13 +862,13 @@
       document.getElementById('tab-btn-4').classList.add('unlocked');
     }
 
-    if (targetTabNum >= 5) {
+    if (pendingTargetTab >= 5) {
       isTab4Unlocked = true;
       document.getElementById('tab-btn-5').innerText = '🧩 簡稱解密及尋找真兇';
       document.getElementById('tab-btn-5').classList.add('unlocked');
     }
 
-    switchNav('nav-' + targetTabNum);
+    switchNav('nav-' + pendingTargetTab);
   }
 
   let gateAnswers = { item: null, owner: null, location: null, arrested: null };
@@ -962,7 +962,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /* 精確對照的 6 大事件 */
   const timelineData = [
     { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 0, enteredHour: '', enteredMin: '' },
     { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
@@ -1060,7 +1059,6 @@
     }
   }
 
-  /* 11 大拆分線索牆資料 (含簡短標籤名稱) */
   const slideCards = [
     { 
       shortTitle: '1. 蛋糕包裝紙',
@@ -1132,7 +1130,6 @@
 
   let currentSlideIndex = 0;
 
-  /* 渲染左側 11 大線索導覽選單與右側圖文 */
   function renderClueWall() {
     const sidebar = document.getElementById('clue-sidebar');
     sidebar.innerHTML = '';
@@ -1232,3 +1229,74 @@
     const isCulpritCorrect = culpritAnswer === 'correct';
 
     if (isAbbrCorrect && isCulpritCorrect) {
+      if (tab5Attempts === 1) isTab5Perfect = true;
+
+      alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
+      
+      calculateAndRenderTraits();
+
+      document.getElementById('main-dashboard').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n2. 正確指認真正的真兇！");
+    }
+  }
+
+  function calculateAndRenderTraits() {
+    const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
+
+    if (isAllRound) {
+      document.getElementById('all-round-container').style.display = 'block';
+      document.getElementById('three-traits-row').style.display = 'none';
+    } else {
+      document.getElementById('all-round-container').style.display = 'none';
+      document.getElementById('three-traits-row').style.display = 'flex';
+
+      const hawkBox = document.getElementById('trait-hawk-box');
+      hawkBox.className = isTab4Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
+
+      const logicBox = document.getElementById('trait-logic-box');
+      logicBox.className = isTimelinePerfect ? 'flip-card-container lit' : 'flip-card-container unlit';
+
+      const codeBox = document.getElementById('trait-code-box');
+      codeBox.className = isTab5Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
+    }
+  }
+
+  function toggleFlip(innerElem) {
+    const container = innerElem.closest('.flip-card-container, .all-round-container');
+    if (container && container.classList.contains('lit')) {
+      innerElem.classList.toggle('flipped');
+    }
+  }
+
+  let isImageDecoded = false;
+  function toggleMirrorImage() {
+    const img = document.getElementById('truth-img');
+    const hint = document.getElementById('truth-hint');
+    if (!isImageDecoded) {
+      img.src = '19b.jpg';
+      hint.innerHTML = '✨ 鏡像解密成功！點擊圖片可切換回加密鏡像檢視 🔄';
+      isImageDecoded = true;
+    } else {
+      img.src = '19a.jpg';
+      hint.innerHTML = '🔍 發現加密的鏡像真相檔案！請點擊圖片翻轉解密 🔄';
+      isImageDecoded = false;
+    }
+  }
+
+  function returnToDashboard() {
+    document.getElementById('victory-screen').style.display = 'none';
+    document.getElementById('main-dashboard').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.onload = function() {
+    renderTimeline();
+    renderClueWall();
+  };
+</script>
+</body>
+</html>

@@ -37,7 +37,7 @@
       border-radius: 20px;
       padding: 25px;
       width: 100%;
-      max-width: 920px;
+      max-width: 960px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(127, 85, 57, 0.15);
       margin-top: 10px;
     }
@@ -230,13 +230,65 @@
       color: #fff;
     }
 
-    /* 線索藝廊圖卡 */
+    /* ==========================================
+       11 大線索牆：左右雙欄佈局
+       ========================================== */
+    .clue-wall-layout {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 15px;
+      align-items: flex-start;
+    }
+
+    .clue-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 540px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .clue-menu-btn {
+      padding: 10px 12px;
+      background: #fffdf9;
+      border: 1.5px solid #b8a898;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: bold;
+      color: #582f0e;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .clue-menu-btn:hover {
+      background: #e8f5e9;
+      border-color: #2d6a4f;
+    }
+
+    .clue-menu-btn.active {
+      background: #2d6a4f;
+      color: #ffffff;
+      border-color: #1b4332;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .clue-content {
+      flex: 1;
+      min-width: 0;
+    }
+
     .slide-card {
       background: #fff;
       border: 2px solid #7f5539;
       border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
 
@@ -255,9 +307,18 @@
       color: #3d230d;
     }
 
+    @media (max-width: 680px) {
+      .clue-wall-layout {
+        flex-direction: column;
+      }
+      .clue-sidebar {
+        width: 100%;
+        max-height: 200px;
+      }
+    }
+
     /* ==========================================
        特質卡 3D 雙面翻牌效果 (正面:文字/Emoji ↔ 背面:圖片)
-       第一至三張比例 400x450，全能神探型 1200x450
        ========================================== */
     .traits-wrapper {
       margin: 20px 0;
@@ -425,7 +486,7 @@
 
 <div class="glass-card">
 
-  <!-- 0. 開頭獨立頁面：福爾摩斯的邀請信 -->
+  <!-- 0. 開頭獨立頁面：福爾摩斯的邀請信 + 快捷關卡跳轉區域 -->
   <div id="welcome-screen">
     <h1>✉️ 福爾摩斯的特別委託信</h1>
     <h2>── 倫敦貝克街 221 號 B ──</h2>
@@ -441,7 +502,16 @@
       <p style="color: #8c2d19; font-weight: bold;">準備好了嗎？請點擊下方按鈕，開啟【檔案1】閱讀基本資料並完成審核，就能與我一同動身搜查！</p>
     </div>
 
-    <button class="btn" onclick="startInvestigation()">✉️ 接受委託，開啟【檔案1基本資料】</button>
+    <button class="btn" onclick="startInvestigation()">✉️ 從頭開始：開啟【檔案1基本資料】</button>
+
+    <!-- 接續上次進度快捷跳轉區 -->
+    <div style="margin-top: 18px; padding: 16px; background: rgba(216, 203, 184, 0.4); border: 2px dashed #7f5539; border-radius: 12px; text-align: center;">
+      <p style="font-weight: bold; color: #582f0e; margin-bottom: 8px; font-size: 0.98rem;">🏫 接續上次課堂進度：</p>
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn" style="flex: 1; min-width: 180px; margin: 4px; background: linear-gradient(135deg, #7f5539, #582f0e); font-size: 0.92rem;" onclick="jumpToTab(4)">💡 直達【破案小提示】</button>
+        <button class="btn" style="flex: 1; min-width: 180px; margin: 4px; background: linear-gradient(135deg, #7f5539, #582f0e); font-size: 0.92rem;" onclick="jumpToTab(5)">🧩 直達【簡稱解密與真兇】</button>
+      </div>
+    </div>
   </div>
 
   <!-- 偵探主控台 (分頁導覽) -->
@@ -500,16 +570,17 @@
       <button class="btn" onclick="verifyGateAnswers()">🔍 驗證基本資料，解鎖現場搜查（跟福爾摩斯動身！）</button>
     </div>
 
-    <!-- 分頁 2: 11大拆分線索牆 -->
+    <!-- 分頁 2: 11大拆分線索牆 (升級為左右雙欄) -->
     <div id="nav-2" class="tab-page" style="display: none;">
       <h1>🖼️ 11 大拆分線索牆</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">翻閱下方卡片，仔細研讀便利貼上的「偵探麵包屑」：</p>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">點擊左側線索按鈕，可直接切換查看對應圖文線索與偵探便利貼：</p>
 
-      <div id="slide-area"></div>
+      <div class="clue-wall-layout">
+        <!-- 左側：11 大線索按鈕選單 -->
+        <div id="clue-sidebar" class="clue-sidebar"></div>
 
-      <div style="display: flex; gap: 10px;">
-        <button class="btn" style="flex: 1;" onclick="changeSlide(-1)">⬅️ 上一張線索</button>
-        <button class="btn" style="flex: 1;" onclick="changeSlide(1)">下一張線索 ➡️</button>
+        <!-- 右側：線索圖文展示區 -->
+        <div id="clue-display-area" class="clue-content"></div>
       </div>
 
       <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
@@ -735,24 +806,69 @@
 </div>
 
 <script>
+  /* 教師專屬授權口令 */
+  const TEACHER_PIN = "221b";
+
   let isGate1Unlocked = false;
-  let isTimelineUnlocked = false; // 時間線排序完成標誌
+  let isTimelineUnlocked = false;
   let isTab4Unlocked = false;
 
-  /* 統計各關卡完整提交的次數 */
   let timelineAttempts = 0;
   let tab4Attempts = 0;
   let tab5Attempts = 0;
 
-  let isTimelineCorrect = false; // 時間線是否最終正確
-  let isTimelinePerfect = false; // 是否第一次即完全正確
-  let isTab4Perfect = false;     // Tab 4 是否第一次即完全正確
-  let isTab5Perfect = false;     // Tab 5 是否第一次即完全正確
+  let isTimelineCorrect = false;
+  let isTimelinePerfect = false;
+  let isTab4Perfect = false;
+  let isTab5Perfect = false;
 
   function startInvestigation() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function jumpToTab(targetTabNum) {
+    const isClaimedPerfect = confirm(
+      "🏫 請確認上次【事件排序】表現：\n\n" +
+      "・點擊【確定】：上次一次過全對（需輸入教師授權口令）\n" +
+      "・點擊【取消】：一般接續（未一次過全對）"
+    );
+
+    if (isClaimedPerfect) {
+      const pin = prompt("🔐 請輸入教師授權口令以解鎖『一次過全對』特質資格：");
+      if (pin === TEACHER_PIN) {
+        isTimelinePerfect = true;
+        alert("✨ 教師授權成功！已為本組保留『嚴密邏輯』特質解鎖資格。");
+      } else {
+        isTimelinePerfect = false;
+        alert("❌ 口令不正確！系統將自動設定為『一般接續』進入關卡。");
+      }
+    } else {
+      isTimelinePerfect = false;
+    }
+
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('main-dashboard').style.display = 'block';
+
+    if (targetTabNum >= 4) {
+      isGate1Unlocked = true;
+      isTimelineUnlocked = true;
+      document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
+      document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
+      document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
+      document.getElementById('tab-btn-2').classList.add('unlocked');
+      document.getElementById('tab-btn-3').classList.add('unlocked');
+      document.getElementById('tab-btn-4').classList.add('unlocked');
+    }
+
+    if (targetTabNum >= 5) {
+      isTab4Unlocked = true;
+      document.getElementById('tab-btn-5').innerText = '🧩 簡稱解密及尋找真兇';
+      document.getElementById('tab-btn-5').classList.add('unlocked');
+    }
+
+    switchNav('nav-' + targetTabNum);
   }
 
   let gateAnswers = { item: null, owner: null, location: null, arrested: null };
@@ -796,7 +912,7 @@
       return;
     }
 
-    tab4Attempts++; // 僅在填寫完整點擊提交時採計次數
+    tab4Attempts++;
 
     const isFinalCorrect =
       finalAnswers['q1'] === 'correct' &&
@@ -806,7 +922,7 @@
       finalAnswers['q5'] === 'correct';
 
     if (isFinalCorrect) {
-      if (tab4Attempts === 1) isTab4Perfect = true; // 第一次即無錯才判定為 Perfect
+      if (tab4Attempts === 1) isTab4Perfect = true;
       isTab4Unlocked = true;
       alert("🎉 太棒了！第 18 頁的 5 大細節推理完全正確！\n\n🔓 成功解鎖最後分頁【簡稱解密及尋找真兇】！");
 
@@ -819,23 +935,19 @@
     }
   }
 
-  /* 切換分頁關卡檢查 */
   function switchNav(pageId) {
     const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
 
-    // 關卡 1 門檻檢查：Tab 2, 3 需要先通過基本資料
     if (pageIndex > 1 && pageIndex < 4 && !isGate1Unlocked) {
       alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟【11大線索牆】與【事件排序】喔！");
       return;
     }
 
-    // 關卡 2 門檻檢查：Tab 4 需要先通過【事件排序】
     if (pageIndex === 4 && !isTimelineUnlocked) {
       alert("🔒 請先在【⏱️ 事件排序】中將事件順序與時間全部排列正確，才能解鎖【💡 破案小提示】喔！");
       return;
     }
 
-    // 關卡 3 門檻檢查：Tab 5 需要先通過【破案小提示】
     if (pageIndex === 5 && !isTab4Unlocked) {
       alert("🔒 請先在【💡 破案小提示】中答對 5 道推理題目，才能解鎖【簡稱解密及尋找真兇】分頁喔！");
       return;
@@ -847,7 +959,6 @@
     document.getElementById(pageId).style.display = 'block';
     document.getElementById(`tab-btn-${pageIndex}`).classList.add('active');
 
-    // 自動滾動平滑置頂
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -861,7 +972,6 @@
     { id: 6, text: '美美．思華特小姐被捕', hour: 3, min: 30, enteredHour: '', enteredMin: '' }
   ];
 
-  /* 初始隨機打散順序 */
   let currentTimeline = [
     { ...timelineData[2] },
     { ...timelineData[0] },
@@ -932,8 +1042,8 @@
 
     if (isOrderCorrect && isTimeValueCorrect) {
       isTimelineCorrect = true;
-      isTimelineUnlocked = true; // 解鎖下一步門檻
-      if (timelineAttempts === 1) isTimelinePerfect = true; // 第一次即無錯
+      isTimelineUnlocked = true;
+      if (timelineAttempts === 1) isTimelinePerfect = true;
       alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！\n\n🔓 成功解鎖分頁【💡 破案小提示】！");
 
       document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
@@ -950,59 +1060,70 @@
     }
   }
 
-  /* 11 大拆分線索牆 */
+  /* 11 大拆分線索牆資料 (含簡短標籤名稱) */
   const slideCards = [
     { 
+      shortTitle: '1. 蛋糕包裝紙',
       img: '20240119093952729_0002.jpg', 
       title: '線索 1：蛋糕包裝紙與秘密字條（第6-7頁）', 
       note: '🔍 偵探麵包屑：集中觀察蛋糕包裝紙上的地址「麗晶街114號」、日期時間（3月29日 下午2時30分）以及字條的內容。' 
     },
     { 
+      shortTitle: '2. 警方與波伊口供',
       img: '8.jpg', 
       title: '線索 2：警方紀錄與波伊小姐口供（第8頁）', 
       note: '🔍 偵探麵包屑：警方紀錄與波伊小姐的口供中，有一部分的時間線線索可整理。' 
     },
     { 
+      shortTitle: '3. 思華布藝減價',
       img: '9.jpg', 
       title: '線索 3：思華布藝減價與美美口供（第9頁）', 
       note: '🔍 偵探麵包屑：思華布藝減價、有 M 及 MT 縮寫，以及一部分的時間線線索可整理。' 
     },
     { 
+      shortTitle: '4. 診所紀錄與名片',
       img: '10.jpg', 
       title: '線索 4：診所紀錄與吉迪恩名片（第10頁）', 
       note: '🔍 偵探麵包屑：第6頁地址的真正地方；對照字條地址、日期及時間找出「約會目的」。' 
     },
     { 
+      shortTitle: '5. 生活雜誌報導',
       img: '11.jpg', 
       title: '線索 5：肯辛頓生活雜誌與福韋克布行（第11頁）', 
-      note: '🔍 偵探麵包屑：雜誌報道有關神秘烘培師、福韋克布行廣告與 M 縮寫線索。' 
+      note: '🔍 偵探麵包屑：雜誌報導有關神秘烘培師、福韋克布行廣告與 M 縮寫線索。' 
     },
     { 
+      shortTitle: '6. 保險箱蛋糕',
       img: '12.jpg', 
       title: '線索 6：吉迪恩口供與保險箱蛋糕（第12頁）', 
       note: '🔍 偵探麵包屑：吉迪恩的口供及另一個在保險箱的蛋糕，留意 MT 縮寫線索。' 
     },
     { 
+      shortTitle: '7. 櫻桃蛋糕食譜',
       img: '13.jpg', 
       title: '線索 7：櫻桃蛋糕食譜與關鍵合照（第13頁）', 
       note: '🔍 偵探麵包屑：MB 縮寫出現，關鍵照片可聯繫到神秘烘培師。' 
     },
     { 
+      shortTitle: '8. 商業貸款申請',
       img: '14.jpg', 
       title: '線索 8：莉奧蘿拉口供與商業貸款（第14頁）', 
       note: '🔍 偵探麵包屑：思華布藝關店原因；思華布藝用的裁縫粉筆；對照 RLG 銀行的貸款申請資料。' 
     },
     { 
+      shortTitle: '9. 大屋梳妝台',
       img: '15.jpg', 
       title: '線索 9：大屋原貌與規劃會議告示（第15頁）', 
       note: '🔍 偵探麵包屑：對比大屋梳妝台照片與原本樣貌；茶室專用的規劃申請會議。' 
     },
     { 
+      shortTitle: '10. 午餐菜單與絲帶',
       img: '16.jpg', 
       title: '線索 10：午餐菜單、彩色絲帶與工程估價（第16頁）', 
       note: '🔍 偵探麵包屑：午餐菜單與波伊口供的衝突！彩色絲帶中少了一根？柯林斯建築公司工程估價。' 
     },
     { 
+      shortTitle: '11. 管家手冊揭密',
       img: '17.jpg', 
       title: '線索 11：管家手冊揭密（第17頁）', 
       note: '🔍 偵探麵包屑：瑪麗安·波伊寫給未婚夫 (MT) 的管家手冊，解開神秘烘培師的面紗！' 
@@ -1010,9 +1131,39 @@
   ];
 
   let currentSlideIndex = 0;
+
+  /* 渲染左側 11 大線索導覽選單與右側圖文 */
+  function renderClueWall() {
+    const sidebar = document.getElementById('clue-sidebar');
+    sidebar.innerHTML = '';
+
+    slideCards.forEach((card, index) => {
+      const btn = document.createElement('button');
+      btn.className = `clue-menu-btn ${index === currentSlideIndex ? 'active' : ''}`;
+      btn.innerHTML = `📌 ${card.shortTitle}`;
+      btn.onclick = () => selectClue(index);
+      sidebar.appendChild(btn);
+    });
+
+    renderSlide();
+  }
+
+  function selectClue(index) {
+    currentSlideIndex = index;
+    const btns = document.querySelectorAll('.clue-menu-btn');
+    btns.forEach((btn, idx) => {
+      if (idx === index) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    renderSlide();
+  }
+
   function renderSlide() {
     const card = slideCards[currentSlideIndex];
-    document.getElementById('slide-area').innerHTML = `
+    document.getElementById('clue-display-area').innerHTML = `
       <div class="slide-card">
         <img src="${card.img}" alt="${card.title}">
         <div class="slide-caption">
@@ -1021,13 +1172,6 @@
         </div>
       </div>
     `;
-  }
-
-  function changeSlide(dir) {
-    currentSlideIndex += dir;
-    if (currentSlideIndex < 0) currentSlideIndex = 0;
-    if (currentSlideIndex >= slideCards.length) currentSlideIndex = slideCards.length - 1;
-    renderSlide();
   }
 
   let finalAnswers = {};
@@ -1064,7 +1208,6 @@
   }
 
   function submitFinalInvestigation() {
-    // 防護檢查：未完成時間線排序阻擋
     if (!isTimelineUnlocked) {
       alert("⚠️ 你尚未完成【⏱️ 事件排序】關卡！請先前往 Tab 3 將事件順序與時間排列正確後再提交報告！");
       switchNav('nav-3');
@@ -1076,7 +1219,7 @@
       return;
     }
 
-    tab5Attempts++; // 僅在填寫完整點擊提交時採計次數
+    tab5Attempts++;
 
     const isMbCorrect = mbSelections.has('A') && mbSelections.has('C') && !mbSelections.has('B') && mbSelections.size === 2;
 
@@ -1089,81 +1232,3 @@
     const isCulpritCorrect = culpritAnswer === 'correct';
 
     if (isAbbrCorrect && isCulpritCorrect) {
-      if (tab5Attempts === 1) isTab5Perfect = true; // 第一次即無錯才判定為 Perfect
-
-      alert("🎉 太棒了！縮寫密碼與真兇指認完全正確！\n\n💡 聰明的偵探，你成功破解了雙重身分的秘密：\n「瑪麗安．波伊（Miss Boyle）」與「莫拉．貝雅．蘭尼（Moria Bea Lenny）」其實是同一個人！\n\n正在為你開啟【第 19 頁真相大白】大結局畫面！");
-      
-      calculateAndRenderTraits();
-
-      document.getElementById('main-dashboard').style.display = 'none';
-      document.getElementById('victory-screen').style.display = 'block';
-
-      // 跳轉大結局時自動置頂
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      alert("🔍 報告中有回答錯誤的地方喔！\n請再仔細檢查：\n1. 縮寫密碼第 4 題要同時選出所有代表 MB 的正確人物\n2. 正確指認真正的真兇！");
-    }
-  }
-
-  /* 精確判定特質卡解鎖（需該模組「首試零失誤」） */
-  function calculateAndRenderTraits() {
-    const isAllRound = isTab4Perfect && isTimelinePerfect && isTab5Perfect;
-
-    if (isAllRound) {
-      document.getElementById('all-round-container').style.display = 'block';
-      document.getElementById('three-traits-row').style.display = 'none';
-    } else {
-      document.getElementById('all-round-container').style.display = 'none';
-      document.getElementById('three-traits-row').style.display = 'flex';
-
-      // 1. 細節觀察卡：需【破案小提示】一次全對（零失誤）
-      const hawkBox = document.getElementById('trait-hawk-box');
-      hawkBox.className = isTab4Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
-
-      // 2. 嚴密邏輯卡：需【事件排序】一次全對（零失誤）
-      const logicBox = document.getElementById('trait-logic-box');
-      logicBox.className = isTimelinePerfect ? 'flip-card-container lit' : 'flip-card-container unlit';
-
-      // 3. 密碼解密卡：需【簡稱與指認真兇】一次全對（零失誤）
-      const codeBox = document.getElementById('trait-code-box');
-      codeBox.className = isTab5Perfect ? 'flip-card-container lit' : 'flip-card-container unlit';
-    }
-  }
-
-  /* 安全點擊翻牌邏輯：僅當容器為 lit 時才允許翻面 */
-  function toggleFlip(innerElem) {
-    const container = innerElem.closest('.flip-card-container, .all-round-container');
-    if (container && container.classList.contains('lit')) {
-      innerElem.classList.toggle('flipped');
-    }
-  }
-
-  /* 鏡像圖片切換翻轉邏輯 */
-  let isImageDecoded = false;
-  function toggleMirrorImage() {
-    const img = document.getElementById('truth-img');
-    const hint = document.getElementById('truth-hint');
-    if (!isImageDecoded) {
-      img.src = '19b.jpg';
-      hint.innerHTML = '✨ 鏡像解密成功！點擊圖片可切換回加密鏡像檢視 🔄';
-      isImageDecoded = true;
-    } else {
-      img.src = '19a.jpg';
-      hint.innerHTML = '🔍 發現加密的鏡像真相檔案！請點擊圖片翻轉解密 🔄';
-      isImageDecoded = false;
-    }
-  }
-
-  function returnToDashboard() {
-    document.getElementById('victory-screen').style.display = 'none';
-    document.getElementById('main-dashboard').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  window.onload = function() {
-    renderTimeline();
-    renderSlide();
-  };
-</script>
-</body>
-</html>

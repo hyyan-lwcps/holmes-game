@@ -175,7 +175,7 @@
       transform: translateY(-2px);
     }
 
-    /* 事件排序列表與純數字時間輸入框 */
+    /* 時間配對列表與下拉選單 */
     .timeline-list {
       list-style: none;
       padding: 0;
@@ -186,48 +186,33 @@
       background: #fff;
       border: 1.5px solid #c8beac;
       border-radius: 10px;
-      padding: 12px 15px;
-      margin-bottom: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .time-box {
-      width: 55px;
-      padding: 6px 4px;
-      border: 1.5px solid #b8a898;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      background: #fffdf9;
+    .time-select {
+      padding: 8px 12px;
+      border: 2px solid #7f5539;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: bold;
       color: #8c2d19;
-      font-weight: bold;
-      text-align: center;
-      transition: border-color 0.2s;
-    }
-
-    .time-box:focus {
-      border-color: #2d6a4f;
-      outline: none;
-      background: #f4fbf7;
-    }
-
-    .timeline-controls button {
-      background: #e6dfd3;
-      border: 1px solid #b8a898;
-      border-radius: 6px;
-      padding: 6px 12px;
+      background: #fffdf9;
       cursor: pointer;
-      font-weight: bold;
-      margin-left: 4px;
+      outline: none;
+      transition: all 0.2s;
+      min-width: 150px;
     }
 
-    .timeline-controls button:hover {
-      background: #2d6a4f;
-      color: #fff;
+    .time-select:focus {
+      border-color: #2d6a4f;
+      background: #e8f5e9;
     }
 
     /* 11 大線索牆：左右雙欄佈局 */
@@ -474,12 +459,12 @@
 
 <div class="glass-card">
 
-  <!-- 自訂跳關教務彈窗 (完全避免 iPad/平板 prompt/confirm 被系統封鎖的問題) -->
+  <!-- 自訂跳關教務彈窗 (全平台相容，無阻塞) -->
   <div id="custom-jump-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
     <div style="background: #fdfbf7; border: 3px solid #7f5539; border-radius: 16px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;">
       <h3 style="color: #1b4332; margin-bottom: 12px; font-size: 1.3rem;">🏫 接續上次課堂進度驗證</h3>
       <p style="font-size: 0.95rem; color: #582f0e; margin-bottom: 16px; line-height: 1.5;">
-        請確認上次【事件排序】的完成狀況：
+        請確認上次【案件時間對照】的完成狀況：
       </p>
       
       <div style="margin-bottom: 18px; text-align: left; background: #f4ece1; padding: 12px 14px; border-radius: 10px; border: 1px solid #c8beac;">
@@ -529,7 +514,7 @@
     <div class="main-nav">
       <button id="tab-btn-1" class="nav-btn unlocked active" onclick="switchNav('nav-1')">📋 檔案1基本資料</button>
       <button id="tab-btn-2" class="nav-btn" onclick="switchNav('nav-2')">🔒 11大線索牆</button>
-      <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 事件排序</button>
+      <button id="tab-btn-3" class="nav-btn" onclick="switchNav('nav-3')">🔒 案件時間對照</button>
       <button id="tab-btn-4" class="nav-btn" onclick="switchNav('nav-4')">🔒 破案小提示</button>
       <button id="tab-btn-5" class="nav-btn" onclick="switchNav('nav-5')">🔒 簡稱解密及尋找真兇</button>
     </div>
@@ -588,19 +573,19 @@
         <div id="clue-display-area" class="clue-content"></div>
       </div>
 
-      <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【事件排序】➡️</button>
+      <button class="btn" style="margin-top: 10px; background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-3')">⏱️ 前往【案件時間對照】➡️</button>
     </div>
 
-    <!-- 分頁 3: 案件事件排序 -->
+    <!-- 分頁 3: 案件時間對照 (預設時間卡片下拉選單，免打字) -->
     <div id="nav-3" class="tab-page" style="display: none;">
-      <h1>⏱️ 案件事件排序</h1>
-      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照線索卡，在前方輸入幾「時」幾「分」，並點擊「⬆️ 上移」或「⬇️ 下移」將事件按正確時間排列：</p>
+      <h1>⏱️ 案件時間對照</h1>
+      <p style="text-align: center; color: #582f0e; margin-bottom: 12px;">請對照 11 大線索牆，點擊下拉選單為各項事件配對正確的發生時間：</p>
 
       <div class="story-box">
         <ul id="timeline-container" class="timeline-list"></ul>
       </div>
 
-      <button class="btn" onclick="checkTimelineOrder()">✔️ 檢查事件排列與時間</button>
+      <button class="btn" onclick="checkTimelineOrder()">✔️ 驗證對照時間</button>
       <button class="btn" style="background: linear-gradient(135deg, #7f5539, #582f0e);" onclick="switchNav('nav-4')">💡 前往【破案小提示】➡️</button>
     </div>
 
@@ -801,7 +786,7 @@
   /* 教師專屬授權口令 */
   const TEACHER_PIN = "221b";
 
-  let pendingTargetTab = 4; // 暫存跳轉關卡
+  let pendingTargetTab = 4;
 
   let isGate1Unlocked = false;
   let isTimelineUnlocked = false;
@@ -822,14 +807,12 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /* 開啟自訂 Modal 視窗，避免原生 prompt/confirm 在平板 blocked 的問題 */
   function jumpToTab(targetTabNum) {
     pendingTargetTab = targetTabNum;
     document.getElementById('modal-pin-input').value = '';
     document.getElementById('custom-jump-modal').style.display = 'flex';
   }
 
-  /* 自訂 Modal 按鈕事件處置 */
   function confirmModalJump(isTryPerfect) {
     if (isTryPerfect) {
       const pin = document.getElementById('modal-pin-input').value.trim();
@@ -844,18 +827,23 @@
       isTimelinePerfect = false;
     }
 
-    // 關閉 Modal
     document.getElementById('custom-jump-modal').style.display = 'none';
 
-    // 執行關卡切換與解鎖
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('main-dashboard').style.display = 'block';
 
     if (pendingTargetTab >= 4) {
       isGate1Unlocked = true;
       isTimelineUnlocked = true;
+
+      /* 💡 快捷跳轉特色：自動為【案件時間對照】填入全部正確答案並重新渲染 */
+      timelineData.forEach(item => {
+        item.selectedTime = item.correctTime;
+      });
+      renderTimeline();
+
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
-      document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
+      document.getElementById('tab-btn-3').innerText = '⏱️ 案件時間對照';
       document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
       document.getElementById('tab-btn-2').classList.add('unlocked');
       document.getElementById('tab-btn-3').classList.add('unlocked');
@@ -892,10 +880,10 @@
       gateAnswers.arrested === 'mimi'
     ) {
       isGate1Unlocked = true;
-      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，11大線索牆與事件排序已解鎖！");
+      alert("🎉 太棒了！基本資料核對完全正確！\n\n🔓 福爾摩斯讚許了你的觀察力，11大線索牆與案件時間對照已解鎖！");
 
       document.getElementById('tab-btn-2').innerText = '🖼️ 11大線索牆';
-      document.getElementById('tab-btn-3').innerText = '⏱️ 事件排序';
+      document.getElementById('tab-btn-3').innerText = '⏱️ 案件時間對照';
 
       document.getElementById('tab-btn-2').classList.add('unlocked');
       document.getElementById('tab-btn-3').classList.add('unlocked');
@@ -939,12 +927,12 @@
     const pageIndex = parseInt(pageId.replace('nav-', ''), 10);
 
     if (pageIndex > 1 && pageIndex < 4 && !isGate1Unlocked) {
-      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟【11大線索牆】與【事件排序】喔！");
+      alert("🔒 請先在【📋 檔案1基本資料】中答對 4 個問題，才能開啟【11大線索牆】與【案件時間對照】喔！");
       return;
     }
 
     if (pageIndex === 4 && !isTimelineUnlocked) {
-      alert("🔒 請先在【⏱️ 事件排序】中將事件順序與時間全部排列正確，才能解鎖【💡 破案小提示】喔！");
+      alert("🔒 請先在【⏱️ 案件時間對照】中將 6 項事件的時間對照選擇正確，才能解鎖【💡 破案小提示】喔！");
       return;
     }
 
@@ -962,103 +950,92 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  /* 固定的 6 大事件與正確時間選項 */
   const timelineData = [
-    { id: 1, text: '美美．思華特小姐到達斯文布魯大屋', hour: 11, min: 0, enteredHour: '', enteredMin: '' },
-    { id: 2, text: '管家波伊小姐送美美．思華特小姐離開', hour: 12, min: 30, enteredHour: '', enteredMin: '' },
-    { id: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', hour: 1, min: 0, enteredHour: '', enteredMin: '' },
-    { id: 4, text: '史雲探長抵達斯文布魯大屋', hour: 1, min: 15, enteredHour: '', enteredMin: '' },
-    { id: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', hour: 2, min: 45, enteredHour: '', enteredMin: '' },
-    { id: 6, text: '美美．思華特小姐被捕', hour: 3, min: 30, enteredHour: '', enteredMin: '' }
+    { id: 1, seq: 1, text: '美美．思華特小姐到達斯文布魯大屋', correctTime: '11:00', selectedTime: '' },
+    { id: 2, seq: 2, text: '管家波伊小姐送美美．思華特小姐離開', correctTime: '12:30', selectedTime: '' },
+    { id: 3, seq: 3, text: '斯文布魯克夫人通知警方紅寶石被盜', correctTime: '01:00', selectedTime: '' },
+    { id: 4, seq: 4, text: '史雲探長抵達斯文布魯大屋', correctTime: '01:15', selectedTime: '' },
+    { id: 5, seq: 5, text: '波伊小姐有事外出離開了斯文布魯大屋', correctTime: '02:45', selectedTime: '' },
+    { id: 6, seq: 6, text: '美美．思華特小姐被捕', correctTime: '03:30', selectedTime: '' }
   ];
 
-  let currentTimeline = [
-    { ...timelineData[2] },
-    { ...timelineData[0] },
-    { ...timelineData[4] },
-    { ...timelineData[1] },
-    { ...timelineData[5] },
-    { ...timelineData[3] }
+  /* 供學生下拉配對的 6 個標準時間選項 */
+  const timeOptions = [
+    { label: '⏱️ 請選擇時間...', val: '' },
+    { label: '上午 11:00', val: '11:00' },
+    { label: '中午 12:30', val: '12:30' },
+    { label: '下午 01:00', val: '01:00' },
+    { label: '下午 01:15', val: '01:15' },
+    { label: '下午 02:45', val: '02:45' },
+    { label: '下午 03:30', val: '03:30' }
   ];
 
+  /* 渲染時間配對下拉選單 */
   function renderTimeline() {
     const container = document.getElementById('timeline-container');
     container.innerHTML = '';
-    currentTimeline.forEach((item, index) => {
+    timelineData.forEach((item, index) => {
       const li = document.createElement('li');
       li.className = 'timeline-item';
+
+      let optionsHtml = timeOptions.map(opt => 
+        `<option value="${opt.val}" ${item.selectedTime === opt.val ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+
       li.innerHTML = `
-        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px; flex: 1;">
-          <input type="number" class="time-box" placeholder="時" min="1" max="12" value="${item.enteredHour || ''}" oninput="updateHour(${index}, this.value)">
-          <span style="font-weight: bold; color: #582f0e; margin-right: 4px;">時</span>
-          <input type="number" class="time-box" placeholder="分" min="0" max="59" value="${item.enteredMin || ''}" oninput="updateMin(${index}, this.value)">
-          <span style="font-weight: bold; color: #582f0e; margin-right: 10px;">分</span>
-          <span style="font-weight: 600;">${item.text}</span>
-        </div>
-        <div class="timeline-controls">
-          <button onclick="moveTimeline(${index}, -1)">⬆️ 上移</button>
-          <button onclick="moveTimeline(${index}, 1)">⬇️ 下移</button>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; flex: 1;">
+          <span style="font-weight: bold; color: #1b4332; font-size: 1.05rem; min-width: 75px;">事件 ${item.seq}.</span>
+          <select class="time-select" onchange="updateSelectedTime(${index}, this.value)">
+            ${optionsHtml}
+          </select>
+          <span style="font-weight: 600; color: #2d3748; flex: 1; font-size: 0.98rem; margin-left: 6px;">${item.text}</span>
         </div>
       `;
       container.appendChild(li);
     });
   }
 
-  function updateHour(index, val) {
-    currentTimeline[index].enteredHour = val;
+  function updateSelectedTime(index, val) {
+    timelineData[index].selectedTime = val;
   }
 
-  function updateMin(index, val) {
-    currentTimeline[index].enteredMin = val;
-  }
-
-  function moveTimeline(index, direction) {
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= currentTimeline.length) return;
-    const temp = currentTimeline[index];
-    currentTimeline[index] = currentTimeline[newIndex];
-    currentTimeline[newIndex] = temp;
-    renderTimeline();
-  }
-
+  /* 直覺時間配對驗證 */
   function checkTimelineOrder() {
     timelineAttempts++;
-    let isOrderCorrect = true;
-    let isTimeValueCorrect = true;
+    let allSelected = true;
+    let allCorrect = true;
 
-    for (let i = 0; i < currentTimeline.length; i++) {
-      if (currentTimeline[i].id !== timelineData[i].id) {
-        isOrderCorrect = false;
+    for (let i = 0; i < timelineData.length; i++) {
+      const item = timelineData[i];
+      if (!item.selectedTime) {
+        allSelected = false;
       }
-      
-      const item = currentTimeline[i];
-      const h = parseInt(item.enteredHour, 10);
-      const m = parseInt(item.enteredMin, 10);
-
-      if (isNaN(h) || isNaN(m) || h !== item.hour || m !== item.min) {
-        isTimeValueCorrect = false;
+      if (item.selectedTime !== item.correctTime) {
+        allCorrect = false;
       }
     }
 
-    if (isOrderCorrect && isTimeValueCorrect) {
+    if (!allSelected) {
+      alert("⚠️ 請將 6 項事件的時間全部選擇完畢喔！");
+      return;
+    }
+
+    if (allCorrect) {
       isTimelineCorrect = true;
       isTimelineUnlocked = true;
       if (timelineAttempts === 1) isTimelinePerfect = true;
-      alert("🎉 太棒了！事件排序與填寫的時間完全正確！你根據線索進行了非常嚴密的推算！\n\n🔓 成功解鎖分頁【💡 破案小提示】！");
+      alert("🎉 太棒了！6 項事件的時間配對完全正確！你成功展現了嚴密的邏輯推算能力！\n\n🔓 成功解鎖分頁【💡 破案小提示】！");
 
       document.getElementById('tab-btn-4').innerText = '💡 破案小提示';
       document.getElementById('tab-btn-4').classList.add('unlocked');
     } else {
       isTimelineCorrect = false;
-      if (isOrderCorrect && !isTimeValueCorrect) {
-        alert("💡 事件卡片的先後順序排列正確了！\n但有幾項事件的「幾時幾分」填錯囉，請再仔細看看線索卡便利貼上的時間細節！");
-      } else if (!isOrderCorrect && isTimeValueCorrect) {
-        alert("💡 時間的「幾時幾分」填寫完全正確喔！\n但是卡片的「先後排列順序」還沒排好，請點擊「⬆️上移」或「⬇️下移」調整順序！");
-      } else {
-        alert("🔍 卡片順序與填寫的時間都有誤喔！請對照線索卡上的時間，重新輸入並調整排列！");
-      }
+      alert("🔍 有幾項事件的時間配對選擇錯誤囉！請再次對照【🖼️ 11大線索牆】便利貼上的時間細節！");
     }
   }
 
+  /* 11 大拆分線索牆資料 (含簡短標籤名稱) */
   const slideCards = [
     { 
       shortTitle: '1. 蛋糕包裝紙',
@@ -1206,7 +1183,7 @@
 
   function submitFinalInvestigation() {
     if (!isTimelineUnlocked) {
-      alert("⚠️ 你尚未完成【⏱️ 事件排序】關卡！請先前往 Tab 3 將事件順序與時間排列正確後再提交報告！");
+      alert("⚠️ 你尚未完成【⏱️ 案件時間對照】關卡！請先前往 Tab 3 將時間對照選擇正確後再提交報告！");
       switchNav('nav-3');
       return;
     }
